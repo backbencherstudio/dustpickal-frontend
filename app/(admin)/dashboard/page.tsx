@@ -1,7 +1,9 @@
+import AnalyticsCards from "./_components/AnalyticsCards";
+
 export default function DashboardPage() {
-  return <div>DashboardPage</div>;
+  return (
+    <div>
+      <AnalyticsCards />
+    </div>
+  );
 }
-
-
-
-
