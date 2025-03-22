@@ -1,7 +1,7 @@
 import { AppConfig } from "@/config/app.config";
 import "./globals.css";
 import type { Metadata } from "next";
-
+import NavBar from "./(site)/_components/home/shared/Navbar";
 export const metadata: Metadata = {
   title: AppConfig().app.name,
   description: AppConfig().app.slogan,
@@ -14,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        <NavBar />
+        {children}
+        </body>
     </html>
   );
 }
