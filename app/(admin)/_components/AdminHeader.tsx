@@ -1,0 +1,38 @@
+import React from "react";
+import { FaSearch } from "react-icons/fa";
+import { FaUser } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
+import { IoNotifications } from "react-icons/io5";
+
+const AdminHeader = () => {
+  const router = useRouter();
+
+  return (
+    <div className="bg-white dark:bg-gray-800 px-8 py-4 shadow-sm flex justify-end items-center gap-4">
+      {/* <div className="relative w-[50%] lg:w-full lg:max-w-[315px]">
+        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        <input
+          type="text"
+          placeholder="Search Anything"
+          className=" w-full border bg-[#f9fafb] border-[#EAF1FF] rounded-lg p-2 pl-10"
+        />
+      </div> */}
+
+      <div
+        onClick={() => router.push("/admin/notification")}
+        className="relative w-10 h-10 border border-[#EAF1FF] rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-50"
+      >
+        <IoNotifications className="text-2xl" />
+       
+      </div>
+      <div
+        onClick={() => router.push("/admin/profile")}
+        className="w-10 h-10 border border-[#EAF1FF] bg-[#f6f8fa] rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100"
+      >
+        <FaUser />
+      </div>
+    </div>
+  );
+};
+
+export default AdminHeader;
