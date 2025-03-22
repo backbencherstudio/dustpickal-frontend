@@ -14,27 +14,14 @@ const AdminSidebar = ({ onNavigate }: { onNavigate: () => void }) => {
   const router = useRouter();
 
   const navItems = [
-    { label: "Dashboard", path: "/admin", icon: <RxDashboard /> },
-    {
-      label: "Messages Management",
-      path: "/admin/messages",
-      icon: <TbMessage2 size={18} />,
-    },
+    { label: "Dashboard", path: "/dashboard", icon: <RxDashboard /> },
+    
     {
       label: "User Management",
-      path: "/admin/users",
+      path: "/dashboard/users",
       icon: <FaUsers size={18} />,
     },
-    {
-      label: "Contact Us Info",
-      path: "/admin/contacts",
-      icon: <AiOutlineUserAdd size={18} />,
-    },
-    {
-      label: "Content Customize",
-      path: "/admin/content",
-      icon: <PiNoteLight size={18} />,
-    },
+  
   ];
 
   const handleLogout = () => {
