@@ -100,7 +100,7 @@ const SubsStatsChart = () => {
         />
         <div className="flex items-center gap-2 mt-4 justify-left ml-[30%]">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#f1d883] via-[#f3825f] via-40% to-[#26beec]"></div>
+            <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#a58be6 ] via-[#ff597b] via-40% to-[#7ed3da]"></div>
             <p className="text-[15px] font-semibold">Total {total}</p>
           </div>
         </div>
