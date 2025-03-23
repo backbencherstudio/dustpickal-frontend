@@ -48,7 +48,7 @@ const ApiChart = () => {
       </div>
 
       <div className="flex justify-around mt-6">
-        <div className="relative w-[200px] h-[200px]">
+        <div className="relative w-[100px] h-[100px] lg:w-[200px] lg:h-[200px]">
           {/* Total circle - largest and in back */}
           <div className="absolute w-full h-full rounded-full bg-[#7ed3da] opacity-80"></div>
 

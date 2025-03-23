@@ -2,10 +2,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaHome } from "react-icons/fa";
-import { MdAddCard, MdApi } from "react-icons/md";
+import { MdAddCard, MdApi, MdOutlineLogout, MdSupport } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { FiUsers } from "react-icons/fi";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut, IoMdNotificationsOutline } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { PiHammer } from "react-icons/pi";
 
@@ -30,7 +30,34 @@ const AdminSidebar = ({
     {
       label: "Rule Management",
       path: "/dashboard/rule-management",
-      icon: <PiHammer size={20} />,
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <mask
+            id="mask0_5474_10712"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="20"
+            height="20"
+          >
+            <rect width="20" height="20" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_5474_10712)">
+            <path
+              d="M3.38086 17.2916V16.0416H12.9642V17.2916H3.38086ZM8.21732 12.9934L3.79753 8.57364L5.25898 7.07052L9.72044 11.4903L8.21732 12.9934ZM13.1565 8.05427L8.73669 3.59281L10.2398 2.13135L14.6596 6.55114L13.1565 8.05427ZM17.1661 16.378L6.57961 5.79156L7.45773 4.91343L18.0442 15.4999L17.1661 16.378Z"
+              fill={
+                pathname === "/dashboard/rule-management" ? "white" : "#1D1F2C"
+              }
+            />
+          </g>
+        </svg>
+      ),
     },
     {
       label: "API Management",
@@ -105,19 +132,35 @@ const AdminSidebar = ({
           </Link>
         ))}
       </nav>
-      <div
-        onClick={handleLogout}
-        className=" flex items-center gap-2 mt-8 absolute bottom-6 left-6 cursor-pointer hover:scale-105 transition-all duration-300"
-      >
-        <IoIosLogOut size={18} />
-        <p className="text-red-500">Logout</p>
-      </div>{" "}
-      <div
-        onClick={() => router.push("/")}
-        className=" flex items-center gap-2 mt-8 absolute bottom-6 left-36 cursor-pointer hover:scale-105 transition-all duration-300"
-      >
-        <FaHome size={18} />
-        <p className="">Home</p>
+      <div className="flex flex-col gap-2 absolute bottom-2 left-6">
+        <div
+          onClick={handleLogout}
+          className=" flex items-center gap-2 p-1 rounded-md cursor-pointer hover:scale-105 transition-all duration-300"
+        >
+          <MdSupport size={20} />
+          <p className="">Support</p>
+        </div>
+        <div
+          onClick={handleLogout}
+          className=" flex items-center gap-2 p-1 rounded-md cursor-pointer hover:scale-105 transition-all duration-300"
+        >
+          <IoMdNotificationsOutline size={20} />
+          <p className="">Notification</p>
+        </div>
+        <div
+          onClick={handleLogout}
+          className=" flex items-center gap-2 p-1 rounded-md cursor-pointer hover:scale-105 transition-all duration-300"
+        >
+          <MdOutlineLogout size={20} />
+          <p className="">Logout</p>
+        </div>
+        {/* <div
+          onClick={() => router.push("/")}
+          className=" flex items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-300"
+        >
+          <FaHome size={18} />
+          <p className="">Home</p>
+        </div> */}
       </div>
     </div>
   );

@@ -14,10 +14,10 @@ import {
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const SubsStatsChart = () => {
-  const options = {
+  const options: ApexCharts.ApexOptions = {
     series: [100, 500, 1000, 400],
     chart: {
-      type: "donut",
+      type: "donut" as const,
     },
     colors: ["#FF6B6B", "#FFB572", "#A69AFC", "#4AD991"],
     labels: ["Pay as you go", "Pro", "Basic", "Enterprise"],
@@ -40,9 +40,7 @@ const SubsStatsChart = () => {
       fontSize: "15px",
       fontWeight: 400,
       markers: {
-        width: 12,
-        height: 12,
-        radius: 6,
+        size: 12,
       },
       formatter: function (seriesName, opts) {
         return seriesName + " " + opts.w.globals.series[opts.seriesIndex];
@@ -66,7 +64,7 @@ const SubsStatsChart = () => {
     ],
   };
 
-  const total = options.series.reduce((sum, num) => sum + num, 0);
+  const total = (options.series as number[]).reduce((sum, num) => sum + num, 0);
 
   return (
     <div className="bg-white p-4 rounded-xl w-full">

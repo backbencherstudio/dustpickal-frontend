@@ -3,6 +3,7 @@ import CustomTable from "../_components/CustomTable";
 import AnalyticsCards from "./_components/AnalyticsCards";
 import ApiChart from "./_components/ApiChart";
 import SubsStatsChart from "./_components/SubsStatsChart";
+import SubsStatus from "./_components/SubsStatus";
 
 export default function DashboardPage() {
   const rulesColumns = [
@@ -46,6 +47,63 @@ export default function DashboardPage() {
       total_views: 100,
     },
   ];
+  const newUsersColumns = [
+    { label: "User Name", accessor: "userName" },
+    { label: "Email", accessor: "email" },
+    { label: "Subscriptions", accessor: "subscriptions" },
+  ];
+  const newUsersData = [
+    {
+      userName: "Theresa Webb",
+      email: "curtis.weaver@example.com",
+      subscriptions: "Pay as you go",
+    },
+    {
+      userName: "Brooklyn Simmons",
+      email: "nevaeh.simmons@example.com",
+      subscriptions: "Pay as you go",
+    },
+    {
+      userName: "Kristin Watson",
+      email: "jackson.graham@example.com",
+      subscriptions: "Pro plan",
+    },
+    {
+      userName: "Courtney Henry",
+      email: "tim.jennings@example.com",
+      subscriptions: "Pay as you go",
+    },
+    {
+      userName: "Kristin Watson",
+      email: "jackson.graham@example.com",
+      subscriptions: "Enterprise",
+    },
+    {
+      userName: "Courtney Henry",
+      email: "tim.jennings@example.com",
+      subscriptions: "Basic",
+    },
+    {
+      userName: "Kristin Watson",
+      email: "jackson.graham@example.com",
+      subscriptions: "Pay as you go",
+    },
+    {
+      userName: "Courtney Henry",
+      email: "tim.jennings@example.com",
+      subscriptions: "Basic",
+    },
+    {
+      userName: "Kristin Watson",
+      email: "jackson.graham@example.com",
+      subscriptions: "Pro plan",
+    },
+    {
+      userName: "Robert Fox",
+      email: "michael.mitc@example.com",
+      subscriptions: "Enterprise",
+    },
+  ];
 
   return (
     <div>
@@ -53,6 +111,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-6">
         <div className="bg-white p-6 rounded-xl shadow">
           <CustomTable
+            type="rules"
             columns={rulesColumns}
             data={rulesData}
             onRowClick={() => {}}
@@ -60,17 +119,29 @@ export default function DashboardPage() {
             title="RulList of most used Pre-define ruleses"
           />
         </div>
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div className="bg-white p-4 rounded-xl shadow">
           <SubsStatsChart />
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div className="bg-white p-4 rounded-xl shadow">
           <ApiChart />
         </div>
-        <div className="bg-white p-6 rounded-xl shadow">
-          <SubsStatsChart />
+        <div className="grid  gap-6">
+          <div className="bg-white p-2 rounded-xl shadow">
+            <SubsStatus />
+          </div>
         </div>
+      </div>
+      <div className="mt-6">
+        <CustomTable
+          type="newUsers"
+          columns={newUsersColumns}
+          data={newUsersData}
+          onRowClick={() => {}}
+          rowClassName={() => ""}
+          title="New users this month"
+        />
       </div>
     </div>
   );

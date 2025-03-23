@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/table";
 
 export default function CustomTable({
+  type,
   columns = [],
   data = [],
   onRowClick,
@@ -15,7 +16,12 @@ export default function CustomTable({
 }) {
   return (
     <div>
-      <h3 className="text-gray-800 text-[14px] font-medium mb-4">{title}</h3>
+      <div className="flex justify-between items-center mx-2">
+        <h3 className="text-gray-800 text-[14px] font-medium mb-4">{title}</h3>
+        <h3 className="text-gray-800 text-[14px] underline mb-4 hover:font-medium cursor-pointer">
+          {type === "newUsers" ? "View all" : ""}
+        </h3>
+      </div>
       <div className="overflow-hidden rounded-xl border">
         <Table>
           <TableHeader>
