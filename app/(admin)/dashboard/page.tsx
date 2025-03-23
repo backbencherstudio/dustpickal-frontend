@@ -1,6 +1,7 @@
 "use client";
 import CustomTable from "../_components/CustomTable";
 import AnalyticsCards from "./_components/AnalyticsCards";
+import ApiChart from "./_components/ApiChart";
 import SubsStatsChart from "./_components/SubsStatsChart";
 
 export default function DashboardPage() {
@@ -58,6 +59,14 @@ export default function DashboardPage() {
             rowClassName={() => ""}
             title="RulList of most used Pre-define ruleses"
           />
+        </div>
+        <div className="bg-white p-6 rounded-xl shadow">
+          <SubsStatsChart />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-6">
+        <div className="bg-white p-6 rounded-xl shadow">
+          <ApiChart />
         </div>
         <div className="bg-white p-6 rounded-xl shadow">
           <SubsStatsChart />
