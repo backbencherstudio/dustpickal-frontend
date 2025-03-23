@@ -11,9 +11,9 @@ import React from "react";
 const ApiChart = () => {
   const apiData = [
     {
-      total: 6000,
-      Used: 3000,
-      Remaining: 3000,
+      total: 10000,
+      Used: 6000,
+      Remaining: 4000,
     },
   ];
 
@@ -50,15 +50,24 @@ const ApiChart = () => {
       <div className="flex justify-around mt-6">
         <div className="relative w-[100px] h-[100px] lg:w-[200px] lg:h-[200px]">
           {/* Total circle - largest and in back */}
-          <div className="absolute w-full h-full rounded-full bg-[#7ed3da] opacity-80"></div>
+          <div className="absolute w-full h-full rounded-full border opacity-80"></div>
 
           {/* Used circle - medium and overlapping */}
           <div
+            className="absolute rounded-full bg-[#7ed3da] opacity-80"
+            style={{
+              width: `50%`,
+              height: `50%`,
+              left: "10%",
+              top: "20%",
+            }}
+          ></div>
+          <div
             className="absolute rounded-full bg-[#ae97e9] opacity-80"
             style={{
-              width: `${usedPercentage}%`,
-              height: `${usedPercentage}%`,
-              right: "10%",
+              width: `${usedPercentage / 2}%`,
+              height: `${usedPercentage / 2}%`,
+              left: "40%",
               top: "10%",
             }}
           ></div>
@@ -67,10 +76,10 @@ const ApiChart = () => {
           <div
             className="absolute rounded-full bg-[#ff6a89] opacity-80"
             style={{
-              width: `${remainingPercentage}%`,
-              height: `${remainingPercentage}%`,
-              right: "20%",
-              bottom: "10%",
+              width: `${remainingPercentage / 2}%`,
+              height: `${remainingPercentage / 2}%`,
+              left: "40%",
+              bottom: "20%",
             }}
           ></div>
         </div>

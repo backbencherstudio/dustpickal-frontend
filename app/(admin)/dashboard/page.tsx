@@ -114,9 +114,7 @@ export default function DashboardPage() {
             type="rules"
             columns={rulesColumns}
             data={rulesData}
-            onRowClick={() => {}}
-            rowClassName={() => ""}
-            title="RulList of most used Pre-define ruleses"
+            title="List of most used Pre-define ruleses"
           />
         </div>
         <div className="bg-white p-4 rounded-xl shadow">
@@ -138,8 +136,6 @@ export default function DashboardPage() {
           type="newUsers"
           columns={newUsersColumns}
           data={newUsersData}
-          onRowClick={() => {}}
-          rowClassName={() => ""}
           title="New users this month"
         />
       </div>

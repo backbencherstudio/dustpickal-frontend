@@ -1,4 +1,12 @@
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Table,
   TableBody,
   TableCell,
@@ -10,17 +18,53 @@ export default function CustomTable({
   type,
   columns = [],
   data = [],
-  onRowClick,
-  rowClassName,
   title,
+  filter = false,
 }) {
   return (
     <div>
       <div className="flex justify-between items-center mx-2">
         <h3 className="text-gray-800 text-[14px] font-medium mb-4">{title}</h3>
-        <h3 className="text-gray-800 text-[14px] underline mb-4 hover:font-medium cursor-pointer">
-          {type === "newUsers" ? "View all" : ""}
-        </h3>
+        {filter && (
+          <div className="">
+            {type === "newUsers" ? (
+              <p className="text-gray-800 text-[14px] underline mb-4 hover:font-medium cursor-pointer">
+                View all
+              </p>
+            ) : (
+              <div className="flex items-center gap-2 mb-4">
+                <Select>
+                  <SelectTrigger className="w-[110px] bg-[#f8fafb]">
+                    <SelectValue placeholder="Billing" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">Billing</SelectItem>
+                      <SelectItem value="today">Today</SelectItem>
+                      <SelectItem value="week">Weekly</SelectItem>
+                      <SelectItem value="month">Monthly</SelectItem>
+                      <SelectItem value="year">Yearly</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <Select>
+                  <SelectTrigger className="w-[110px] bg-[#f8fafb]">
+                    <SelectValue placeholder="Plan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="all">Plan</SelectItem>
+                      <SelectItem value="today">Today</SelectItem>
+                      <SelectItem value="week">Weekly</SelectItem>
+                      <SelectItem value="month">Monthly</SelectItem>
+                      <SelectItem value="year">Yearly</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+          </div>
+        )}
       </div>
       <div className="overflow-hidden rounded-xl border">
         <Table>
@@ -71,8 +115,7 @@ export default function CustomTable({
               data?.map((row, i) => (
                 <TableRow
                   key={row.id}
-                  onClick={() => onRowClick?.(row)}
-                  className={`hover:bg-gray-100 ${rowClassName?.(row)} ${
+                  className={`hover:bg-gray-100 ${
                     i % 2 === 0 ? "bg-white" : "bg-[#f8fafb]"
                   }`}
                 >
