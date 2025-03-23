@@ -1,4 +1,12 @@
 "use client";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import React from "react";
 
 const AnalyticsCards = () => {
@@ -27,16 +35,20 @@ const AnalyticsCards = () => {
         <div key={card.title} className="bg-white p-6 rounded-md shadow">
           <div className="flex justify-between items-center">
             <h3 className="text-[14px]">{card.title}</h3>
-            <select
-              className=" p-2 text-[14px] rounded-md border border-gray-300 bg-[#f8fafb]"
-              value={null}
-              onChange={() => {}}
-            >
-              <option value="1">Today</option>
-              <option value="2">This Week</option>
-              <option value="3">This Month</option>
-              <option value="4">This Year</option>
-            </select>
+            <Select>
+              <SelectTrigger className="w-[110px] bg-[#f8fafb]">
+                <SelectValue placeholder="All" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="week">Weekly</SelectItem>
+                  <SelectItem value="month">Monthly</SelectItem>
+                  <SelectItem value="year">Yearly</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <p className="text-[28px] font-bold mt-10">{card.value}</p>
         </div>
