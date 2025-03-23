@@ -9,15 +9,15 @@ const AnalyticsCards = () => {
     },
     {
       title: "Documents Analyzed",
-      value: 1000,
+      value: 3670,
     },
     {
       title: "Predefined Rules",
-      value: 1000,
+      value: 30,
     },
     {
       title: "User Created Rules",
-      value: 1000,
+      value: 670,
     },
   ];
 
@@ -26,7 +26,7 @@ const AnalyticsCards = () => {
       {cards.map((card) => (
         <div key={card.title} className="bg-white p-6 rounded-md shadow">
           <div className="flex justify-between items-center">
-            <h3 className="text-[14px] mb-2">{card.title}</h3>
+            <h3 className="text-[14px]">{card.title}</h3>
             <select
               className=" p-2 text-[14px] rounded-md border border-gray-300 bg-[#f8fafb]"
               value={null}
