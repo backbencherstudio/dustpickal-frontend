@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 const page = () => {
   const router = useRouter();
   return (
@@ -20,7 +28,20 @@ const page = () => {
       <div className="max-w-[820px]">
         <div className="flex justify-between items-center mt-5">
           <p className="text-[14px]  text-gray-400">Rule Heading</p>
-          <BsThreeDotsVertical className="text-gray-500 cursor-pointer" />
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <BsThreeDotsVertical className="text-gray-500 cursor-pointer" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mr-24 text-[12px] p-2 ">
+              <button className="bg-[#d2d2d5] text-black cursor-pointer w-full mx-auto py-2 px-3 rounded text-start hover:opacity-80 transition-all duration-300 font-medium">
+                Edit
+              </button>
+              <button className="bg-[#ef6471] text-white cursor-pointer w-full mx-auto py-2 px-3 rounded mt-2 text-start hover:opacity-80 transition-all duration-300 font-medium">
+                Delete
+              </button>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <Input
           type="email"
