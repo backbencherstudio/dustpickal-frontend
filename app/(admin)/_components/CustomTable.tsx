@@ -39,14 +39,14 @@ export default function CustomTable({
           </div>
         )}
       </div>
-      <div className="overflow-hidden rounded-xl border">
+      <div className="overflow-hidden rounded-xl border border-[#d2d2d5]">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="border-b border-[#d2d2d5]">
               {columns?.map((col) => (
                 <TableCell
                   key={col.accessor}
-                  className="text-gray-800 bg-[#dfe1e7] font-semibold border py-3 px-4 text-[14px]"
+                  className="text-gray-800 bg-[#dfe1e7] font-semibold py-3 px-4 text-[14px] border-r border-[#d2d2d5] last:border-r-0"
                 >
                   {col.label}
                 </TableCell>
@@ -88,14 +88,14 @@ export default function CustomTable({
               data?.map((row, i) => (
                 <TableRow
                   key={row.id}
-                  className={`hover:bg-gray-100 ${
+                  className={`hover:bg-gray-100 border-b border-[#d2d2d5] last:border-b-0 ${
                     i % 2 === 0 ? "bg-white" : "bg-[#f8fafb]"
                   }`}
                 >
                   {columns?.map((col) => (
                     <TableCell
                       key={col.accessor}
-                      className="py-3 px-4 text-[12px] border"
+                      className="py-3 px-4 text-[12px] border-r border-[#d2d2d5] last:border-r-0"
                     >
                       {col.customCell ? col.customCell(row) : row[col.accessor]}
                     </TableCell>

@@ -21,7 +21,7 @@ const CustomFilter = ({
         <SelectTrigger className="w-[110px] bg-[#f8fafb] border border-[#e5e7eb]">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-[#f8fafb]">
+        <SelectContent className="bg-[#f8fafb] border border-[#d2d2d5]">
           <SelectGroup>
             {options.map((option) => (
               <SelectItem key={option} value={option}>
