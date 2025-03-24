@@ -10,12 +10,17 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DeleteModal from "@/app/(admin)/_components/DeleteModal";
+import CustomModal from "@/app/(admin)/_components/CustomModal";
+import { Button } from "@/components/ui/button";
 const page = () => {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const handleDelete = () => {
     setIsDeleteModalOpen(false);
+  };
+  const handleUpdate = () => {
+    setIsUpdateModalOpen(false);
   };
   return (
     <div>
@@ -36,7 +41,10 @@ const page = () => {
               <BsThreeDotsVertical className="text-gray-500 cursor-pointer" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="lg:mr-24 mr-3 text-[12px] p-2 ">
-              <button className="bg-[#d2d2d5] text-black cursor-pointer w-full mx-auto py-2 px-3 rounded text-start hover:opacity-80 transition-all duration-300 font-medium">
+              <button
+                onClick={() => setIsUpdateModalOpen(true)}
+                className="bg-[#d2d2d5] text-black cursor-pointer w-full mx-auto py-2 px-3 rounded text-start hover:opacity-80 transition-all duration-300 font-medium"
+              >
                 Edit
               </button>
               <button
@@ -59,19 +67,27 @@ const page = () => {
           className="ml-4 w-[98%] min-h-[300px] mt-3 p-3 border-gray-300 shadow-none focus:border-[#f7f9fb] focus:ring focus:ring-gray-300 transition-colors duration-200"
         />
         <div className="flex justify-end mt-10 gap-4">
-          <button className="px-6 py-2 text-[12px] border rounded text-gray-500 hover:bg-gray-100 transition-all duration-300">
-            Save ad draft
-          </button>
-          <button className="px-6 py-2 text-[12px] border rounded bg-[#a5a5ab] text-white hover:opacity-80 transition-all duration-300">
-            Add Rule
-          </button>
+          <Button
+            onClick={() => setIsUpdateModalOpen(true)}
+            className="px-6 py-2 text-[12px] border rounded bg-black text-white hover:opacity-80 transition-all duration-300"
+          >
+            Update
+          </Button>
         </div>
       </div>
-      <DeleteModal
+      <CustomModal
+        type="delete"
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDelete}
         title="Are you sure you want to delete this rule?"
+      />
+      <CustomModal
+        type="update"
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        onConfirm={handleUpdate}
+        title="Are you sure you want to update changes?"
       />
     </div>
   );
