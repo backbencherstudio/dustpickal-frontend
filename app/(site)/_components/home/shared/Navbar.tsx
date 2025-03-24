@@ -30,6 +30,7 @@ export default function NavBar() {
     const handleCloseLoginModal = (e: React.MouseEvent) => {
         e.preventDefault();
         setIsLoginModalOpen(false);
+        setIsSignUpModalOpen(false);
     };
 
     // const handleCloseResetPassword = (e: React.MouseEvent) => {
@@ -43,7 +44,7 @@ export default function NavBar() {
             <div className="max-w-[1440px] mx-auto flex flex-row justify-between items-center py-5 px-4 md:px-6">
                 <div>
                     <Link href="/">
-                        <Image src={logo} alt="logo" width={140} height={40}/>
+                        <Image src={logo} alt="logo" width={140} height={40} />
                     </Link>
                 </div>
 
@@ -63,18 +64,18 @@ export default function NavBar() {
                 </div>
 
                 {/* Mobile Menu Button */}
-                <button 
+                <button
                     className="lg:hidden p-2"
                     onClick={toggleMenu}
                     aria-label="Toggle menu"
                 >
-                    <svg 
-                        className="w-6 h-6 transition-transform duration-300" 
-                        fill="none" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth="2" 
-                        viewBox="0 0 24 24" 
+                    <svg
+                        className="w-6 h-6 transition-transform duration-300"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
                         stroke="currentColor"
                     >
                         {isMenuOpen ? (
@@ -86,10 +87,9 @@ export default function NavBar() {
                 </button>
 
                 {/* Mobile Menu */}
-                <div 
-                    className={`lg:hidden absolute top-[80px] left-0 right-0 bg-[#F1F1F1] shadow-lg z-50 transition-all duration-300 ease-in-out overflow-hidden ${
-                        isMenuOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
-                    }`}
+                <div
+                    className={`lg:hidden absolute top-[80px] left-0 right-0 bg-[#F1F1F1] shadow-lg z-50 transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
+                        }`}
                 >
                     <div className="flex flex-col p-4 space-y-4">
                         <Link href="/analyze/profile" className="text-base font-normal text-black hover:text-[#0C58C1] p-2 transform transition-transform duration-200 hover:translate-x-2">What We Do</Link>
@@ -105,7 +105,7 @@ export default function NavBar() {
                 </div>
             </div>
             <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
-            {/* <ResetPassword isOpenResetPassword={isResetPasswordOpen} onCloseResetPassword={handleCloseResetPassword} /> */}
+            <ResetPassword />
         </div>
     );
 }
