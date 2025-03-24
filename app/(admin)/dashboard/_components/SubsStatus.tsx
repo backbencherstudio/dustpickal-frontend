@@ -1,14 +1,6 @@
 "use client";
 import React from "react";
-import dynamic from "next/dynamic";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import CustomFilter from "../../_components/CustomFilter";
 
 const SubsStatus = () => {
   const subsStatus = {
@@ -35,20 +27,10 @@ const SubsStatus = () => {
         <h3 className="text-gray-800 text-[14px] font-medium">
           Subscription Status
         </h3>
-        <Select>
-          <SelectTrigger className="w-[110px] bg-[#f8fafb]">
-            <SelectValue placeholder="All" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="today">Today</SelectItem>
-              <SelectItem value="week">Weekly</SelectItem>
-              <SelectItem value="month">Monthly</SelectItem>
-              <SelectItem value="year">Yearly</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <CustomFilter
+          placeholder="All"
+          options={["All", "Today", "Weekly", "Monthly", "Yearly"]}
+        />
       </div>
 
       <h2 className="text-gray-800 text-[14px] mb-6">
