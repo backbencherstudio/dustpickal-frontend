@@ -2,19 +2,21 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import DeleteModal from "@/app/(admin)/_components/DeleteModal";
 const page = () => {
   const router = useRouter();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const handleDelete = () => {
+    setIsDeleteModalOpen(false);
+  };
   return (
     <div>
       <div className="inline-block">
@@ -33,11 +35,14 @@ const page = () => {
             <DropdownMenuTrigger>
               <BsThreeDotsVertical className="text-gray-500 cursor-pointer" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="mr-24 text-[12px] p-2 ">
+            <DropdownMenuContent className="lg:mr-24 mr-3 text-[12px] p-2 ">
               <button className="bg-[#d2d2d5] text-black cursor-pointer w-full mx-auto py-2 px-3 rounded text-start hover:opacity-80 transition-all duration-300 font-medium">
                 Edit
               </button>
-              <button className="bg-[#ef6471] text-white cursor-pointer w-full mx-auto py-2 px-3 rounded mt-2 text-start hover:opacity-80 transition-all duration-300 font-medium">
+              <button
+                onClick={() => setIsDeleteModalOpen(true)}
+                className="bg-[#ef6471] text-white cursor-pointer w-full mx-auto py-2 px-3 rounded mt-2 text-start hover:opacity-80 transition-all duration-300 font-medium"
+              >
                 Delete
               </button>
             </DropdownMenuContent>
@@ -62,6 +67,12 @@ const page = () => {
           </button>
         </div>
       </div>
+      <DeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        title="Are you sure you want to delete this rule?"
+      />
     </div>
   );
 };
