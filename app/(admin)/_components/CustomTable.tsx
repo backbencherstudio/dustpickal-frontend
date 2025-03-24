@@ -1,3 +1,4 @@
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -6,6 +7,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CustomFilter from "./CustomFilter";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function CustomTable({
   type,
@@ -13,7 +23,57 @@ export default function CustomTable({
   data = [],
   title,
   filter = false,
+  itemsPerPage = 10,
 }) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Calculate total number of pages
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const currentData = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return data.slice(startIndex, endIndex);
+  }, [data, currentPage, itemsPerPage]);
+
+  const pageNumbers = useMemo(() => {
+    const pages = [];
+
+    // Always show first page
+    pages.push(1);
+
+    // Add current page and surrounding pages
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
+      if (pages[pages.length - 1] !== i - 1) {
+        // Add ellipsis if there's a gap
+        pages.push("...");
+      }
+      pages.push(i);
+    }
+
+    // Add last page if we have more than 1 page
+    if (totalPages > 1 && pages[pages.length - 1] !== totalPages) {
+      if (pages[pages.length - 1] !== totalPages - 1) {
+        // Add ellipsis if there's a gap
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+
+    return pages;
+  }, [currentPage, totalPages]);
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mx-2">
@@ -54,7 +114,7 @@ export default function CustomTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.length === 0 ? (
+            {currentData?.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
@@ -85,9 +145,9 @@ export default function CustomTable({
                 </TableCell>
               </TableRow>
             ) : (
-              data?.map((row, i) => (
+              currentData?.map((row, i) => (
                 <TableRow
-                  key={row.id}
+                  key={row.id || i}
                   className={`hover:bg-gray-100 border-b border-[#d2d2d5] last:border-b-0 ${
                     i % 2 === 0 ? "bg-white" : "bg-[#f8fafb]"
                   }`}
@@ -106,6 +166,59 @@ export default function CustomTable({
           </TableBody>
         </Table>
       </div>
+
+      {/* Only show pagination if there are more than itemsPerPage (10) items */}
+      {data.length > itemsPerPage && (
+        <div className="flex justify-end mt-2">
+          <div className="">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className={
+                      currentPage === 1
+                        ? "pointer-events-none opacity-50"
+                        : "cursor-pointer"
+                    }
+                  />
+                </PaginationItem>
+
+                {pageNumbers.map((page, index) => (
+                  <PaginationItem key={index}>
+                    {page === "..." ? (
+                      <PaginationEllipsis />
+                    ) : (
+                      <PaginationLink
+                        isActive={page === currentPage}
+                        onClick={() => handlePageChange(page)}
+                        className={`cursor-pointer border ${
+                          page === currentPage
+                            ? "bg-black text-white hover:bg-black hover:text-white"
+                            : " bg-white"
+                        }`}
+                      >
+                        {page}
+                      </PaginationLink>
+                    )}
+                  </PaginationItem>
+                ))}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className={
+                      currentPage === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : "cursor-pointer"
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
