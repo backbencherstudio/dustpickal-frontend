@@ -1,12 +1,5 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import React from "react";
+import CustomFilter from "../../_components/CustomFilter";
 
 const ApiChart = () => {
   const apiData = [
@@ -31,20 +24,10 @@ const ApiChart = () => {
         <h3 className="text-gray-800 text-[14px] font-medium ">
           API management
         </h3>
-        <Select>
-          <SelectTrigger className="w-[110px] bg-[#f8fafb]">
-            <SelectValue placeholder="All" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="today">Today</SelectItem>
-              <SelectItem value="week">Weekly</SelectItem>
-              <SelectItem value="month">Monthly</SelectItem>
-              <SelectItem value="year">Yearly</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <CustomFilter
+          placeholder="All"
+          options={["All", "Today", "Weekly", "Monthly", "Yearly"]}
+        />
       </div>
 
       <div className="flex justify-around mt-6">
