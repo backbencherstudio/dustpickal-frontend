@@ -4,15 +4,39 @@ import CustomImage from "@/components/reusable/CustomImage";
 import Logo from "@/public/assets/client/logo.png";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import LoginModal from "@/app/(site)/_auth/login";
+import ResetPassword from "@/app/(site)/_auth/_forget-password/resetPassword";
 
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [menuHeight, setMenuHeight] = useState(0);
     const logo = Logo.src;
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+    const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    const showLoginModal = () => {
+        setIsLoginModalOpen(true);
+    };
+
+    const showSignUpModal = () => {
+        setIsSignUpModalOpen(true);
+    };
+
+    const handleCloseLoginModal = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setIsLoginModalOpen(false);
+    };
+
+    // const handleCloseResetPassword = (e: React.MouseEvent) => {
+    //     e.preventDefault();
+    //     setIsLoginModalOpen(false);
+    //     setIsResetPasswordOpen(false);
+    // };
 
     return (
         <div className="w-full bg-[#F1F1F1]">
@@ -34,8 +58,8 @@ export default function NavBar() {
 
                 {/* Desktop Auth Buttons */}
                 <div className="hidden lg:flex flex-row gap-4">
-                    <Link href="/analyze/profile" className="text-sm font-medium text-[#0C58C1] px-[26px] py-[15px] hover:bg-[#0C58C1] hover:text-white rounded-full transition-colors">Login</Link>
-                    <Link href="/analyze/profile" className="text-sm font-normal text-white px-[26px] py-[15px] bg-[#0C58C1] rounded-full hover:bg-[#0946A0] transition-colors">Sign Up</Link>
+                    <button className="text-sm font-medium text-[#0C58C1] px-[26px] py-[15px] hover:text-blue-400 rounded-full transition-colors cursor-pointer" onClick={() => showLoginModal()}>Login</button>
+                    <button className="text-sm font-normal text-white px-[26px] py-[15px] bg-[#0C58C1] rounded-full hover:bg-white hover:text-[#0C58C1] transition-colors cursor-pointer" onClick={() => showSignUpModal()}>Sign Up</button>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -74,12 +98,14 @@ export default function NavBar() {
                         <Link href="/analyze/profile" className="text-base font-normal text-black hover:text-[#0C58C1] p-2 transform transition-transform duration-200 hover:translate-x-2">Pricing</Link>
                         <Link href="/analyze/profile" className="text-base font-normal text-black hover:text-[#0C58C1] p-2 transform transition-transform duration-200 hover:translate-x-2">Testimonials</Link>
                         <div className="flex flex-col gap-4 pt-4 border-t border-gray-200">
-                            <Link href="/analyze/profile" className="text-sm font-medium text-[#0C58C1] text-center p-3 hover:bg-[#0C58C1] hover:text-white rounded-full transition-all duration-300">Login</Link>
-                            <Link href="/analyze/profile" className="text-sm font-normal text-white text-center p-3 bg-[#0C58C1] rounded-full hover:bg-[#0946A0] transition-all duration-300">Sign Up</Link>
+                            <button className="text-sm font-medium text-[#0C58C1] text-center p-3 hover:text-blue-400 rounded-full transition-all duration-300 cursor-pointer" onClick={() => showLoginModal()}>Login</button>
+                            <button className="text-sm font-normal text-white text-center p-3 bg-[#0C58C1] rounded-full hover:bg-white hover:text-[#0C58C1] transition-all duration-300 cursor-pointer" onClick={() => showSignUpModal()}>Sign Up</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
+            {/* <ResetPassword isOpenResetPassword={isResetPasswordOpen} onCloseResetPassword={handleCloseResetPassword} /> */}
         </div>
     );
 }

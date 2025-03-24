@@ -6,7 +6,7 @@ export default function HowItWorks() {
       <h1 className="text-3xl font-semibold text-[#0F4487] text-center">
         How It Works?
       </h1>
-      <div className="flex flex-col md:flex-row justify-between items-start">
+      <div className="flex flex-col lg:flex-row justify-between items-start">
         <div className="w-full p-6 flex flex-col gap-8 items-center">
           <div className="w-full flex flex-col justify-center items-center max-w-[90px] max-h-[90px] p-[3px] border border-[#E9E9E9] rounded-lg">
             <p className="text-[#E9E9EA] text-2xl font-medium px-[37px] py-[26px] bg-[#34A6DF] rounded-lg">1</p>
