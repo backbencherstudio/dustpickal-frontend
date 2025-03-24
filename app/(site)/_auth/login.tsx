@@ -27,15 +27,14 @@ export default function LoginPage({
 
   const handleResetPassword = (e: React.MouseEvent) => {
     e.preventDefault();
-    // onClose();
+    onClose(e);
     router.push("?mode=forget-password");
   };
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center z-50 ${
-        isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-      } transition-opacity duration-300`}
+      className={`fixed inset-0 flex items-center justify-center z-50 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        } transition-opacity duration-300`}
     >
       <div
         className="absolute inset-0 bg-black opacity-50"
@@ -123,7 +122,7 @@ export default function LoginPage({
               className="w-full flex items-center justify-center gap-2 bg-[#F8FAFB] text-sm font-medium text-[#4A4C56] px-3 py-2 rounded cursor-pointer hover:bg-[#0D86FF]/50 hover:text-black transition-colors duration-300"
               type="submit"
             >
-              {/* <Image src={AppleIcon} alt="Apple" className="w-5 h-5" />  */}
+              <Image src={AppleIcon} alt="Apple" className="w-5 h-5" />
               Log in with Apple
             </button>
           </div>
