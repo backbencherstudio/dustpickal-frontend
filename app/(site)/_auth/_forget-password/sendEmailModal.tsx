@@ -1,16 +1,21 @@
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
+import sendEmailImg from "@/public/assets/client/auth/send.svg";
 
 export default function SendEmailModal() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const isSendEmailModalOpen = searchParams.get("mode") === "send-email";
+    const email = searchParams.get("email");
+    console.log(email);
 
     const handleClose = () => {
         router.push("/"); // Remove the query parameter
     };
 
-    const handleSubmit = (data: any) => {
-        console.log(data);
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        router.push("?mode=reset-with-new-password&email=" + email);
     };
 
     const handleBackToLogin = (e: React.MouseEvent) => {
@@ -30,33 +35,21 @@ export default function SendEmailModal() {
                     filter: 'blur(66.55px)',
                     pointerEvents: 'none'
                 }}></div>
-                <h1 className="text-[24px] md:text-[32px] font-semibold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#03377F] via-[#754499] to-[#F3411B] text-center relative z-10">
-                    Send Email
-                </h1>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-[60px] w-full max-w-[445px] mx-auto">
-                    <div className="flex flex-col gap-4">
-                        <input
-                            type="email"
-                            className="border border-[#D2D2D5] rounded px-3 py-2 placeholder:text-[#A5A5AB] placeholder:text-sm placeholder:font-medium"
-                            placeholder="Email"
-                        />
-                    </div>
+                <div className="flex flex-col items-center gap-6">
+                    <h1 className="text-[24px] md:text-[32px] font-semibold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#03377F] via-[#754499] to-[#F3411B] text-center relative z-10">
+                        Please check your email
+                    </h1>
+                    <Image src={sendEmailImg} alt="email" width={100} height={100} />
+                </div>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-[445px] mx-auto">
+                    <p className="text-center text-sm  text-[#4A4C56]">Please check the email address <span className="text-[#0C58C1]">{email}</span> for instructions to reset your password.</p>
                     <div className="flex flex-col gap-4">
                         <button
                             type="submit"
                             className="w-full bg-[#0D86FF] text-base font-medium text-white px-4 py-2 rounded cursor-pointer hover:bg-[#0D86FF]/90 transition-colors duration-300"
                         >
-                            Send Email
+                            Resend Email
                         </button>
-                        <p className="text-xs text-[#777980] font-medium text-end">
-                            Remember your password? <button
-                                type="button"
-                                onClick={handleBackToLogin}
-                                className="text-[#0D86FF] cursor-pointer hover:text-[#0D86FF]/80 transition-colors duration-300"
-                            >
-                                Sign in
-                            </button>
-                        </p>
                     </div>
                 </form>
             </div>

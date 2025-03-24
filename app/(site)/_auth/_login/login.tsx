@@ -7,7 +7,7 @@ import google from "@/public/assets/client/auth/google.svg";
 import microsoft from "@/public/assets/client/auth/microsoft.svg";
 import AppleIcon from "@/public/assets/client/auth/apple.svg";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import EyeIcon from "@/public/assets/client/auth/eye.svg";
 export default function LoginPage({
   isOpen,
   onClose,
@@ -16,6 +16,8 @@ export default function LoginPage({
   onClose: (e?: React.MouseEvent) => void;
 }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isLoginOpen = searchParams.get("mode") === "login";
   const {
     register,
     handleSubmit,
@@ -33,7 +35,7 @@ export default function LoginPage({
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center z-50 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+      className={`fixed inset-0 flex items-center justify-center z-50 ${isLoginOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         } transition-opacity duration-300`}
     >
       <div
@@ -64,7 +66,7 @@ export default function LoginPage({
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-[60px] w-full max-w-[445px] mx-auto"
         >
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 ">
             <input
               type="text"
               className="border border-[#D2D2D5] rounded px-3 py-2 placeholder:text-[#A5A5AB] placeholder:text-sm placeholder:font-medium"
@@ -72,12 +74,19 @@ export default function LoginPage({
               {...register("email", { required: true })}
             />
             {errors.email && <p className="text-red-500">Email is required</p>}
-            <input
-              type="password"
-              className="border border-[#D2D2D5] rounded px-3 py-2 placeholder:text-[#A5A5AB] placeholder:text-sm placeholder:font-medium"
-              placeholder="Password"
-              {...register("password", { required: true })}
-            />
+            <div className="flex flex-col gap-2 relative">
+              <input
+                type="password"
+                id="password"
+                className="border border-[#D2D2D5] rounded px-3 py-2 placeholder:text-[#A5A5AB] placeholder:text-sm placeholder:font-medium"
+                placeholder="Password"
+                {...register("password", { required: true })}
+              />
+              <Image src={EyeIcon} alt="Eye" width={20} height={20} className="absolute right-3 top-[11px] cursor-pointer" onClick={() => {
+                const input = document.getElementById("password") as HTMLInputElement;
+                input.type = input.type === "password" ? "text" : "password";
+              }} />
+            </div>
             {errors.password && (
               <p className="text-red-500">Password is required</p>
             )}
@@ -97,7 +106,10 @@ export default function LoginPage({
             </button>
             <p className="text-xs text-[#777980] font-medium text-end">
               Don't have an account?{" "}
-              <button className="text-[#0D86FF] cursor-pointer hover:text-[#0D86FF]/80 transition-colors duration-300">
+              <button className="text-[#0D86FF] cursor-pointer hover:text-[#0D86FF]/80 transition-colors duration-300" onClick={(e) => {
+                e.preventDefault();
+                router.push("/?mode=signup");
+              }}>
                 Sign up
               </button>
             </p>

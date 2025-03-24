@@ -4,10 +4,14 @@ import CustomImage from "@/components/reusable/CustomImage";
 import Logo from "@/public/assets/client/logo.png";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import LoginModal from "@/app/(site)/_auth/login";
+import LoginModal from "@/app/(site)/_auth/_login/login";
 import ResetPassword from "@/app/(site)/_auth/_forget-password/resetPassword";
-
+import SendEmailModal from "@/app/(site)/_auth/_forget-password/sendEmailModal";
+import PasswordResetForm from "@/app/(site)/_auth/_forget-password/passwordResetForm";
+import { useRouter } from "next/navigation";
+import Signup from "@/app/(site)/_auth/_signup/signup";
 export default function NavBar() {
+    const router = useRouter();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [menuHeight, setMenuHeight] = useState(0);
     const logo = Logo.src;
@@ -20,17 +24,20 @@ export default function NavBar() {
     };
 
     const showLoginModal = () => {
-        setIsLoginModalOpen(true);
+        // setIsLoginModalOpen(true);
+        router.push("/?mode=login");
     };
 
     const showSignUpModal = () => {
-        setIsSignUpModalOpen(true);
+        // setIsSignUpModalOpen(true);
+        router.push("/?mode=signup");
     };
 
     const handleCloseLoginModal = (e: React.MouseEvent) => {
         e.preventDefault();
-        setIsLoginModalOpen(false);
-        setIsSignUpModalOpen(false);
+        // setIsLoginModalOpen(false);
+        // setIsSignUpModalOpen(false);
+        router.push("/");
     };
 
     // const handleCloseResetPassword = (e: React.MouseEvent) => {
@@ -104,8 +111,11 @@ export default function NavBar() {
                     </div>
                 </div>
             </div>
+            <Signup />
             <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
             <ResetPassword />
+            <SendEmailModal />
+            <PasswordResetForm />
         </div>
     );
 }
