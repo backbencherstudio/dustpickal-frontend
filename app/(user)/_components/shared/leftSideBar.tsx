@@ -1,6 +1,7 @@
 import logo from "@/public/assets/client/logo.png";
 import miniLogo from "@/public/assets/client/mini-logo.png";
 import tapIcon from "@/public/assets/client/icons/tap-menu.svg";
+import paymentIcon from "@/public/assets/client/icons/payment.svg";
 import Image from "next/image";
 import {
     Command,
@@ -56,16 +57,19 @@ export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebar
             {/* Search Section */}
             <div className="px-4">
                 <Command>
-                    <CommandInput 
-                        placeholder={isExpanded ? "Type a command or search..." : ""} 
-                        className={!isExpanded ? "w-8" : ""}
+                    <CommandInput
+                        placeholder={isExpanded ? "Type a command or search..." : ""}
+                        className={!isExpanded ? "!w-8" : ""}
                     />
                 </Command>
             </div>
 
             {/* Additional Content Section */}
             <div className="flex-1 px-4">
-                {/* Add your additional content here */}
+                <button className="flex flex-row gap-2 cursor-pointer ">
+                    <Image src={paymentIcon} alt="payment-icon" width={isExpanded ? 20 : 30} height={isExpanded ? 20 : 30} />
+                    <p className={`text-sm font-medium text-black ${isExpanded ? '' : 'hidden'}`}>Subscription</p>
+                </button>
             </div>
         </div>
     );
