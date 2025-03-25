@@ -1,25 +1,33 @@
-import Image from "next/image";
-import logo from "@/public/assets/client/logo.png";
+"use client";
+import LeftSidenbar from "../_components/shared/leftSideBar";
+import RightSideBar from "../_components/shared/rightSideBar"; 
+import { useState } from "react";
 
 export default function AnalyzeLayout({ children }: { children: React.ReactNode }) {
+    const [isLeftExpanded, setIsLeftExpanded] = useState(true);
+    const [isRightExpanded, setIsRightExpanded] = useState(true);
+
     return (
-        <div className="flex flex-row w-full h-full bg-gray-100">
+        <div className="grid grid-cols-12 w-full mx-auto h-screen p-3">
             {/* Analyze left sidebar */}
-            <div className="w-1/4">
-                <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-2">
-                        <Image src={logo} alt="logo" width={100} height={100} />
-                    </div>
-                </div>
+            <div className={`${isLeftExpanded ? 'col-span-2' : 'col-span-1'} p-3 transition-all duration-300`}>
+                <LeftSidenbar 
+                    isExpanded={isLeftExpanded}
+                    onExpandToggle={setIsLeftExpanded}
+                />
             </div>
-            {children}
+            {/* Analyze main content */}
+            <div className={`${isLeftExpanded && isRightExpanded ? 'col-span-8' : 
+                           isLeftExpanded || isRightExpanded ? 'col-span-9' : 
+                           'col-span-10'} p-3 transition-all duration-300`}>
+                {children}
+            </div>
             {/* Analyze right sidebar */}
-            <div className="w-1/4">
-                <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-2">
-                        <Image src={logo} alt="logo" width={100} height={100} />
-                    </div>
-                </div>
+            <div className={`${isRightExpanded ? 'col-span-2' : 'col-span-1'} p-3 transition-all duration-300`}>
+                <RightSideBar 
+                    isExpanded={isRightExpanded}
+                    onExpandToggle={setIsRightExpanded}
+                />
             </div>
         </div>
     );

@@ -1,0 +1,72 @@
+import logo from "@/public/assets/client/logo.png";
+import miniLogo from "@/public/assets/client/mini-logo.png";
+import tapIcon from "@/public/assets/client/icons/tap-menu.svg";
+import Image from "next/image";
+import {
+    Command,
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+    CommandShortcut,
+} from "@/components/ui/command"
+
+interface LeftSidebarProps {
+    isExpanded: boolean;
+    onExpandToggle: (value: boolean) => void;
+}
+
+export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebarProps) {
+    return (
+        <div className={`flex flex-col gap-4 shadow-xl rounded h-screen transition-all duration-300 ease-in-out ${isExpanded ? 'w-full' : 'w-28'}`}>
+            {/* Logo Section */}
+            <div className="flex flex-row justify-between items-center px-4 py-2">
+                {isExpanded ? (
+                    <Image
+                        src={logo}
+                        alt="logo"
+                        width={100}
+                        height={100}
+                        className="transition-all duration-300"
+                    />
+                ) : (
+                    <Image
+                        src={miniLogo}
+                        alt="logo"
+                        width={28}
+                        height={32}
+                        className="transition-all duration-300"
+                    />
+                )}
+                <div className={`${!isExpanded ? 'border-l border-gray-200 pl-3' : ''}`}>
+                    <Image
+                        src={tapIcon}
+                        alt="tap-icon"
+                        width={20}
+                        height={20}
+                        className={`cursor-pointer transition-transform duration-300 ${isExpanded ? '' : 'rotate-180'}`}
+                        onClick={() => onExpandToggle(!isExpanded)}
+                    />
+                </div>
+            </div>
+
+            {/* Search Section */}
+            <div className="px-4">
+                <Command>
+                    <CommandInput 
+                        placeholder={isExpanded ? "Type a command or search..." : ""} 
+                        className={!isExpanded ? "w-8" : ""}
+                    />
+                </Command>
+            </div>
+
+            {/* Additional Content Section */}
+            <div className="flex-1 px-4">
+                {/* Add your additional content here */}
+            </div>
+        </div>
+    );
+}
