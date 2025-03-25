@@ -2,12 +2,43 @@
 import React from "react";
 import CustomFilter from "../../_components/CustomFilter";
 import OverViewChart from "./_components/OverViewChart";
+import TokenUsageChart from "./_components/TokenUsageChart";
+import CustomTable from "../../_components/CustomTable";
+import DateFilter from "./_components/DateFilter";
 
 const page = () => {
+  const inputData = [
+    {
+      x: "Input",
+      y: 100,
+    },
+    {
+      x: "Output",
+      y: 200,
+    },
+    {
+      x: "Remaining",
+      y: 300,
+    },
+  ];
+  const outputData = [
+    {
+      x: "Input",
+      y: 100,
+    },
+    {
+      x: "Output",
+      y: 200,
+    },
+    {
+      x: "Remaining",
+      y: 300,
+    },
+  ];
   return (
     <div className="bg-white p-3 rounded">
       <p className="font-medium">API Usage Overview</p>
-      <div className="grid grid-cols-5 lg:mx-8">
+      <div className="grid lg:grid-cols-5">
         <div className="col-span-1"></div>
         <div className="col-span-4">
           <div className=" flex justify-center items-center mt-5">
@@ -54,6 +85,25 @@ const page = () => {
               <OverViewChart />
             </div>
           </div>
+        </div>
+      </div>
+      <p className="font-medium mt-10 mb-5">Token Usage</p>
+
+      <TokenUsageChart title="Input Tokens" color="#7adfce" data={inputData} />
+      <TokenUsageChart
+        title="Output Tokens"
+        color="#86daff"
+        data={outputData}
+      />
+
+      <p className="font-medium mt-10 mb-5">User Usages</p>
+      <div className="grid lg:grid-cols-5">
+        <div className="col-span-1"></div>
+        <div className="col-span-4">
+          <div className="flex justify-end">
+            <DateFilter />
+          </div>
+          <CustomTable title="" type="" />
         </div>
       </div>
     </div>
