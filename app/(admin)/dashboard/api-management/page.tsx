@@ -88,14 +88,12 @@ const page = () => {
         </div>
       </div>
       <p className="font-medium mt-10 mb-5">Token Usage</p>
-
       <TokenUsageChart title="Input Tokens" color="#7adfce" data={inputData} />
       <TokenUsageChart
         title="Output Tokens"
         color="#86daff"
         data={outputData}
       />
-
       <p className="font-medium mt-10 mb-5">User Usages</p>
       <div className="grid lg:grid-cols-5">
         <div className="col-span-1"></div>

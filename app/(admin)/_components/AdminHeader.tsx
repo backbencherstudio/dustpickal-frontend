@@ -1,17 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
-import { IoNotifications } from "react-icons/io5";
+import { usePathname, useRouter } from "next/navigation";
 
-const AdminHeader = ({ pageTitle }: { pageTitle: string }) => {
+const AdminHeader = () => {
+  const pageTitle = usePathname();
   const router = useRouter();
 
   return (
     <div className="bg-white  px-8 py-4 flex justify-between items-center gap-4">
-      <h1 className="text-[20px] lg:w-[200px]">{pageTitle}</h1>
-      <div className="relative w-[50%] lg:w-full lg:max-w-[340px]">
+      <h1 className="text-[20px] lg:w-[200px] ">
+        {pageTitle?.split("/dashboard/")[1] &&
+        !pageTitle.split("/dashboard/")[1].includes("/")
+          ? pageTitle
+              .split("/dashboard/")[1]
+              .split("-")
+              .map(
+                (word) =>
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join(" ")
+          : ""}
+      </h1>
+      <div className="relative w-[50%] lg:w-full lg:max-w-[340px] hidden lg:block">
         <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
           type="text"
@@ -20,8 +32,10 @@ const AdminHeader = ({ pageTitle }: { pageTitle: string }) => {
         />
       </div>
 
-      <div className="flex items-center gap-4">
-        <div onClick={() => router.push("/admin/profile")}>Admin</div>
+      <div className="flex items-center gap-4 mr-6 lg:mr-0">
+        <div className="" onClick={() => router.push("/admin/profile")}>
+          Admin
+        </div>
         <div
           onClick={() => router.push("/admin/profile")}
           className="w-10 h-10 border border-[#EAF1FF] bg-[#f6f8fa] rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100"
