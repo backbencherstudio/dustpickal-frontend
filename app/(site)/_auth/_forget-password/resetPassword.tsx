@@ -11,6 +11,7 @@ export default function ResetPassword() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data: any) => {
         console.log(data);
+        router.push("?mode=send-email&email=" + data.email);
     };
 
     const handleBackToLogin = (e: React.MouseEvent) => {
