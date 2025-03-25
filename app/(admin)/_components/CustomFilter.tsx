@@ -18,7 +18,7 @@ const CustomFilter = ({
   return (
     <div>
       <Select>
-        <SelectTrigger className="w-[110px] bg-[#f8fafb] border border-[#e5e7eb]">
+        <SelectTrigger className="w-[120px] bg-[#f8fafb] border border-[#e5e7eb]">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="bg-[#f8fafb] border border-[#d2d2d5]">

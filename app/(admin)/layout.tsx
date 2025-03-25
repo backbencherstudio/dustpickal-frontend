@@ -22,13 +22,13 @@ export default function AdminLayout({ children }) {
     <div className="flex h-screen bg-[#f7f9fb]">
       {/* Mobile menu button */}
       <button
-        className="lg:hidden fixed z-20 m-4 p-2 rounded-md bg-gray-800 text-white"
+        className="lg:hidden fixed right-2 z-20 top-4 p-2 rounded-full bg-[#f3f4f6] text-black border"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
       >
         {isSidebarOpen ? (
           <svg
-            className="h-6 w-6"
+            className="h-5 w-5"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -40,7 +40,7 @@ export default function AdminLayout({ children }) {
           </svg>
         ) : (
           <svg
-            className="h-6 w-6"
+            className="h-5 w-5"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -69,13 +69,13 @@ export default function AdminLayout({ children }) {
 
         {/* Sidebar content */}
         <div className="relative z-20 h-full max-w-[264px] dark:bg-gray-800">
-          <AdminSidebar onNavigate={handleNavigation} />
+          <AdminSidebar />
         </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
-        <AdminHeader pageTitle={pageTitle} />
+        <AdminHeader />
         <div className="flex-1 overflow-auto">
           <div className="p-5 lg:p-8">{children}</div>
         </div>
