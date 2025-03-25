@@ -156,7 +156,7 @@ const AdminSidebar = () => {
         </div>
         <div
           onClick={() => {
-            /* Notification logic */
+            router.push("/dashboard/notification");
           }}
           className="flex items-center gap-2 p-1 rounded-md cursor-pointer hover:scale-105 transition-all duration-300"
           title="Notifications"
