@@ -85,7 +85,7 @@ const AdminSidebar = () => {
   return (
     <div
       className={`bg-white h-screen p-4 py-6 transition-all duration-300 ease-in-out 
-        ${isCollapsed ? "lg:w-[80px]" : "w-[230px]"}`}
+        ${isCollapsed ? "w-[80px]" : "w-[230px]"}`}
     >
       <div
         className={`flex items-center gap-2 justify-between ${
@@ -100,8 +100,8 @@ const AdminSidebar = () => {
       </div>
       <div
         className={`bg-white h-full ${
-          isCollapsed ? "border-l" : ""
-        } absolute top-0 right-5 lg:-right-8 p-7 px-1`}
+          isCollapsed ? "border-l right-40" : "right-5"
+        } absolute top-0 lg:-right-8 p-7 px-1 transition-all duration-300 ease-in-out`}
       >
         <svg
           onClick={toggleSidebar}
