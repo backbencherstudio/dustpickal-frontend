@@ -1,6 +1,7 @@
 import { AppConfig } from "@/config/app.config";
 import "./globals.css";
 import type { Metadata } from "next";
+import { Providers } from "./provider";
 export const metadata: Metadata = {
   title: AppConfig().app.name,
   description: AppConfig().app.slogan,
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

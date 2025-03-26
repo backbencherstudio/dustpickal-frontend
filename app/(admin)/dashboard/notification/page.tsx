@@ -1,15 +1,19 @@
 "use client";
 import CustomTable from "@/app/(admin)/_components/CustomTable";
+import { useGetNotificationsQuery } from "@/app/store/api/notificationApi";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 import { FaAnglesRight } from "react-icons/fa6";
 import { MdOutlineNotifications } from "react-icons/md";
 
 const page = () => {
+  const { data: notification, isLoading } = useGetNotificationsQuery();
   const [activeTab, setActiveTab] = useState("all");
   useEffect(() => {
     localStorage.setItem("tab", "Support");
   }, []);
+  console.log(notification);
+
   return (
     <div>
       <div className="mt-5 mx-4 p-5 pt-2 bg-white lg:max-w-[50%] rounded-lg">
