@@ -54,9 +54,15 @@ const PricingTable = ({ data = [] }) => {
                 <td key={plan.title} className="p-3 text-center border-b">
                   {typeof feature.getValue(plan) === "boolean" ? (
                     feature.getValue(plan) ? (
-                      <Check className="mx-auto text-green-500" size={20} />
+                      <Check
+                        className="mx-auto text-green-500 border rounded-full p-0.5 border-green-500"
+                        size={20}
+                      />
                     ) : (
-                      <X className="mx-auto text-red-500" size={20} />
+                      <X
+                        className="mx-auto text-red-500 border rounded-full p-0.5 border-red-500"
+                        size={20}
+                      />
                     )
                   ) : (
                     feature.getValue(plan)
