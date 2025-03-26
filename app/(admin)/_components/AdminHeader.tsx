@@ -33,11 +33,11 @@ const AdminHeader = () => {
       </div>
 
       <div className="flex items-center gap-4 mr-6 lg:mr-0">
-        <div className="" onClick={() => router.push("/admin/profile")}>
+        <div className="" onClick={() => router.push("/dashboard/profile")}>
           Admin
         </div>
         <div
-          onClick={() => router.push("/admin/profile")}
+          onClick={() => router.push("/dashboard/profile")}
           className="w-10 h-10 border border-[#EAF1FF] bg-[#f6f8fa] rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100"
         >
           <FaUser />
