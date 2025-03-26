@@ -7,7 +7,7 @@ import { FaAnglesRight } from "react-icons/fa6";
 import { MdOutlineNotifications } from "react-icons/md";
 
 const page = () => {
-  const { data: notification, isLoading } = useGetNotificationsQuery();
+  const { data: notification, isLoading } = useGetNotificationsQuery(1);
   const [activeTab, setActiveTab] = useState("all");
   useEffect(() => {
     localStorage.setItem("tab", "Support");
