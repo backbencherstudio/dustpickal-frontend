@@ -25,7 +25,7 @@ export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebar
         <div className={`flex flex-col gap-4 shadow-xl rounded h-screen transition-all duration-300 ease-in-out ${isExpanded ? 'w-full' : 'w-28'}`}>
             {/* Logo Section */}
             <div className="flex flex-row justify-between items-center px-4 py-2">
-                {isExpanded ? (
+                {isExpanded && window.innerWidth > 1024 ? (
                     <Image
                         src={logo}
                         alt="logo"

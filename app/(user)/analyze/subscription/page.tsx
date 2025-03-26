@@ -59,7 +59,7 @@ export default function Subscription() {
                                 Annual Pricing
                             </button>
                         </div>
-                        <div className="grid grid-cols-4 gap-4 w-full">
+                        <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 w-full">
                             {subscriptionPlans.map((plan) => (
                                 <div key={plan.id} className={getCardStyles(plan)}>
                                     {plan.isRecommended && (
@@ -93,12 +93,12 @@ export default function Subscription() {
                 </div>
 
                 {/* Features Table */}
-                <div className="grid grid-cols-12 gap-4">
+                <div className="grid md:grid-cols-12 gap-4">
                     <div className="col-span-2">
                         <h3 className="text-base font-medium text-[#1D1F2C]">Feature</h3>
                     </div>
                     <div className="col-span-10">
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {subscriptionPlans.map((plan) => (
                                 <div key={plan.id} className="text-center">
                                     <p className="text-base font-medium text-[#1D1F2C]">{plan.name}</p>
@@ -109,14 +109,14 @@ export default function Subscription() {
                 </div>
 
                 {/* Token */}
-                <div className="grid grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
+                <div className="grid md:grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
                     <div className="col-span-2">
                         <p className="text-sm text-[#777980]">Token</p>
                     </div>
                     <div className="col-span-10">
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {subscriptionPlans.map((plan) => (
-                                <div key={plan.id}>
+                                <div key={plan.id} className="text-center">
                                     <p className="text-sm text-[#1D1F2C]">{plan.features.token}</p>
                                 </div>
                             ))}
@@ -125,14 +125,14 @@ export default function Subscription() {
                 </div>
 
                 {/* Rule Apply */}
-                <div className="grid grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
+                <div className="grid md:grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
                     <div className="col-span-2">
                         <p className="text-sm text-[#777980]">Rule Apply</p>
                     </div>
                     <div className="col-span-10">
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {subscriptionPlans.map((plan) => (
-                                <div key={plan.id}>
+                                <div key={plan.id} className="text-center">
                                     <p className="text-sm text-[#1D1F2C]">{plan.features.ruleApply}</p>
                                 </div>
                             ))}
@@ -141,14 +141,14 @@ export default function Subscription() {
                 </div>
 
                 {/* Validation */}
-                <div className="grid grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
+                <div className="grid md:grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
                     <div className="col-span-2">
                         <p className="text-sm text-[#777980]">Validation</p>
                     </div>
                     <div className="col-span-10">
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {subscriptionPlans.map((plan) => (
-                                <div key={plan.id}>
+                                <div key={plan.id} className="text-center">
                                     <p className="text-sm text-[#1D1F2C]">{plan.features.validation}</p>
                                 </div>
                             ))}
@@ -157,14 +157,14 @@ export default function Subscription() {
                 </div>
 
                 {/* Benefits */}
-                <div className="grid grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
+                <div className="grid md:grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
                     <div className="col-span-2">
                         <p className="text-sm text-[#777980]">Benefits</p>
                     </div>
                     <div className="col-span-10">
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {subscriptionPlans.map((plan) => (
-                                <div key={plan.id}>
+                                <div key={plan.id} className="text-center">
                                     <p className="text-sm text-[#1D1F2C]">{plan.features.benefits}</p>
                                 </div>
                             ))}
@@ -173,18 +173,18 @@ export default function Subscription() {
                 </div>
 
                 {/* Integrations */}
-                <div className="grid grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
+                <div className="grid md:grid-cols-12 gap-4 border-t border-[#E9E9EA] py-4">
                     <div className="col-span-2">
                         <p className="text-sm text-[#777980]">Integrations</p>
                     </div>
                     <div className="col-span-10">
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
                             {subscriptionPlans.map((plan) => (
                                 <div key={plan.id} className="flex justify-center">
                                     {plan.features.integrations ? (
-                                        <Check className="w-4 h-4 text-[#22CAAD]" />
+                                        <Check className="w-5 h-5 text-[#22CAAD] p-[2px] border border-[#22CAAD] rounded-full" />
                                     ) : (
-                                        <X className="w-4 h-4 text-[#FF4D4D]" />
+                                        <X className="w-5 h-5 text-[#FF4D4D] p-[2px] border border-[#FF4D4D] rounded-full" />
                                     )}
                                 </div>
                             ))}
@@ -202,9 +202,9 @@ export default function Subscription() {
                             {subscriptionPlans.map((plan) => (
                                 <div key={plan.id} className="flex justify-center">
                                     {plan.features.customRule ? (
-                                        <Check className="w-4 h-4 text-[#22CAAD]" />
+                                        <Check className="w-5 h-5 text-[#22CAAD] p-[2px] border border-[#22CAAD] rounded-full" />
                                     ) : (
-                                        <X className="w-4 h-4 text-[#FF4D4D]" />
+                                        <X className="w-5 h-5 text-[#FF4D4D] p-[2px] border border-[#FF4D4D] rounded-full" />
                                     )}
                                 </div>
                             ))}
@@ -218,9 +218,9 @@ export default function Subscription() {
                         <p className="text-sm text-[#777980]">Support</p>
                     </div>
                     <div className="col-span-10">
-                        <div className="grid grid-cols-4 gap-4">
+                        <div className="grid grid-cols-4 gap-4 justify-center">
                             {subscriptionPlans.map((plan) => (
-                                <div key={plan.id}>
+                                <div key={plan.id} className="text-center">
                                     <p className="text-sm text-[#1D1F2C]">{plan.features.support}</p>
                                 </div>
                             ))}
