@@ -159,8 +159,8 @@ const AdminSidebar = () => {
         ))}
       </nav>
       <div
-        className={`flex flex-col gap-2 absolute bottom-2 
-          ${isCollapsed ? "left-4 items-center" : "left-6 items-start"}`}
+        className={`flex flex-col gap-2 absolute left-6 bottom-2  
+          ${isCollapsed ? "items-center" : "items-start"}`}
       >
         <div
           onClick={() => router.push("/dashboard/support")}
