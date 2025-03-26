@@ -24,7 +24,13 @@ const page = () => {
   };
   return (
     <div className="max-w-[850px] mx-auto text-[14px] font-medium">
-      <div className="flex items-center gap-4">
+      <div className="border-b pb-2">
+        <h1 className="text-[24px] text-gray-800">Profile</h1>
+        <p className="text-gray-400 mt-1 text-[12px]">
+          Update your profile image , password , etc.
+        </p>
+      </div>
+      <div className="flex items-center gap-4 mt-6">
         <LucideSquareUserRound size={80} color="gray" />
         <div>
           <h1 className="text-[12px] text-zinc-700 ">Profile Name</h1>

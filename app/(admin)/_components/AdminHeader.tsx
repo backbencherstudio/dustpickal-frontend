@@ -9,7 +9,7 @@ const AdminHeader = () => {
   const router = useRouter();
 
   return (
-    <div className="bg-white  px-8 py-4 flex justify-between items-center gap-4">
+    <div className="bg-white pl-8 lg:pl-16 py-4 flex justify-between items-center gap-4">
       <h1 className="text-[20px] lg:w-[200px] ">
         {pageTitle?.split("/dashboard/")[1] &&
         !pageTitle.split("/dashboard/")[1].includes("/")
@@ -32,8 +32,11 @@ const AdminHeader = () => {
         />
       </div>
 
-      <div className="flex items-center gap-4 mr-6 lg:mr-0">
-        <div className="" onClick={() => router.push("/dashboard/profile")}>
+      <div className="flex items-center gap-4 mr-16 lg:mr-8">
+        <div
+          className="hidden lg:block"
+          onClick={() => router.push("/dashboard/profile")}
+        >
           Admin
         </div>
         <div
