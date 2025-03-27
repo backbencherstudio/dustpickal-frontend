@@ -70,11 +70,11 @@ const page = () => {
                 Total Tokens Used{" "}
                 <span className="mr-5 ml-[54px] font-semibold">:</span> $24.84
               </p>
-              <p className="my-4 flex gap-2 items-center">
+              <div className="my-4 flex gap-2 items-center">
                 <div className="w-4 h-4 rounded  bg-[#4ed5bd]"></div>
                 Input Token Usage
                 <span className="mr-5 ml-5 font-semibold">:</span> 12,5648
-              </p>
+              </div>
               <p className="my-4 flex gap-2 items-center">
                 <div className="w-4 h-4 rounded  bg-[#86daff]"></div>
                 Output Token Usage
