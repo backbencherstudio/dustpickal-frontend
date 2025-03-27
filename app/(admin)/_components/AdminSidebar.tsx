@@ -92,15 +92,26 @@ const AdminSidebar = () => {
           ${isCollapsed ? "w-[80px]" : "w-[230px]"}`}
       >
         <div
-          className={`flex items-center gap-2 justify-between ${
+          className={`flex items-center gap-2 justify-between mt-5 ${
             isCollapsed ? "justify-center" : "justify-between "
           }`}
         >
-          {!isCollapsed ? (
-            <Image src={logo} alt="logo" width={102} height={32} />
-          ) : (
-            <Image src={logo2} alt="logo" />
-          )}
+          <Image
+            className={`${
+              isCollapsed ? "opacity-0" : "opacity-100"
+            } transition-all duration-300 ease-in-out absolute`}
+            src={logo}
+            alt="logo"
+            width={102}
+            height={32}
+          />
+          <Image
+            className={`${
+              isCollapsed ? "opacity-100" : "opacity-0"
+            } transition-all duration-300 ease-in-out absolute`}
+            src={logo2}
+            alt="logo"
+          />
         </div>
         <div
           className={`bg-white h-full ${
