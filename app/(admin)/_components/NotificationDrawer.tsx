@@ -19,12 +19,11 @@ const NotificationDrawer = ({
   const [activeTab, setActiveTab] = useState("all");
 
   const drawerPositionClasses = {
-    side: "hidden lg:block fixed -right-10 bottom-10 h-[770px] w-[430px] transform transition-transform duration-300 ease-in-out",
+    side: "hidden z-10 lg:block fixed -right-10 bottom-10 h-[770px] w-[430px] transform transition-transform duration-300 ease-in-out",
     top: "fixed top-0 right-0 lg:right-36 w-[100vw] md:max-w-[430px] h-[770px] transform transition-transform duration-300 ease-in-out",
   };
-
   const translateClasses = {
-    side: isOpen ? "-translate-x-72" : "translate-x-full",
+    side: isOpen ? "translate-x-full" : "-translate-x-72",
     top: isOpen ? "translate-y-0" : "-translate-y-full",
   };
 

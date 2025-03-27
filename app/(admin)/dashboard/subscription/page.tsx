@@ -4,9 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 import PricingCards from "./_components/PricingCards";
 import PricingTable from "./_components/PricingTable";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [activeTab, setActiveTab] = useState("all");
+  const router = useRouter();
   useEffect(() => {
     localStorage.setItem("tab", "Support");
   }, []);
@@ -86,7 +88,10 @@ const page = () => {
             <h1 className="text-[14px] text-gray-800 my-4 flex items-center gap-2">
               You can have max 4 plan
             </h1>
-            <button className="bg-black text-gray-200 rounded px-4 py-1 hover:opacity-85">
+            <button
+              onClick={() => router.push("/dashboard/subscription/add-plan")}
+              className="bg-black text-gray-200 rounded px-4 py-1 hover:opacity-85"
+            >
               Admin Access
             </button>
           </div>

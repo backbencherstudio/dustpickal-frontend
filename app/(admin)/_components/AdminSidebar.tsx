@@ -88,7 +88,7 @@ const AdminSidebar = () => {
   return (
     <>
       <div
-        className={`bg-white h-screen p-4 py-6 transition-all duration-300 ease-in-out 
+        className={`bg-white z-20 h-screen p-4 py-6 transition-all duration-300 ease-in-out 
           ${isCollapsed ? "w-[80px]" : "w-[230px]"}`}
       >
         <div
