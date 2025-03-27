@@ -2,13 +2,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaHome } from "react-icons/fa";
 import { MdAddCard, MdApi, MdOutlineLogout, MdSupport } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { FiUsers } from "react-icons/fi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useRouter } from "next/navigation";
-
 import Image from "next/image";
 import logo from "../../assets/logo.png";
 import logo2 from "../../assets/logo2.png";
@@ -16,7 +14,6 @@ import NotificationDrawer from "./NotificationDrawer";
 
 const AdminSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [collapseNotification, setCollapseNotification] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);

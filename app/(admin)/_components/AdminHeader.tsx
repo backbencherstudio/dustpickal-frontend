@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { IoMdNotificationsOutline } from "react-icons/io";
