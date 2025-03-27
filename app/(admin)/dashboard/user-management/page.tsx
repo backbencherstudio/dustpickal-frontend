@@ -182,7 +182,7 @@ const page = () => {
             onClick={() =>
               router.push(`/dashboard/user-management/${row.userId}`)
             }
-            className=" hover:bg-gray-200 rounded-xl p-2"
+            className=" hover:bg-gray-200 rounded-xl p-2 cursor-pointer"
           >
             <IoEyeOutline size={20} />
           </button>
