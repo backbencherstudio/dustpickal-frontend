@@ -14,6 +14,7 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "@/components/ui/command"
+import { useRouter, usePathname } from "next/navigation";
 
 interface LeftSidebarProps {
     isExpanded: boolean;
@@ -21,6 +22,8 @@ interface LeftSidebarProps {
 }
 
 export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebarProps) {
+    const router = useRouter();
+    const pathname = usePathname();
     return (
         <div className={`flex flex-col gap-4 shadow-xl rounded h-screen transition-all duration-300 ease-in-out ${isExpanded ? 'w-full' : 'w-28'}`}>
             {/* Logo Section */}
@@ -66,9 +69,9 @@ export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebar
 
             {/* Additional Content Section */}
             <div className="flex-1 px-4">
-                <button className="flex flex-row gap-2 cursor-pointer ">
+                <button className={`flex flex-row gap-2 cursor-pointer`}  onClick={() => router.push('/analyze/subscription')}>
                     <Image src={paymentIcon} alt="payment-icon" width={isExpanded ? 20 : 30} height={isExpanded ? 20 : 30} />
-                    <p className={`text-sm font-medium text-black ${isExpanded ? '' : 'hidden'}`}>Subscription</p>
+                    <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Subscription</p>
                 </button>
             </div>
         </div>

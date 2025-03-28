@@ -10,9 +10,9 @@ export default function AnalyzeLayout({ children }: { children: React.ReactNode 
     const [isRightExpanded, setIsRightExpanded] = useState(true);
 
     return (
-        <div className="relative w-full mx-auto h-screen p-3 overflow-hidden">
+        <div className="relative w-full mx-auto h-screen p-3">
             {/* Desktop layout */}
-            <div className="hidden lg:grid lg:grid-cols-12">
+            <div className="hidden lg:grid lg:grid-cols-12 h-full">
                 {/* Analyze left sidebar */}
                 <div className={`${isLeftExpanded ? 'col-span-2' : 'col-span-1'} p-3 transition-all duration-300 overflow-hidden`}>
                     <LeftSidenbar 
@@ -27,7 +27,7 @@ export default function AnalyzeLayout({ children }: { children: React.ReactNode 
                     {children}
                 </div>
                 {/* Analyze right sidebar */}
-                <div className={`${isRightExpanded ? 'col-span-2' : 'col-span-1'} p-3 transition-all duration-300 overflow-hidden`}>
+                <div className={`${isRightExpanded ? 'col-span-2' : 'col-span-1'} p-3 transition-all duration-300 overflow-y-auto`}>
                     <RightSideBar 
                         isExpanded={isRightExpanded}
                         onExpandToggle={setIsRightExpanded}
