@@ -1,27 +1,152 @@
 "use client";
 import CustomTable from "@/app/(admin)/_components/CustomTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { IoMdCopy } from "react-icons/io";
+import { IoEyeOutline } from "react-icons/io5";
 
-const userInfo = [
-  { label: "User ID", value: "#9003237" },
-  { label: "Registration Date", value: "12/06/2020" },
-  { label: "Last Active", value: "4 months ago" },
-  { label: "Document Analyzed", value: "883" },
-  { label: "Custom Rules", value: "12" },
-  { label: "Subscription Plan", value: "As Pay You Go" },
-  { label: "Subscription Status", value: "Active", isActive: true },
+// Define the columns
+
+// Define the data
+const ticketData = [
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Open",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Pending",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Resolved",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Open",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Resolved",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Open",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Pending",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Open",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Pending",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
+  {
+    ticketId: "SUP-41231547",
+    userName: "John Hunt",
+    userId: "#45887565",
+    subject: "Facing Issues with my subscription plan...",
+    status: "Resolved",
+    issueDate: "12/02/2025",
+    lastUpdated: "15/02/2025",
+  },
 ];
 
 const page = () => {
   const [activeTab, setActiveTab] = useState("request");
+  const router = useRouter();
   useEffect(() => {
     localStorage.setItem("tab", "Support");
   }, []);
+  const columns = [
+    { header: "Ticket ID", accessor: "ticketId" },
+    { header: "User Name", accessor: "userName" },
+    { header: "User ID", accessor: "userId" },
+    { header: "Subject", accessor: "subject" },
+    {
+      header: "Status",
+      accessor: "status",
+      customCell: (row) => (
+        <div
+          className={`px-2 py-1 rounded-full text-sm ${
+            row?.status === "Open"
+              ? " text-[#007bff]"
+              : row?.status === "Pending"
+              ? " text-[#f9c80e]"
+              : " text-[#22caad]"
+          }`}
+        >
+          {row?.status}
+        </div>
+      ),
+    },
+    { header: "Issue Date", accessor: "issueDate" },
+    { header: "Last Updated", accessor: "lastUpdated" },
+    {
+      header: "View",
+      accessor: "view",
+      customCell: (row) => (
+        <button
+          onClick={() => router.push(`/dashboard/support/${row.ticketId}`)}
+          className="p-2 hover:bg-gray-200 rounded-lg cursor-pointer"
+        >
+          <IoEyeOutline size={20} />
+        </button>
+      ),
+    },
+  ];
   return (
     <div>
-      <div className="mt-5 mx-4 ">
+      <div className="mt-5 mx-4">
         <Tabs defaultValue="request" className="w-full">
           <TabsList className="flex justify-start w-full bg-transparent border-b-2 border-[#e9e9ea]">
             <TabsTrigger
@@ -41,19 +166,19 @@ const page = () => {
           </TabsList>
           <TabsContent value="request" className="mt-6">
             <CustomTable
-              type="user-management"
+              type="support"
               title=""
-              columns={[]}
-              data={[]}
+              columns={columns}
+              data={ticketData}
               filter={false}
             />
           </TabsContent>
           <TabsContent value="history" className="mt-6">
             <CustomTable
-              type="user-management"
+              type="support"
               title=""
-              columns={[]}
-              data={[]}
+              columns={columns}
+              data={ticketData}
               filter={false}
             />
           </TabsContent>

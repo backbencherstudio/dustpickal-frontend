@@ -1,23 +1,52 @@
 "use client";
-import CustomTable from "@/app/(admin)/_components/CustomTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React, { useEffect, useState } from "react";
-import { FaAnglesRight } from "react-icons/fa6";
+import React, { useState } from "react";
 import { MdOutlineNotifications } from "react-icons/md";
+import CustomTable from "./CustomTable";
+import { FaAnglesLeft, FaAnglesUp } from "react-icons/fa6";
 
-const page = () => {
+interface NotificationDrawerProps {
+  position: "side" | "top";
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const NotificationDrawer = ({
+  position,
+  isOpen,
+  onClose,
+}: NotificationDrawerProps) => {
   const [activeTab, setActiveTab] = useState("all");
-  useEffect(() => {
-    localStorage.setItem("tab", "Support");
-  }, []);
+
+  const drawerPositionClasses = {
+    side: "hidden z-10 lg:block fixed -right-10 bottom-10 h-[80vh] overflow-y-auto w-[430px] transform transition-transform duration-300 ease-in-out",
+    top: "fixed top-0 right-0 lg:right-36 w-[100vw] md:max-w-[430px] h-[80vh] overflow-y-auto transform transition-transform duration-300 ease-in-out",
+  };
+  const translateClasses = {
+    side: isOpen ? "translate-x-full" : "-translate-x-72",
+    top: isOpen ? "translate-y-0" : "-translate-y-full",
+  };
+
   return (
-    <div>
-      <div className="mt-5 mx-4 p-5 pt-2 bg-white lg:max-w-[50%] rounded-lg">
+    <div
+      className={`
+        ${drawerPositionClasses[position]} 
+        ${translateClasses[position]}
+        bg-white shadow-lg rounded-lg z-50
+      `}
+    >
+      <div className="p-5">
         <div className="flex justify-between items-center">
           <h1 className="text-[20px] text-gray-800 my-4 flex items-center gap-2 font-medium">
             <MdOutlineNotifications size={24} /> Notifications
           </h1>
-          <FaAnglesRight size={18} className="cursor-pointer" />
+          <button onClick={onClose}>
+            {position === "side" ? (
+              <FaAnglesLeft size={18} className="cursor-pointer" />
+            ) : (
+              <FaAnglesUp size={18} className="cursor-pointer" />
+            )}
+          </button>
         </div>
 
         <Tabs defaultValue="all" className="w-full">
@@ -77,4 +106,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default NotificationDrawer;

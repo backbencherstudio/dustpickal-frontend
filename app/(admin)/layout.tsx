@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
     <div className="flex h-screen bg-[#f7f9fb]">
       {/* Mobile menu button */}
       <button
-        className="lg:hidden fixed right-2 z-20 top-4 p-2 rounded-full bg-[#f3f4f6] text-black border"
+        className="lg:hidden absolute right-2 z-20 top-4 p-2 rounded-full bg-[#f3f4f6] text-black border"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
       >
@@ -77,7 +77,7 @@ export default function AdminLayout({ children }) {
       <div className="flex-1 overflow-auto">
         <AdminHeader />
         <div className="flex-1 overflow-auto">
-          <div className="p-5 lg:p-8">{children}</div>
+          <div className="p-5 lg:p-8 lg:pl-16">{children}</div>
         </div>
       </div>
     </div>
