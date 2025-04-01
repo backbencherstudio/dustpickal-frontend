@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import pdf from '@/public/assets/client/icons/pdf.svg';
+import crossBg from "@/public/assets/client/icons/cross-icon.svg";
+
 interface MainAnalyzeProps {
     uploadedFiles: {
         name: string;
@@ -27,6 +29,8 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
             }
         });
     }, []);
+
+    console.log(uploadedFiles);
 
     const simulateFileUpload = (fileName: string) => {
         let progress = 0;
@@ -60,9 +64,9 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
 
         if (status === 'uploading') {
             return (
-                <div className="relative w-6 h-6 bg-[#E9E9EA]">
+                <div className="relative p-6 bg-[#E9E9EA] rounded">
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-6 h-6 border-2 border-[#4A4C56] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 </div>
             );
@@ -119,21 +123,19 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
                 {/* Uploaded Files List */}
                 <div className="flex flex-col gap-2">
                     <h2 className="text-lg font-semibold text-gray-800">Uploaded Documents</h2>
-                    <div className="max-h-[400px] overflow-y-auto flex items-center gap-2">
+                    <div className="flex items-center gap-2 overflow-y-auto pb-4">
                         {uploadedFiles.map((file) => (
                             <div key={file.name} className="bg-white p-2 rounded-lg border">
-                                <div className="flex items-center gap-2">
+                                <div className="w-96 h-auto flex items-center gap-2">
                                     {getFileIcon(file.name, file.status)}
-                                    <div className='w-[35rem]'>
-                                        <div className="flex justify-between items-center mb-2">
-                                            <span className="text-sm font-medium text-gray-700">{file.name}</span>
+                                    <div className='w-full flex flex-col gap-1'>
+                                        <div className="flex justify-between items-start">
+                                            <span className={`text-sm font-medium ${file.status === 'uploading' ? 'text-[#777980]' : 'text-[#292D32]'}`}>{file.name}</span>
                                             <button
                                                 onClick={() => removeFile(file.name)}
-                                                className="text-gray-400 hover:text-gray-600"
+                                                className="text-gray-400 hover:text-gray-600 w-6 h-6"
                                             >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
+                                                <Image src={crossBg} alt="Close" className="hover:scale-110 transition-all duration-300 hover:rotate-12 cursor-pointer" />
                                             </button>
                                         </div>
                                         {/* <div className="relative pt-1">
@@ -163,8 +165,8 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
                                     </div>
                                 </div> */}
                                         <div className="flex justify-between items-center">
-                                            <span className="text-xs font-semibold text-gray-600">
-                                                {file.status}
+                                            <span className={`text-xs font-normal ${file.status === 'uploading' ? 'text-[#777980]' : 'text-[#4A4C56]'}`}>
+                                                {file.file.type === 'application/pdf' ? 'PDF' : 'Document'}
                                             </span>
                                         </div>
                                     </div>
