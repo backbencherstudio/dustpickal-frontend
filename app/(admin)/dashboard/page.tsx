@@ -108,28 +108,29 @@ export default function DashboardPage() {
   return (
     <div>
       <AnalyticsCards />
-      <div className="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow">
-          <CustomTable
-            type="rules"
-            columns={rulesColumns}
-            data={rulesData}
-            title="List of most used Pre-define ruleses"
-          />
+      <div className="grid grid-cols-1 lg:grid-cols-4 mt-6 gap-6">
+        <div className="lg:col-span-3">
+
         </div>
-        <div className="bg-white p-4 rounded-xl shadow">
+        <div className="bg-white p-6 rounded-xl shadow lg:col-span-1">
+              <SubsStatus />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-5 mt-6 gap-6">
+        <div className="bg-white p-4 rounded-xl shadow lg:col-span-3">
+          <ApiChart />
+        </div>
+        <div className="bg-white p-4 rounded-xl shadow lg:col-span-2">
           <SubsStatsChart />
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 mt-6 gap-6">
-        <div className="bg-white p-4 rounded-xl shadow">
-          <ApiChart />
-        </div>
-        <div className="grid  gap-6">
-          <div className="bg-white p-2 rounded-xl shadow">
-            <SubsStatus />
-          </div>
-        </div>
+      <div className="grid grid-cols-2 mt-6">
+        <CustomTable
+          type="rules"
+          columns={rulesColumns}
+          data={rulesData}
+          title="List of most used Pre-define ruleses"
+        />
       </div>
       <div className="mt-6">
         <CustomTable

@@ -10,7 +10,7 @@ const SubsStatsChart = () => {
   const options: ApexCharts.ApexOptions = {
     series: [100, 500, 1000, 400],
     chart: {
-      type: "donut" as const,
+      type: "donut",
     },
     colors: ["#FF6B6B", "#FFB572", "#A69AFC", "#4AD991"],
     labels: ["Pay as you go", "Pro", "Basic", "Enterprise"],
@@ -22,7 +22,17 @@ const SubsStatsChart = () => {
         donut: {
           size: "50%",
           labels: {
-            show: false,
+            show: true, // Enable labels inside the donut
+            total: {
+              show: true, // Show total in the center
+              label: "Total", // Label text
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#333",
+              formatter: function (w) {
+                return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+              },
+            },
           },
         },
       },
@@ -76,15 +86,14 @@ const SubsStatsChart = () => {
           options={options}
           series={options.series}
           type="donut"
-          height={200}
-          // width="80%"
+          // height={400}
         />
-        <div className="flex items-center gap-2 mt-4 justify-left ml-[30%]">
+        {/* <div className="flex items-center gap-2 mt-4 justify-left ml-[30%]">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#a58be6 ] via-[#ff597b] via-40% to-[#7ed3da]"></div>
             <p className="text-[15px] font-semibold">Total {total}</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
