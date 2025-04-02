@@ -23,7 +23,7 @@ export default function AnalyzeLayout({ children }: { children: React.ReactNode 
                 {/* Analyze main content */}
                 <div className={`${isLeftExpanded && isRightExpanded ? 'col-span-8' : 
                                isLeftExpanded || isRightExpanded ? 'col-span-9' : 
-                               'col-span-10'} p-3 transition-all duration-300 overflow-y-auto`}>
+                               'col-span-10'} p-3 transition-all duration-300 overflow-y-auto custom-scrollbar`}>
                     {children}
                 </div>
                 {/* Analyze right sidebar */}

@@ -1,8 +1,9 @@
+import Image from "next/image";
 import logo from "@/public/assets/client/logo.png";
 import miniLogo from "@/public/assets/client/mini-logo.png";
 import tapIcon from "@/public/assets/client/icons/tap-menu.svg";
 import paymentIcon from "@/public/assets/client/icons/payment.svg";
-import Image from "next/image";
+import addIcon from "@/public/assets/client/icons/add-icon.svg"
 import {
     Command,
     CommandDialog,
@@ -68,6 +69,12 @@ export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebar
             </div>
 
             {/* Additional Content Section */}
+            <div>
+                <button className="flex flex-row gap-2 cursor-pointer px-3 py-2 border border-[#A5A5AB] rounded-lg">
+                    <Image src={addIcon} alt="add-icon" width={isExpanded ? 20 : 30} height={isExpanded ? 20 : 30} />
+                    <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Create New Rules</p>
+                </button>
+            </div>
             <div className="flex-1 px-4">
                 <button className={`flex flex-row gap-2 cursor-pointer`}  onClick={() => router.push('/analyze/subscription')}>
                     <Image src={paymentIcon} alt="payment-icon" width={isExpanded ? 20 : 30} height={isExpanded ? 20 : 30} />

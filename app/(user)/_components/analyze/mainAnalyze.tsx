@@ -123,7 +123,8 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
                 {/* Uploaded Files List */}
                 <div className="flex flex-col gap-2">
                     <h2 className="text-lg font-semibold text-gray-800">Uploaded Documents</h2>
-                    <div className="flex items-center gap-2 overflow-y-auto pb-4">
+                    {/* overflow-y-auto scrollbar should be styled */}
+                    <div className="flex items-center gap-2 overflow-y-auto pb-4 custom-scrollbar">
                         {uploadedFiles.map((file) => (
                             <div key={file.name} className="bg-white p-2 rounded-lg border">
                                 <div className="w-96 h-auto flex items-center gap-2">
