@@ -22,6 +22,7 @@ const UserStatusChart = () => {
       enabled: false,
     },
     legend: {
+      show: false,
       position: "bottom",
       horizontalAlign: "center",
       fontSize: "14px",
@@ -90,8 +91,22 @@ const UserStatusChart = () => {
           series={options.series}
           type="donut"
           height="300"
-          width="100%"
+          width="80%"
         />
+        <div className="flex flex-col justify-center gap-3 mt-10">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded  bg-[#0d86ff]"></div>
+            <p className="text-sm">Active Users: 50000</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded  bg-[#d2d2d5]"></div>
+            <p className="text-sm">Expired Users: 20000</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded  bg-[#ff6a89]"></div>
+            <p className="text-sm">Cancelled Users : 30000</p>
+          </div>
+        </div>
       </div>
     </div>
   );
