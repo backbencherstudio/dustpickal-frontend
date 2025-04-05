@@ -19,7 +19,7 @@ import {
     CommandShortcut,
 } from "@/components/ui/command"
 import { useRouter, usePathname } from "next/navigation";
-
+import AllRules from "../rule/allRules";
 interface LeftSidebarProps {
     isExpanded: boolean;
     onExpandToggle: (value: boolean) => void;
@@ -71,11 +71,12 @@ export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebar
                 </Command>
             </div>
 
+            <AllRules />
             {/* Additional Content Section */}
             <div className="">
                 <button className="w-full flex flex-row gap-2 cursor-pointer px-3 py-2 border border-[#A5A5AB] rounded">
                     <Image src={addIcon} alt="add-icon" width={isExpanded ? 20 : 30} height={isExpanded ? 20 : 30} />
-                    <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Rule Management</p>
+                    <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Create New Rules</p>
                 </button>
             </div>
             <div className="flex flex-col gap-2 pt-3 border-t border-[#D2D2D5]">
