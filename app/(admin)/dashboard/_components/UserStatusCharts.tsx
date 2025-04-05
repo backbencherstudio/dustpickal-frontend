@@ -32,6 +32,10 @@ const UserStatusChart = () => {
         horizontal: 10,
         vertical: 5,
       },
+      formatter: function (seriesName, opts) {
+        return `${seriesName}: ${opts.w.globals.series[opts.seriesIndex]}`;
+      },
+      width: 150,
     },
     plotOptions: {
       pie: {
@@ -74,9 +78,7 @@ const UserStatusChart = () => {
   return (
     <div className="bg-white p-4 rounded-xl w-full">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-gray-800 text-[14px] font-medium">
-          User Status Overview
-        </h3>
+        <h3 className="text-gray-800 text-[14px] font-medium">User Status</h3>
         <CustomFilter
           placeholder="All"
           options={["All", "Today", "Weekly", "Monthly", "Yearly"]}

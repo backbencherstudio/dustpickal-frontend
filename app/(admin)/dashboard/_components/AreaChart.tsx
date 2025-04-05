@@ -15,12 +15,12 @@ const AreaChart = () => {
       enabled: false,
     },
     stroke: {
-      curve: "smooth",
-      width: 2,
+      curve: "straight",
+      width: 1,
     },
     colors: ["#FF6B6B", "#2D3436", "#FFC107", "#4299E1"],
     xaxis: {
-      categories: ["week 1", "week 2", "week 3", "week 4"],
+      // categories: ["week 1", "week 2", "week 3", "week 4"],
       labels: {
         style: {
           colors: "#718096",
@@ -75,19 +75,19 @@ const AreaChart = () => {
   const series = [
     {
       name: "Pay As You Go",
-      data: [200, 400, 500, 1800],
+      data: [200, 100, 600, 200, 1000, 600, 1400, 800, 1800, 1200],
     },
     {
       name: "Basic",
-      data: [300, 3000, 600, 500],
+      data: [300, 500, 800, 1200, 1500, 1800, 2100, 2400, 2700, 3000],
     },
     {
       name: "Pro",
-      data: [500, 1700, 800, 700],
+      data: [800, 1200, 1000, 1500, 1300, 1800, 600, 2000, 900, 2200],
     },
     {
       name: "Enterprise",
-      data: [1000, 2000, 2500, 2000],
+      data: [1500, 1800, 2000, 2000, 1700, 2300, 1800, 2600, 3000, 3200],
     },
   ];
 
