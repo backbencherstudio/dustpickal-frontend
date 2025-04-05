@@ -8,7 +8,7 @@ import {
 
 const DateFilter = () => {
   const [year, setYear] = useState(2025);
-  const [month, setMonth] = useState("March");
+  const [month, setMonth] = useState(2); // Use index for months (0 = January)
 
   const months = [
     "January",
@@ -25,56 +25,27 @@ const DateFilter = () => {
     "December",
   ];
 
-  const handlePreviousYear = () => setYear((prev) => prev - 1);
-  const handleNextYear = () => setYear((prev) => prev + 1);
-
-  const handlePreviousMonth = () => {
-    const currentIndex = months.indexOf(month);
-    const newIndex = currentIndex === 0 ? months.length - 1 : currentIndex - 1;
-    setMonth(months[newIndex]);
-
-    // If we go back from January, also decrement the year
-    if (currentIndex === 0) {
-      setYear((prev) => prev - 1);
-    }
-  };
-
-  const handleNextMonth = () => {
-    const currentIndex = months.indexOf(month);
-    const newIndex = currentIndex === months.length - 1 ? 0 : currentIndex + 1;
-    setMonth(months[newIndex]);
-
-    // If we go forward from December, also increment the year
-    if (currentIndex === months.length - 1) {
-      setYear((prev) => prev + 1);
-    }
+  const updateMonth = (step: number) => {
+    const newMonth = (month + step + 12) % 12;
+    setMonth(newMonth);
+    if (newMonth === 11 && step === -1) setYear((prev) => prev - 1); // Dec -> Jan
+    if (newMonth === 0 && step === 1) setYear((prev) => prev + 1); // Jan -> Dec
   };
 
   return (
     <div className="flex items-center justify-center space-x-3 px-3 py-1.5 rounded border">
-      {/* Year Navigation */}
-      <button onClick={handlePreviousYear}>
+      <button onClick={() => setYear((prev) => prev - 1)}>
         <ChevronsLeft className="h-4 w-4 cursor-pointer" />
       </button>
-      <div className="flex items-center space-x-2">
-        <span className="font-medium text-sm">{year}</span>
-      </div>
-      {/* Year Navigation */}
-      <button onClick={handleNextYear}>
+      <span className="font-medium text-sm">{year}</span>
+      <button onClick={() => setYear((prev) => prev + 1)}>
         <ChevronsRight className="h-4 w-4 cursor-pointer" />
       </button>
-      {/* Month Navigation */}
-      <button onClick={handlePreviousMonth}>
+      <button onClick={() => updateMonth(-1)}>
         <ChevronLeft className="h-4 w-4 cursor-pointer" />
       </button>
-
-      {/* Year and Month Display */}
-      <div className="flex items-center space-x-2">
-        <span className="font-medium text-sm">{month}</span>
-      </div>
-
-      {/* Month Navigation */}
-      <button onClick={handleNextMonth}>
+      <span className="font-medium text-sm">{months[month]}</span>
+      <button onClick={() => updateMonth(1)}>
         <ChevronRight className="h-4 w-4 cursor-pointer" />
       </button>
     </div>
