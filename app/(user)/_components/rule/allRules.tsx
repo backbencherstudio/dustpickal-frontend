@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useRules } from '@/app/context/RulesContext';
 
 export default function AllRules() {
   const [activeTab, setActiveTab] = useState('predefined');
   const [isPredefinedOpen, setIsPredefinedOpen] = useState(true);
   const [isCustomOpen, setIsCustomOpen] = useState(true);
+  const { selectedRules, addRule, removeRule, isRuleSelected } = useRules();
 
   const rules = {
     predefined: [
@@ -42,8 +44,17 @@ export default function AllRules() {
     }
     return text;
   }
+
+  const handleRuleToggle = (rule: any) => {
+    if (isRuleSelected(rule.id)) {
+      removeRule(rule.id);
+    } else {
+      addRule(rule);
+    }
+  };
+
   return (
-    <div className="pt-3 pb-10">
+    <div className="pt-3 pb-10 w-full">
       <div className="mb-8">
         <button
           className="w-full mb-4 flex justify-between items-center py-2 border-b border-[#D2D2D5]"
@@ -60,7 +71,11 @@ export default function AllRules() {
           <div className="space-y-4">
             {rules.predefined.map(rule => (
               <div key={rule.id} className="flex flex-row gap-2">
-                <input type="checkbox" className='' />
+                <input 
+                  type="checkbox" 
+                  checked={isRuleSelected(rule.id)}
+                  onChange={() => handleRuleToggle(rule)}
+                />
                 <h3 className="text-[#1D1F2C]">{textLimiter(rule.name, 25)}</h3>
               </div>
             ))}
@@ -84,7 +99,11 @@ export default function AllRules() {
           <div className="space-y-4">
             {rules.custom.map(rule => (
               <div key={rule.id} className="flex flex-row gap-2">
-                <input type="checkbox" className='' />
+                <input 
+                  type="checkbox" 
+                  checked={isRuleSelected(rule.id)}
+                  onChange={() => handleRuleToggle(rule)}
+                />
                 <h3 className="text-[#1D1F2C]">{textLimiter(rule.name, 25)}</h3>
               </div>
             ))}

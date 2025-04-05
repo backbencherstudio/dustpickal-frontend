@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import pdf from '@/public/assets/client/icons/pdf.svg';
 import crossBg from "@/public/assets/client/icons/cross-icon.svg";
+import ruleIcon from "@/public/assets/client/icons/rule-gray.svg";
+import { useRules } from '@/app/context/RulesContext';
+import { X } from 'lucide-react';
 
 interface MainAnalyzeProps {
     uploadedFiles: {
@@ -19,7 +22,7 @@ interface MainAnalyzeProps {
 }
 
 export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAnalyzeProps) {
-    const [selectedRules, setSelectedRules] = React.useState<string[]>([]);
+    const { selectedRules, removeRule } = useRules();
 
     useEffect(() => {
         // Simulate upload progress for each file
@@ -104,15 +107,19 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
             <div className="flex flex-col gap-6">
                 {/* Selected Rules Section */}
                 <div className="flex flex-col gap-2">
-                    <h2 className="text-lg font-semibold text-gray-800">Selected Rules</h2>
-                    <div className="p-4 bg-gray-50 rounded-lg">
+                    <h2 className="text-sm font-medium text-gray-800">Selected Rules</h2>
+                    <div className="py-4">
                         {selectedRules.length === 0 ? (
                             <p className="text-gray-500">No rules selected</p>
                         ) : (
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-5">
                                 {selectedRules.map(rule => (
-                                    <div key={rule} className="px-3 py-1 bg-white rounded-full border text-sm">
-                                        {rule}
+                                    <div key={rule.id} className="relative flex flex-row gap-3 px-3 py-2 bg-white rounded-lg border border-[#E9E9EA]">
+                                        <Image src={ruleIcon} alt='' />
+                                        <p className='text-sm text-[#4A4C56] text-ellipsis'>{rule.name}</p>
+                                        <button className='cursor-pointer hover:scale-110 transition-all duration-300 absolute -right-3 -top-3 border border-[#A5A5AB] rounded-full p-0.5 bg-[#1D1F2C]' onClick={() => removeRule(rule.id)}>
+                                            <X className='w-4 h-4 text-white' />
+                                        </button>
                                     </div>
                                 ))}
                             </div>
