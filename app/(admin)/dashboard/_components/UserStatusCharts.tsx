@@ -26,9 +26,7 @@ const UserStatusChart = () => {
       horizontalAlign: "center",
       fontSize: "14px",
       markers: {
-        width: 10,
-        height: 10,
-        radius: 2,
+        size: 10,
       },
       itemMargin: {
         horizontal: 10,
