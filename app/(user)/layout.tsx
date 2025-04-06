@@ -1,6 +1,6 @@
 "use client";
-import LeftSidenbar from "../_components/shared/leftSideBar";
-import RightSideBar from "../_components/shared/rightSideBar"; 
+import LeftSidenbar from "./_components/shared/leftSideBar";
+import RightSideBar from "./_components/shared/rightSideBar"; 
 import { useState } from "react";
 import tapIcon from "@/public/assets/client/icons/tap-menu.svg";
 import Image from "next/image";

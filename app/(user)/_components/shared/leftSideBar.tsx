@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import logo from "@/public/assets/client/logo.png";
 import miniLogo from "@/public/assets/client/mini-logo.png";
@@ -21,6 +22,7 @@ import {
 } from "@/components/ui/command"
 import { useRouter, usePathname } from "next/navigation";
 import AllRules from "../rule/allRules";
+import NotificationDrawer from "../NotificationDrawer";
 interface LeftSidebarProps {
     isExpanded: boolean;
     onExpandToggle: (value: boolean) => void;
@@ -29,10 +31,12 @@ interface LeftSidebarProps {
 export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebarProps) {
     const router = useRouter();
     const pathname = usePathname();
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     return (
-        <div className={`flex flex-col gap-4 px-4 justify-between shadow-xl rounded h-screen transition-all duration-300 ease-in-out ${isExpanded ? 'w-full' : 'w-28'}`}>
-            <div className="flex flex-col gap-4">
-                {/* Logo Section */}
+        <>
+            <div className={`flex flex-col gap-4 px-4 justify-between shadow-xl rounded h-screen transition-all duration-300 ease-in-out ${isExpanded ? 'w-full' : 'w-28'}`}>
+                <div className="flex flex-col gap-4">
+                    {/* Logo Section */}
                 <div className="flex flex-row justify-between items-center py-2">
                     {isExpanded && window.innerWidth > 1024 ? (
                         <Image
@@ -91,24 +95,31 @@ export default function LeftSidenbar({ isExpanded, onExpandToggle }: LeftSidebar
                     </button>
                 </div>
                 <div className="flex flex-col gap-2 pt-3 border-t border-[#D2D2D5]">
-                    <button className={`flex flex-row gap-2 cursor-pointer px-3 py-2`} onClick={() => router.push('/analyze/subscription')}>
+                    <button className={`flex flex-row gap-2 cursor-pointer px-3 py-2`} onClick={() => router.push('/rule-management')}>
                         <Image src={ruleIcon} alt="payment-icon" width={isExpanded ? 22 : 30} height={isExpanded ? 20 : 30} />
-                        <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Rule Management</p>
+                        <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/rule-management' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Rule Management</p>
                     </button>
-                    <button className={`flex flex-row gap-2 cursor-pointer px-3 py-2`} onClick={() => router.push('/analyze/subscription')}>
+                    <button className={`flex flex-row gap-2 cursor-pointer px-3 py-2`} onClick={() => setIsNotificationOpen(!isNotificationOpen)}>
                         <Image src={notifyIcon} alt="payment-icon" width={isExpanded ? 22 : 30} height={isExpanded ? 20 : 30} />
-                        <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Notification</p>
+                        <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/notification' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Notification</p>
                     </button>
                     <button className={`flex flex-row gap-2 cursor-pointer px-3 py-2`} onClick={() => router.push('/analyze/subscription')}>
                         <Image src={paymentIcon} alt="payment-icon" width={isExpanded ? 22 : 30} height={isExpanded ? 20 : 30} />
                         <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Subscription</p>
                     </button>
-                    <button className={`flex flex-row gap-2 cursor-pointer px-3 py-2`} onClick={() => router.push('/analyze/subscription')}>
+                    <button className={`flex flex-row gap-2 cursor-pointer px-3 py-2`} onClick={() => router.push('/logout')}>
                         <Image src={logoutIcon} alt="payment-icon" width={isExpanded ? 22 : 30} height={isExpanded ? 20 : 30} />
-                        <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/analyze/subscription' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Logout</p>
+                        <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '/logout' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Logout</p>
                     </button>
                 </div>
             </div>
         </div>
+        
+            <NotificationDrawer
+                position="side"
+                isOpen={isNotificationOpen}
+                onClose={() => setIsNotificationOpen(!isNotificationOpen)}
+            />
+        </>
     );
 }

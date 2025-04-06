@@ -1,4 +1,4 @@
-import logo from "@/public/assets/client/logo.png";
+import logo from "@/public/assets/client/profileImg.jpg";
 import tapIcon from "@/public/assets/client/icons/tap-menu.svg";
 import Image from "next/image";
 
