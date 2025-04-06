@@ -4,7 +4,7 @@ import CustomFilter from "../../_components/CustomFilter";
 import OverViewChart from "./_components/OverViewChart";
 import TokenUsageChart from "./_components/TokenUsageChart";
 import CustomTable from "../../_components/CustomTable";
-import DateFilter from "./_components/DateFilter";
+import DateFilter from "../../_components/DateFilter";
 
 const page = () => {
   const inputData = [

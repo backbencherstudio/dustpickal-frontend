@@ -40,31 +40,7 @@ const SubsStatus = () => {
         </span>
       </h2>
 
-      <div className="flex h-12 relative w-full gap-[2px]">
-        {/* Cancelled Users */}
-        <div
-          className="h-full bg-[#ff597b] flex items-center justify-center text-white text-xs rounded font-medium"
-          style={{ width: `${cancelledPercentage}%` }}
-        >
-          {subsStatus.cancelledUser}
-        </div>
-
-        {/* Expired Users */}
-        <div
-          className="h-full bg-[#a5a5ab] flex items-center justify-center text-white text-xs rounded font-medium"
-          style={{ width: `${expiredPercentage}%` }}
-        >
-          {subsStatus.expiredUser}
-        </div>
-
-        {/* Active Users */}
-        <div
-          className="h-full bg-[#24a4ff] flex items-center justify-center text-white text-xs rounded font-medium"
-          style={{ width: `${activePercentage}%` }}
-        >
-          {subsStatus.activeUser}
-        </div>
-      </div>
+      z
 
       {/* Labels */}
       <div className="flex flex-col justify-center gap-3 mt-10">
