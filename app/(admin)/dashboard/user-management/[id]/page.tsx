@@ -1,29 +1,51 @@
 "use client";
 import CustomTable from "@/app/(admin)/_components/CustomTable";
+import { useGetUserInfoQuery } from "@/app/store/api/userApi";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { format } from "date-fns";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { IoMdCopy } from "react-icons/io";
 
-const userInfo = [
-  { label: "User ID", value: "#9003237" },
-  { label: "Registration Date", value: "12/06/2020" },
-  { label: "Last Active", value: "4 months ago" },
-  { label: "Document Analyzed", value: "883" },
-  { label: "Custom Rules", value: "12" },
-  { label: "Subscription Plan", value: "As Pay You Go" },
-  { label: "Subscription Status", value: "Active", isActive: true },
-];
-
 const page = () => {
+  const params = useParams();
+  const { id } = params;
   const [activeTab, setActiveTab] = useState("info");
+  const { data, isLoading, isError } = useGetUserInfoQuery({
+    id: id,
+  });
+  const userInfo = [
+    { label: "User ID", value: data?.user_information?.user_id },
+    {
+      label: "Registration Date",
+      value: data?.user_information?.registration_date
+        ? format(
+            new Date(data.user_information.registration_date),
+            "dd MMMM yyyy"
+          )
+        : "N/A",
+    },
+    {
+      label: "Last Active",
+      value: data?.user_information?.last_active
+        ? format(new Date(data.user_information.last_active), "dd MMMM yyyy")
+        : "N/A",
+    },
+    { label: "Document Analyzed", value: "883" },
+    { label: "Custom Rules", value: "12" },
+    { label: "Subscription Plan", value: "As Pay You Go" },
+    { label: "Subscription Status", value: "Active", isActive: true },
+  ];
   return (
     <div>
       <div className="bg-[#e9e9ea] h-12 rounded"></div>
       <div className="flex justify-between items-center mr-10">
         <div>
-          <h1 className="mt-10 text-[16px] mx-4">Stive Smith</h1>
+          <h1 className="mt-10 text-[16px] mx-4">
+            {data?.personal_info?.full_name}
+          </h1>
           <p className="text-[12px] mx-4 text-[#4A4C56]">
-            stive.smith@gmail.com
+            {data?.personal_info?.email}
           </p>
         </div>
         <div className="text-[14px] mt-5">
@@ -99,6 +121,13 @@ const page = () => {
               columns={[]}
               data={[]}
               filter={false}
+              pagination={{
+                currentPage: 1,
+                totalPages: 1,
+                onPageChange: () => {},
+                limit: 10,
+                onLimitChange: () => {},
+              }}
             />
           </TabsContent>
         </Tabs>

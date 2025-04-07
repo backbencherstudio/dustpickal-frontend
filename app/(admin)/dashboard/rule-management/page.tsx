@@ -1,105 +1,56 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React from "react";
+import React, { useState } from "react";
 import CustomTable from "../../_components/CustomTable";
 import { IoEyeOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-
+import { useGetRulesQuery } from "@/app/store/api/ruleApi";
+import { format } from "date-fns";
 const page = () => {
   const router = useRouter();
-  const rulesData = [
-    {
-      sl: 1,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 2,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 3,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 4,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 5,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 6,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 7,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 8,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 9,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 10,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 11,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 12,
-      rules: "IEC 62368-1 Safety Report Check",
-      usageCount: "10,000",
-      publishedDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-  ];
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
+  const { data, isLoading, isError } = useGetRulesQuery({ page, limit });
+  if (isLoading)
+    return (
+      <div className=" mt-6">
+        <div className="bg-white min-h-[80vh] p-5 rounded-xl shadow">
+          <div className="h-5 w-48 bg-gray-200 rounded mb-4"></div>
+          <div className="space-y-5">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+              <div key={i} className="h-12 bg-gray-100 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  if (isError) return <div>Error...</div>;
 
   const columns = [
-    { label: "SL", accessor: "sl" },
-    { label: "Rules", accessor: "rules" },
-    { label: "Usage Count", accessor: "usageCount" },
-    { label: "Published Date", accessor: "publishedDate" },
-    { label: "Last Modified", accessor: "lastModified" },
+    { label: "Rules", accessor: "rule_name" },
+    { label: "Usage Count", accessor: "usage_count" },
+    {
+      label: "Published Date",
+      accessor: "published_date",
+      customCell: (row) => {
+        try {
+          return format(new Date(row.published_date), "dd MMMM yyyy");
+        } catch (error) {
+          return row.published_date || "N/A";
+        }
+      },
+    },
+    {
+      label: "Last Modified",
+      accessor: "last_modified",
+      customCell: (row) => {
+        try {
+          return format(new Date(row.last_modified), "dd MMMM yyyy");
+        } catch (error) {
+          return row.last_modified || "N/A";
+        }
+      },
+    },
     {
       label: "Action",
       accessor: "action",
@@ -145,8 +96,15 @@ const page = () => {
               type="user-management"
               title=""
               columns={columns}
-              data={rulesData}
+              data={data?.data}
               filter={false}
+              pagination={{
+                currentPage: page,
+                totalPages: data?.totalPages || 1,
+                onPageChange: setPage,
+                limit,
+                onLimitChange: setLimit,
+              }}
             />
           </TabsContent>
           <TabsContent value="billings" className="mt-6">
@@ -156,6 +114,13 @@ const page = () => {
               columns={[]}
               data={[]}
               filter={false}
+              pagination={{
+                currentPage: page,
+                totalPages: 1,
+                onPageChange: setPage,
+                limit,
+                onLimitChange: setLimit,
+              }}
             />
           </TabsContent>
         </Tabs>

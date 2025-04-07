@@ -9,12 +9,19 @@ import SubsStatus from "./_components/SubsStatus";
 import UserStatusChart from "./_components/UserStatusCharts";
 import SkeletonLoading from "./_components/SkeletonLoading";
 import { FiAlertTriangle, FiRefreshCw } from "react-icons/fi";
+import { useState } from "react";
 
 export default function DashboardPage() {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
   const { data, isLoading, isError, refetch } = useGetDashboardsQuery({
     year: 2025,
     month: 4,
+    page,
+    limit,
   });
+
   const rulesColumns = [
     { label: "S/N", accessor: "pNo" },
     { label: "Rule Name", accessor: "rule_name" },
@@ -163,6 +170,13 @@ export default function DashboardPage() {
           columns={rulesColumns}
           data={rulesData}
           title="List of most used Pre-define ruleses"
+          pagination={{
+            currentPage: page,
+            totalPages: data?.data?.totalPages || 1,
+            onPageChange: setPage,
+            limit,
+            onLimitChange: setLimit,
+          }}
         />
       </div>
       <div className="mt-6">
@@ -171,6 +185,13 @@ export default function DashboardPage() {
           columns={newUsersColumns}
           data={newUsersData}
           title="New users this month"
+          pagination={{
+            currentPage: page,
+            totalPages: data?.data?.totalPages || 1,
+            onPageChange: setPage,
+            limit,
+            onLimitChange: setLimit,
+          }}
         />
       </div>
     </div>

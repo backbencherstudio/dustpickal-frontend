@@ -24,17 +24,37 @@ export default function CustomTable({
   title,
   filter = false,
   itemsPerPage = 10,
+  pagination,
 }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [localItemsPerPage, setLocalItemsPerPage] = useState(itemsPerPage);
 
-  // Calculate total number of pages
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  // Use external pagination if provided, otherwise use internal state
+  const page = pagination?.currentPage || currentPage;
+  const limit = pagination?.limit || localItemsPerPage;
+  const totalPages = pagination?.totalPages || Math.ceil(data.length / limit);
+
+  const handlePageChange = (newPage) => {
+    if (pagination?.onPageChange) {
+      pagination.onPageChange(newPage);
+    } else {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handleLimitChange = (newLimit) => {
+    if (pagination?.onLimitChange) {
+      pagination.onLimitChange(newLimit);
+    } else {
+      setLocalItemsPerPage(newLimit);
+    }
+  };
 
   const currentData = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
     return data.slice(startIndex, endIndex);
-  }, [data, currentPage, itemsPerPage]);
+  }, [data, page, limit]);
 
   const pageNumbers = useMemo(() => {
     const pages = [];
@@ -44,8 +64,8 @@ export default function CustomTable({
 
     // Add current page and surrounding pages
     for (
-      let i = Math.max(2, currentPage - 1);
-      i <= Math.min(totalPages - 1, currentPage + 1);
+      let i = Math.max(2, page - 1);
+      i <= Math.min(totalPages - 1, page + 1);
       i++
     ) {
       if (pages[pages.length - 1] !== i - 1) {
@@ -65,14 +85,7 @@ export default function CustomTable({
     }
 
     return pages;
-  }, [currentPage, totalPages]);
-
-  // Handle page change
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  }, [page, totalPages]);
 
   return (
     <div>
@@ -175,9 +188,9 @@ export default function CustomTable({
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious
-                    onClick={() => handlePageChange(currentPage - 1)}
+                    onClick={() => handlePageChange(page - 1)}
                     className={
-                      currentPage === 1
+                      page === 1
                         ? "pointer-events-none opacity-50"
                         : "cursor-pointer"
                     }
@@ -190,10 +203,10 @@ export default function CustomTable({
                       <PaginationEllipsis />
                     ) : (
                       <PaginationLink
-                        isActive={page === currentPage}
+                        isActive={page === page}
                         onClick={() => handlePageChange(page)}
                         className={`cursor-pointer border ${
-                          page === currentPage
+                          page === page
                             ? "bg-black text-white hover:bg-black hover:text-white"
                             : " bg-white"
                         }`}
@@ -206,9 +219,9 @@ export default function CustomTable({
 
                 <PaginationItem>
                   <PaginationNext
-                    onClick={() => handlePageChange(currentPage + 1)}
+                    onClick={() => handlePageChange(page + 1)}
                     className={
-                      currentPage === totalPages
+                      page === totalPages
                         ? "pointer-events-none opacity-50"
                         : "cursor-pointer"
                     }
