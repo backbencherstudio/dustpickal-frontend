@@ -3,11 +3,12 @@ import React from "react";
 import { FiUsers } from "react-icons/fi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuUserRoundPen } from "react-icons/lu";
-const AnalyticsCards = () => {
+const AnalyticsCards = ({ data }) => {
+  console.log(data);
   const cards = [
     {
       title: "Total Users",
-      value: 123567,
+      value: data?.totalUsers,
       icon: <FiUsers size={20} />,
     },
     {
@@ -47,7 +48,7 @@ const AnalyticsCards = () => {
     },
     {
       title: "User Created Rules",
-      value: 670,
+      value: data?.userRules,
       icon: <LuUserRoundPen size={20} />,
     },
   ];

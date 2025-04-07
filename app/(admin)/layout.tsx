@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
     <div className="flex h-screen bg-[#f7f9fb]">
       {/* Mobile menu button */}
       <button
-        className="lg:hidden absolute right-2 z-20 top-4 p-2 rounded-full bg-[#f3f4f6] text-black border"
+        className="lg:hidden absolute right-4 z-20 top-4 p-2 rounded-full bg-[#f3f4f6] text-black border cursor-pointer"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
       >
