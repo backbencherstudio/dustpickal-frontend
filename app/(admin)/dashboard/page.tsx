@@ -1,4 +1,5 @@
 "use client";
+import { useGetDashboardsQuery } from "@/app/store/api/dashboardApi";
 import CustomTable from "../_components/CustomTable";
 import AnalyticsCards from "./_components/AnalyticsCards";
 import ApiChart from "./_components/ApiChart";
@@ -6,8 +7,14 @@ import AreaChart from "./_components/AreaChart";
 import SubsStatsChart from "./_components/SubsStatsChart";
 import SubsStatus from "./_components/SubsStatus";
 import UserStatusChart from "./_components/UserStatusCharts";
+import SkeletonLoading from "./_components/SkeletonLoading";
+import { FiAlertTriangle, FiRefreshCw } from "react-icons/fi";
 
 export default function DashboardPage() {
+  const { data, isLoading, isError, refetch } = useGetDashboardsQuery({
+    year: 2025,
+    month: 4,
+  });
   const rulesColumns = [
     { label: "S/N", accessor: "pNo" },
     { label: "Rule Name", accessor: "rule_name" },
@@ -106,10 +113,33 @@ export default function DashboardPage() {
       subscriptions: "Enterprise",
     },
   ];
+  if (isLoading) return <SkeletonLoading />;
+  if (isError)
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[70vh] bg-white rounded-xl p-8 shadow-sm">
+        <div className="bg-red-50 p-4 rounded-full mb-6">
+          <FiAlertTriangle className="text-red-500 text-4xl" />
+        </div>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+          Failed to Load Dashboard
+        </h2>
+        <p className="text-gray-500 text-center mb-6 max-w-md">
+          We couldn't load your dashboard data. This might be due to a network
+          issue or server problem.
+        </p>
+        <button
+          onClick={() => refetch()}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+        >
+          <FiRefreshCw className="text-lg" />
+          <span>Try Again</span>
+        </button>
+      </div>
+    );
 
   return (
     <div>
-      <AnalyticsCards />
+      <AnalyticsCards data={data?.data} />
       <div className="grid grid-cols-1 lg:grid-cols-4 mt-6 gap-6">
         <div className="lg:col-span-3 bg-white p-6 rounded-xl">
           <AreaChart />
