@@ -21,15 +21,15 @@ const page = () => {
   const { id } = useParams();
   console.log(id);
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const edit = urlParams.get("edit") || false;
-  
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const edit = urlParams.get("edit") || false;
+    
     editRule()
     if (edit) {
       setIsEdit(true);
     }
-  }, [edit, isEdit]);
+  }, [isEdit]);
   
   const handleDelete = () => {
     setIsDeleteModalOpen(false);
