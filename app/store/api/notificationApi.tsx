@@ -8,7 +8,7 @@ export const notificationApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: [{ type: "Notifications" }],
+      providesTags: ["Notifications"],
     }),
 
     markNotificationAsRead: builder.mutation({
@@ -16,7 +16,7 @@ export const notificationApi = baseApi.injectEndpoints({
         url: `/notifications/${id}/read`,
         method: "PATCH",
       }),
-      invalidatesTags: [{ type: "Notifications" }],
+      invalidatesTags: ["Notifications"],
     }),
   }),
   overrideExisting: false,
