@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "react-apexcharts";
 import DateFilter from "../../_components/DateFilter";
 
-const AreaChart = () => {
+const AreaChart = ({ data }) => {
   const options: ApexCharts.ApexOptions = {
     chart: {
       height: 350,
@@ -50,6 +50,7 @@ const AreaChart = () => {
       strokeDashArray: 4,
     },
     legend: {
+      show: false,
       position: "top",
       horizontalAlign: "left",
       offsetY: -10,
@@ -90,32 +91,32 @@ const AreaChart = () => {
       data: [1500, 1800, 2000, 2000, 1700, 2300, 1800, 2600, 3000, 3200],
     },
   ];
-
+  const revenueData = [
+    {
+      value: data?.revenue?.subscriptionRevenue?.payAsYouGo,
+      label: "Pay As You Go",
+      color: "#eb3d4d",
+    },
+    {
+      value: data?.revenue?.subscriptionRevenue?.basic,
+      label: "Basic",
+      color: "#161721",
+    },
+    {
+      value: data?.revenue?.subscriptionRevenue?.pro,
+      label: "Pro",
+      color: "#f9c80e",
+    },
+    {
+      value: data?.revenue?.subscriptionRevenue?.enterprise,
+      label: "Enterprise",
+      color: "#0d86ff",
+    },
+  ];
   return (
     <div className="bg-white p-6 rounded-lg">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h2 className="text-2xl font-semibold">$18,356</h2>
-          <p className="text-gray-600">Monthly</p>
-        </div>
-        <div className="flex gap-8">
-          <div>
-            <p className="text-xl font-semibold">$2,356</p>
-            <p className="text-red-500 text-sm">Pay As You Go</p>
-          </div>
-          <div>
-            <p className="text-xl font-semibold">$1,346</p>
-            <p className="text-gray-800 text-sm">Basic</p>
-          </div>
-          <div>
-            <p className="text-xl font-semibold">$5,356</p>
-            <p className="text-yellow-500 text-sm">Pro</p>
-          </div>
-          <div>
-            <p className="text-xl font-semibold">$7,356</p>
-            <p className="text-blue-500 text-sm">Enterprise</p>
-          </div>
-        </div>
+      <div className="flex justify-between mb-6">
+        <h1 className="font-medium">Revenue</h1>
         <div className="flex items-center gap-4">
           <select className="border rounded px-3 py-1 text-sm">
             <option>Total Earnings</option>
@@ -123,6 +124,30 @@ const AreaChart = () => {
           </select>
           <DateFilter />
         </div>
+      </div>
+      <div className="grid lg:grid-cols-5 grid-cols-2 items-center flex-wrap mb-6 gap-6">
+        <div className="border-r">
+          <h2 className="text-2xl font-semibold">
+            ${data?.revenue?.monthlyRevenue}
+          </h2>
+          <p className="text-gray-600 mt-3">Monthly</p>
+        </div>
+
+        {revenueData?.map((item, index, array) => (
+          <div
+            key={item.label}
+            className={index < array.length - 1 ? "border-r" : ""}
+          >
+            <p className="text-xl font-semibold">${item.value}</p>
+            <div className="flex gap-2 items-center mt-3">
+              <div
+                className={`w-4 h-4 rounded`}
+                style={{ backgroundColor: item.color }}
+              ></div>
+              <p className="text-sm">{item.label}</p>
+            </div>
+          </div>
+        ))}
       </div>
       <Chart options={options} series={series} type="area" height={350} />
     </div>
