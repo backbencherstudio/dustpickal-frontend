@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { Upload } from "lucide-react";
+import { Upload, History } from "lucide-react";
 import miniLogo from "@/public/assets/client/mini-logo.png"
 import artWork from "@/public/assets/client/artwork.svg"
 import Document from "@/public/assets/client/icons/document.svg"
@@ -9,6 +9,7 @@ import Results from "@/public/assets/client/icons/result.svg"
 import { useEffect, useState } from "react";
 import FreeSubsModal from "./_components/freeSubsModal";
 import MainAnalyze from "../_components/analyze/mainAnalyze";
+import Link from "next/link";
 
 const steps = [
     {
@@ -147,8 +148,15 @@ export default function AnalyzePage() {
 
                 {/* Upload Section */}
                 <div className="border border-[#E9E9EA] backdrop-blur-sm rounded-xl p-8 shadow-sm">
-                    <div className="mb-4">
-                        <h4 className="text-lg font-medium mb-2">Uploaded Document</h4>
+                    <div className="flex justify-between items-center mb-4">
+                        <h4 className="text-lg font-medium">Uploaded Document</h4>
+                        <Link 
+                            href="/analyze/history" 
+                            className="flex items-center gap-2 text-[#24A4FF] hover:text-indigo-600 transition-colors"
+                        >
+                            <History className="w-5 h-5" />
+                            <span className="text-sm font-medium">View History</span>
+                        </Link>
                     </div>
                     <div 
                         className="bg-[#F8FAFB] border-2 border-dashed border-gray-200 rounded-xl p-8 transition-colors hover:border-indigo-500/50"
