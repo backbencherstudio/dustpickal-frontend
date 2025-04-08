@@ -2,9 +2,10 @@
 import { ArrowLeft, Check, X } from "lucide-react";
 import { useState } from "react";
 import { subscriptionPlans } from "./subscriptionData";
-
+import { useRouter } from "next/navigation";
 export default function Subscription() {
     const [selected, setSelected] = useState<'monthly' | 'annual'>('monthly');
+    const router = useRouter();
 
     const getButtonStyles = (plan: typeof subscriptionPlans[0]) => {
         if (plan.id === 'pro') {
@@ -84,7 +85,7 @@ export default function Subscription() {
                                                 Purchase annually and save <span className="text-[#22CAAD]">{plan.annualDiscount.percentage}% - ${plan.annualDiscount.amount}</span>
                                             </p>
                                         )}
-                                        <button className={getButtonStyles(plan)}>Get Started</button>
+                                        <button className={getButtonStyles(plan)} onClick={() => router.push('/subscription/upgrade')}>Get Started</button>
                                     </div>
                                 </div>
                             ))}

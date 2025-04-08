@@ -59,7 +59,7 @@ export default function UpgradePage() {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 justify-between items-start gap-5 lg:gap-0">
             <div className="col-span-2">
-                <button className="flex flex-row gap-2 items-center text-sm text-[#1D1F2C] cursor-pointer" onClick={() => router.push('/analyze/subscription')}>
+                <button className="flex flex-row gap-2 items-center text-sm text-[#1D1F2C] cursor-pointer" onClick={() => router.push('/subscription')}>
                     <ArrowLeft className="w-4 h-4" /> <p className="text-sm font-medium">Back</p>
                 </button>
             </div>
