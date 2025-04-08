@@ -9,7 +9,7 @@ import { format } from "date-fns";
 const page = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(10);
   const { data, isLoading, isError } = useGetRulesQuery({ page, limit });
   if (isLoading)
     return (
@@ -66,6 +66,9 @@ const page = () => {
       ),
     },
   ];
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
   return (
     <div>
       <div className="mt-5 mx-4 relative">
@@ -98,13 +101,13 @@ const page = () => {
               columns={columns}
               data={data?.data}
               filter={false}
-              pagination={{
-                currentPage: page,
-                totalPages: data?.totalPages || 1,
-                onPageChange: setPage,
-                limit,
-                onLimitChange: setLimit,
+              paginationData={{
+                currentPage: data?.meta?.page || 1,
+                totalPages: data?.meta?.total_pages || 1,
+                // totalItems: data?.meta?.total || 1,
               }}
+              pagination={true}
+              onPageChange={handlePageChange}
             />
           </TabsContent>
           <TabsContent value="billings" className="mt-6">
@@ -114,13 +117,7 @@ const page = () => {
               columns={[]}
               data={[]}
               filter={false}
-              pagination={{
-                currentPage: page,
-                totalPages: 1,
-                onPageChange: setPage,
-                limit,
-                onLimitChange: setLimit,
-              }}
+              onPageChange={handlePageChange}
             />
           </TabsContent>
         </Tabs>

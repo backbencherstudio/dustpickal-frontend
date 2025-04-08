@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useParams, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import {
@@ -14,6 +14,7 @@ import CustomModal from "@/app/(admin)/_components/CustomModal";
 import { Button } from "@/components/ui/button";
 import {
   useDeleteRuleMutation,
+  useGetRuleByIdQuery,
   useUpdateRuleMutation,
 } from "@/app/store/api/ruleApi";
 import { toast } from "react-hot-toast"; // Import react-hot-toast
@@ -24,10 +25,18 @@ const page = () => {
   const router = useRouter();
   const [heading, setHeading] = React.useState("");
   const [subRule, setSubRule] = React.useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const { data: ruleData } = useGetRuleByIdQuery(id);
   const [updateRule] = useUpdateRuleMutation();
   const [deleteRule] = useDeleteRuleMutation();
+  useEffect(() => {
+    if (ruleData) {
+      setHeading(ruleData.title);
+      setSubRule(ruleData.description);
+    }
+  }, [ruleData]);
 
   const handleDelete = async () => {
     try {
@@ -85,7 +94,7 @@ const page = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="lg:mr-24 mr-3 text-[12px] p-2 ">
               <button
-                onClick={() => setIsUpdateModalOpen(true)}
+                onClick={() => setIsEditing(!isEditing)}
                 className="bg-[#d2d2d5] text-black cursor-pointer w-full mx-auto py-2 px-3 rounded text-start hover:opacity-80 transition-all duration-300 font-medium"
               >
                 Edit
@@ -101,6 +110,7 @@ const page = () => {
         </div>
         <Input
           type="text"
+          disabled={!isEditing}
           onChange={(e) => setHeading(e.target.value)}
           value={heading}
           placeholder="Heading"
@@ -108,6 +118,7 @@ const page = () => {
         />
         <p className="text-[14px] mt-5 text-gray-400">Sub-Rule</p>
         <Textarea
+          disabled={!isEditing}
           onChange={(e) => setSubRule(e.target.value)}
           value={subRule}
           placeholder="Sub-Rule"
@@ -115,6 +126,7 @@ const page = () => {
         />
         <div className="flex justify-end mt-10 gap-4">
           <Button
+            disabled={!isEditing}
             onClick={() => setIsUpdateModalOpen(true)}
             className="px-6 py-2 text-[12px] border rounded bg-black text-white hover:opacity-80 transition-all duration-300"
           >
