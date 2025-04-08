@@ -14,6 +14,76 @@ const page = () => {
   const { data, isLoading, isError } = useGetUserInfoQuery({
     id: id,
   });
+
+  if (isLoading) {
+    return (
+      <div>
+        {/* Header placeholder */}
+        <div className="bg-[#e9e9ea] h-12 rounded animate-pulse"></div>
+
+        {/* User info header placeholder */}
+        <div className="flex justify-between items-center mr-10">
+          <div>
+            <div className="mt-10 h-6 w-40 bg-gray-200 rounded mx-4 animate-pulse"></div>
+            <div className="h-4 w-32 bg-gray-200 rounded mx-4 mt-2 animate-pulse"></div>
+          </div>
+          <div className="mt-5">
+            <div className="bg-gray-200 h-8 w-32 rounded-md animate-pulse"></div>
+          </div>
+        </div>
+
+        {/* Tabs placeholder */}
+        <div className="mt-5 mx-4">
+          <Tabs defaultValue="info" className="w-full">
+            <TabsList className="flex justify-start w-full bg-transparent border-b-2 border-[#e9e9ea]">
+              <TabsTrigger
+                value="info"
+                className="data-[state=active]:text-[#1d1f2c] data-[state=active]:border-b-2 max-w-[120px] data-[state=active]:border-b-[#1d1f2c] data-[state=active]:shadow-none data-[state=active]:bg-transparent py-4 rounded-none text-[#a5a5ab] cursor-pointer"
+              >
+                User Information
+              </TabsTrigger>
+              <TabsTrigger
+                value="billings"
+                className="data-[state=active]:text-[#1d1f2c] data-[state=active]:border-b-2 max-w-[100px] data-[state=active]:border-b-[#1d1f2c] data-[state=active]:shadow-none data-[state=active]:bg-transparent py-4 rounded-none text-[#a5a5ab] cursor-pointer"
+              >
+                Billings
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="info" className="mt-6">
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
+                <div className="space-y-4">
+                  {/* Create 7 skeleton items to match userInfo array length */}
+                  {Array(7)
+                    .fill(0)
+                    .map((_, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between items-center py-2"
+                      >
+                        <div className="h-5 w-24 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="h-5 w-20 bg-gray-200 rounded animate-pulse"></div>
+                      </div>
+                    ))}
+                </div>
+                <div>{/* Right side content placeholder */}</div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="billings" className="mt-6">
+              {/* Billing tab skeleton */}
+              <div className="w-full h-64 bg-gray-100 rounded animate-pulse"></div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div className="p-4 text-red-500">Failed to load user data.</div>;
+  }
+
   const userInfo = [
     { label: "User ID", value: data?.user_information?.user_id },
     {
@@ -31,11 +101,15 @@ const page = () => {
         ? format(new Date(data.user_information.last_active), "dd MMMM yyyy")
         : "N/A",
     },
-    { label: "Document Analyzed", value: "883" },
-    { label: "Custom Rules", value: "12" },
-    { label: "Subscription Plan", value: "As Pay You Go" },
+    {
+      label: "Document Analyzed",
+      value: data?.user_information?.documents_analyzed,
+    },
+    { label: "Custom Rules", value: data?.user_information?.custom_rules },
+    { label: "Subscription Plan", value: data?.user_information?.subscription },
     { label: "Subscription Status", value: "Active", isActive: true },
   ];
+
   return (
     <div>
       <div className="bg-[#e9e9ea] h-12 rounded"></div>
