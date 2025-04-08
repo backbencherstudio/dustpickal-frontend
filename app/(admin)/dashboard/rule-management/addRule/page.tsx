@@ -1,23 +1,44 @@
 "use client";
 import CustomModal from "@/app/(admin)/_components/CustomModal";
+import { useCreateRuleMutation } from "@/app/store/api/ruleApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa";
 
 const page = () => {
+  const [heading, setHeading] = React.useState("");
+  const [subRule, setSubRule] = React.useState("");
   const router = useRouter();
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [isDraftModalOpen, setIsDraftModalOpen] = React.useState(false);
+  const [createRule] = useCreateRuleMutation(); // Correctly destructure the mutation function
 
-  const handleAdd = () => {
-    setIsAddModalOpen(false);
+  const handleAdd = async () => {
+    const data = {
+      title: heading,
+      description: subRule,
+    };
+    try {
+      await createRule(data).unwrap();
+      setHeading("");
+      setSubRule("");
+      setIsAddModalOpen(false);
+      toast.success("Rule added successfully!");
+      router.push("/dashboard/rule-management");
+    } catch (error) {
+      console.error("Failed to create rule:", error);
+      toast.error("Failed to create rule.");
+    }
   };
+
   const handleDraft = () => {
     setIsDraftModalOpen(false);
   };
+
   return (
     <div>
       <div className="inline-block">
@@ -31,13 +52,17 @@ const page = () => {
       <div className="max-w-[820px]">
         <p className="text-[14px] mt-5 text-gray-400">Rule Heading</p>
         <Input
-          type="email"
-          placeholder="Email"
+          type="text"
+          onChange={(e) => setHeading(e.target.value)}
+          value={heading}
+          placeholder="Heading"
           className="mt-3 p-3 border-gray-300 shadow-none focus:border-[#f7f9fb] focus:ring focus:ring-gray-300 transition-colors duration-200"
         />
         <p className="text-[14px] mt-5 text-gray-400">Sub-Rule</p>
         <Textarea
           placeholder="Sub-Rule"
+          onChange={(e) => setSubRule(e.target.value)}
+          value={subRule}
           className="ml-4 w-[98%] min-h-[300px] mt-3 p-3 border-gray-300 shadow-none focus:border-[#f7f9fb] focus:ring focus:ring-gray-300 transition-colors duration-200"
         />
         <div className="flex justify-end mt-10 gap-4">
@@ -45,12 +70,12 @@ const page = () => {
             onClick={() => setIsDraftModalOpen(true)}
             className="px-6 py-2 text-[12px] border rounded text-gray-500 bg-gray-100 hover:bg-gray-200 transition-all duration-300"
           >
-            Save ad draft
+            Save as draft
           </Button>
           <Button
-            disabled={false}
+            disabled={!heading || !subRule}
             onClick={() => setIsAddModalOpen(true)}
-            className={`px-6 py-2 text-[12px] border rounded bg-black text-white hover:opacity-80 transition-all duration-300`}
+            className={`px-6 py-2 text-[12px] border rounded bg-black text-white hover:opacity-80 transition-all duration-300 cursor-pointer`}
           >
             Add Rule
           </Button>

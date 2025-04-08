@@ -9,6 +9,42 @@ export const ruleApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Rules"],
     }),
+    getRuleById: builder.query({
+      query: (id) => ({
+        url: `/admin/rule-management/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Rules"],
+    }),
+    createRule: builder.mutation({
+      query: (data) => ({
+        url: "/admin/rule-management",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Rules"],
+    }),
+    updateRule: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/admin/rule-management/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Rules"],
+    }),
+    deleteRule: builder.mutation({
+      query: (id) => ({
+        url: `/admin/rule-management/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Rules"],
+    }),
   }),
 });
-export const { useGetRulesQuery } = ruleApi;
+export const {
+  useGetRulesQuery,
+  useCreateRuleMutation,
+  useUpdateRuleMutation,
+  useDeleteRuleMutation,
+  useGetRuleByIdQuery,
+} = ruleApi;

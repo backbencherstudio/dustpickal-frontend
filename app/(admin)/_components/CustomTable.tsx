@@ -1,4 +1,3 @@
-import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -17,75 +16,47 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
+interface PaginationData {
+  currentPage?: number;
+  totalPages?: number;
+}
+
 export default function CustomTable({
   type,
   columns = [],
   data = [],
   title,
   filter = false,
-  itemsPerPage = 10,
-  pagination,
+  onPageChange,
+  paginationData = {} as PaginationData,
+  pagination = true,
 }) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [localItemsPerPage, setLocalItemsPerPage] = useState(itemsPerPage);
+  const { currentPage = 1, totalPages = 1 } = paginationData || {};
 
-  // Use external pagination if provided, otherwise use internal state
-  const page = pagination?.currentPage || currentPage;
-  const limit = pagination?.limit || localItemsPerPage;
-  const totalPages = pagination?.totalPages || Math.ceil(data.length / limit);
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const showPages = 3; // Number of pages to show before and after current page
 
-  const handlePageChange = (newPage) => {
-    if (pagination?.onPageChange) {
-      pagination.onPageChange(newPage);
-    } else {
-      setCurrentPage(newPage);
-    }
-  };
-
-  const handleLimitChange = (newLimit) => {
-    if (pagination?.onLimitChange) {
-      pagination.onLimitChange(newLimit);
-    } else {
-      setLocalItemsPerPage(newLimit);
-    }
-  };
-
-  const currentData = useMemo(() => {
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    return data.slice(startIndex, endIndex);
-  }, [data, page, limit]);
-
-  const pageNumbers = useMemo(() => {
-    const pages = [];
-
-    // Always show first page
-    pages.push(1);
-
-    // Add current page and surrounding pages
-    for (
-      let i = Math.max(2, page - 1);
-      i <= Math.min(totalPages - 1, page + 1);
-      i++
-    ) {
-      if (pages[pages.length - 1] !== i - 1) {
-        // Add ellipsis if there's a gap
-        pages.push("...");
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 || // First page
+        i === totalPages || // Last page
+        (i >= currentPage - showPages && i <= currentPage + showPages) // Pages around current
+      ) {
+        pageNumbers.push(i);
       }
-      pages.push(i);
     }
 
-    // Add last page if we have more than 1 page
-    if (totalPages > 1 && pages[pages.length - 1] !== totalPages) {
-      if (pages[pages.length - 1] !== totalPages - 1) {
-        // Add ellipsis if there's a gap
-        pages.push("...");
+    // Add ellipsis where needed
+    const withEllipsis = [];
+    for (let i = 0; i < pageNumbers.length; i++) {
+      if (i > 0 && pageNumbers[i] - pageNumbers[i - 1] > 1) {
+        withEllipsis.push("...");
       }
-      pages.push(totalPages);
+      withEllipsis.push(pageNumbers[i]);
     }
-
-    return pages;
-  }, [page, totalPages]);
+    return withEllipsis;
+  };
 
   return (
     <div>
@@ -127,7 +98,7 @@ export default function CustomTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentData?.length === 0 ? (
+            {data?.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
@@ -158,7 +129,7 @@ export default function CustomTable({
                 </TableCell>
               </TableRow>
             ) : (
-              currentData?.map((row, i) => (
+              data?.map((row, i) => (
                 <TableRow
                   key={row.id || i}
                   className={`hover:bg-gray-100 border-b border-[#d2d2d5] last:border-b-0 ${
@@ -168,7 +139,7 @@ export default function CustomTable({
                   {columns?.map((col) => (
                     <TableCell
                       key={col.accessor}
-                      className="py-3 px-4 text-[12px] border-r border-[#d2d2d5] last:border-r-0"
+                      className="py-2 px-4 text-[12px] border-r border-[#d2d2d5] last:border-r-0"
                     >
                       {col.customCell ? col.customCell(row) : row[col.accessor]}
                     </TableCell>
@@ -180,51 +151,59 @@ export default function CustomTable({
         </Table>
       </div>
 
-      {/* Only show pagination if there are more than itemsPerPage (10) items */}
-      {data.length > itemsPerPage && (
-        <div className="flex justify-end mt-2">
-          <div className="">
-            <Pagination>
-              <PaginationContent>
+      {pagination && totalPages > 1 && (
+        <div className="mt-6 w-full">
+          <div className="flex justify-end">
+            <Pagination className="justify-end">
+              <PaginationContent className="flex flex-nowrap justify-end gap-1">
                 <PaginationItem>
                   <PaginationPrevious
-                    onClick={() => handlePageChange(page - 1)}
-                    className={
-                      page === 1
+                    onClick={() => onPageChange(currentPage - 1)}
+                    className={`whitespace-nowrap ${
+                      currentPage === 1
                         ? "pointer-events-none opacity-50"
                         : "cursor-pointer"
-                    }
+                    }`}
                   />
                 </PaginationItem>
 
-                {pageNumbers.map((page, index) => (
-                  <PaginationItem key={index}>
-                    {page === "..." ? (
-                      <PaginationEllipsis />
+                {/* For mobile, show fewer page numbers */}
+                <div className="flex gap-1">
+                  {getPageNumbers().map((pageNum, index) =>
+                    pageNum === "..." ? (
+                      <PaginationItem key={`ellipsis-${index}`}>
+                        <PaginationEllipsis />
+                      </PaginationItem>
                     ) : (
-                      <PaginationLink
-                        isActive={page === page}
-                        onClick={() => handlePageChange(page)}
-                        className={`cursor-pointer border ${
-                          page === page
-                            ? "bg-black text-white hover:bg-black hover:text-white"
-                            : " bg-white"
-                        }`}
-                      >
-                        {page}
-                      </PaginationLink>
-                    )}
-                  </PaginationItem>
-                ))}
-
+                      <PaginationItem key={pageNum}>
+                        <PaginationLink
+                          onClick={() => onPageChange(pageNum)}
+                          isActive={currentPage === pageNum}
+                          className={`cursor-pointer min-w-[32px] flex justify-center rounded-md px-2 py-1 text-sm font-medium transition duration-200 ease-in-out  ${
+                            currentPage === pageNum
+                              ? "bg-black text-white hover:bg-black hover:text-white" // Active page styles
+                              : "bg-white text-black " // Non-active page styles
+                          }`}
+                        >
+                          {pageNum}
+                        </PaginationLink>
+                      </PaginationItem>
+                    )
+                  )}
+                </div>
+                {/* <div className="sm:block hidden text-nowrap items-center mx-1">
+                  <span className="text-sm font-medium text-gray-600">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                </div> */}
                 <PaginationItem>
                   <PaginationNext
-                    onClick={() => handlePageChange(page + 1)}
-                    className={
-                      page === totalPages
+                    onClick={() => onPageChange(currentPage + 1)}
+                    className={`whitespace-nowrap ${
+                      currentPage === totalPages
                         ? "pointer-events-none opacity-50"
                         : "cursor-pointer"
-                    }
+                    }`}
                   />
                 </PaginationItem>
               </PaginationContent>
