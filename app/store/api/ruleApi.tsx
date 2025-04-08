@@ -25,10 +25,18 @@ export const ruleApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Rules"],
     }),
+    deleteRule: builder.mutation({
+      query: (id) => ({
+        url: `/admin/rule-management/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Rules"],
+    }),
   }),
 });
 export const {
   useGetRulesQuery,
   useCreateRuleMutation,
   useUpdateRuleMutation,
+  useDeleteRuleMutation,
 } = ruleApi;

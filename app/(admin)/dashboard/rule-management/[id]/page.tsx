@@ -12,7 +12,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import CustomModal from "@/app/(admin)/_components/CustomModal";
 import { Button } from "@/components/ui/button";
-import { useUpdateRuleMutation } from "@/app/store/api/ruleApi";
+import {
+  useDeleteRuleMutation,
+  useUpdateRuleMutation,
+} from "@/app/store/api/ruleApi";
 import { toast } from "react-hot-toast"; // Import react-hot-toast
 
 const page = () => {
@@ -24,9 +27,21 @@ const page = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updateRule] = useUpdateRuleMutation();
+  const [deleteRule] = useDeleteRuleMutation();
 
-  const handleDelete = () => {
-    setIsDeleteModalOpen(false);
+  const handleDelete = async () => {
+    try {
+      deleteRule(id)
+        .unwrap()
+        .then(() => {
+          toast.success("Rule deleted successfully!"); // Show success toast
+          setIsDeleteModalOpen(false);
+          router.push("/dashboard/rule-management");
+        });
+    } catch (error) {
+      console.error("Failed to delete rule:", error);
+      toast.error("Failed to delete rule."); // Show error toast
+    }
   };
 
   const handleUpdate = async () => {
