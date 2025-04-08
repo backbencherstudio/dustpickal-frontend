@@ -3,7 +3,7 @@ import Link from "next/link";
 import CustomImage from "@/components/reusable/CustomImage";
 import Logo from "@/public/assets/client/logo.png";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import LoginModal from "@/app/(site)/_auth/_login/login";
 import ResetPassword from "@/app/(site)/_auth/_forget-password/resetPassword";
 import SendEmailModal from "@/app/(site)/_auth/_forget-password/sendEmailModal";
@@ -111,11 +111,13 @@ export default function NavBar() {
                     </div>
                 </div>
             </div>
-            <Signup />
-            <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
-            <ResetPassword />
-            <SendEmailModal />
-            <PasswordResetForm />
+            <Suspense fallback={<div>Loading...</div>}>
+                <Signup />
+                <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
+                <ResetPassword />
+                <SendEmailModal />
+                <PasswordResetForm />
+            </Suspense>
         </div>
     );
 }

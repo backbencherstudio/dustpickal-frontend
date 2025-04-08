@@ -1,0 +1,10 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icons">
+<mask id="mask0_5106_5608" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+<rect id="Bounding box" width="20" height="20" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_5106_5608)">
+<path id="gavel" d="M3.33203 17.4993V15.8327H13.332V17.4993H3.33203ZM8.04036 13.4577L3.33203 8.74935L5.08203 6.95768L9.83203 11.666L8.04036 13.4577ZM13.332 8.16602L8.6237 3.41602L10.4154 1.66602L15.1237 6.37435L13.332 8.16602ZM17.1654 16.666L6.29036 5.79102L7.45703 4.62435L18.332 15.4993L17.1654 16.666Z" fill="#1D1F2C"/>
+</g>
+</g>
+</svg>

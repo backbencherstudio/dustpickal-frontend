@@ -17,7 +17,7 @@ export const baseApi = createApi({
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["Dashboard", "Rules", "Users"],
+  tagTypes: ["Dashboard", "Notifications", "Rules", "Users"],
 });
 
 export const { useQuery, useMutation } = baseApi as any;
