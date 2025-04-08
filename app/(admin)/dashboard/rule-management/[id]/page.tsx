@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -12,16 +12,44 @@ import {
 } from "@/components/ui/dropdown-menu";
 import CustomModal from "@/app/(admin)/_components/CustomModal";
 import { Button } from "@/components/ui/button";
+import { useUpdateRuleMutation } from "@/app/store/api/ruleApi";
+import { toast } from "react-hot-toast"; // Import react-hot-toast
+
 const page = () => {
+  const params = useParams();
+  const { id } = params;
   const router = useRouter();
+  const [heading, setHeading] = React.useState("");
+  const [subRule, setSubRule] = React.useState("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [updateRule] = useUpdateRuleMutation();
+
   const handleDelete = () => {
     setIsDeleteModalOpen(false);
   };
-  const handleUpdate = () => {
-    setIsUpdateModalOpen(false);
+
+  const handleUpdate = async () => {
+    const payload = {
+      id,
+      data: {
+        title: heading,
+        description: subRule,
+      },
+    };
+
+    try {
+      await updateRule(payload).unwrap();
+      setHeading("");
+      setSubRule("");
+      setIsUpdateModalOpen(false);
+      toast.success("Rule updated successfully!"); // Show success toast
+    } catch (error) {
+      console.error("Failed to update rule:", error);
+      toast.error("Failed to update rule.");
+    }
   };
+
   return (
     <div>
       <div className="inline-block">
@@ -57,12 +85,16 @@ const page = () => {
           </DropdownMenu>
         </div>
         <Input
-          type="email"
-          placeholder="Email"
+          type="text"
+          onChange={(e) => setHeading(e.target.value)}
+          value={heading}
+          placeholder="Heading"
           className="mt-3 p-3 border-gray-300 shadow-none focus:border-[#f7f9fb] focus:ring focus:ring-gray-300 transition-colors duration-200"
         />
         <p className="text-[14px] mt-5 text-gray-400">Sub-Rule</p>
         <Textarea
+          onChange={(e) => setSubRule(e.target.value)}
+          value={subRule}
           placeholder="Sub-Rule"
           className="ml-4 w-[98%] min-h-[300px] mt-3 p-3 border-gray-300 shadow-none focus:border-[#f7f9fb] focus:ring focus:ring-gray-300 transition-colors duration-200"
         />

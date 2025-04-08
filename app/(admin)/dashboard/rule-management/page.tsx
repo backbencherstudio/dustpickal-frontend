@@ -57,7 +57,7 @@ const page = () => {
       customCell: (row) => (
         <div className="flex gap-2">
           <button
-            onClick={() => router.push(`/dashboard/rule-management/${row.sl}`)}
+            onClick={() => router.push(`/dashboard/rule-management/${row.id}`)}
             className=" hover:bg-gray-200 rounded-xl p-2"
           >
             <IoEyeOutline size={20} />

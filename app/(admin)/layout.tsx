@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import AdminSidebar from "./_components/AdminSidebar";
 import AdminHeader from "./_components/AdminHeader";
+import { Toaster } from "react-hot-toast";
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
@@ -20,6 +21,7 @@ export default function AdminLayout({ children }) {
 
   return (
     <div className="flex h-screen bg-[#f7f9fb]">
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Mobile menu button */}
       <button
         className="lg:hidden absolute right-4 z-20 top-4 p-2 rounded-full bg-[#f3f4f6] text-black border cursor-pointer"
