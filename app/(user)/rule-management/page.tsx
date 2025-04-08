@@ -128,7 +128,7 @@ const page = () => {
 
         <TabsContent value="info" className="">
           <CustomTable
-            type="user-management"
+            type="rule-management"
             title=""
             columns={columns}
             data={rulesData}

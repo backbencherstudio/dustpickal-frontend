@@ -43,6 +43,14 @@ export default function CustomModal({
       buttonColor: "bg-black",
       defaultTitle: "Are you sure you want to save this rule as draft?",
     },
+    paymentMethod: {
+      bgColor: "bg-[#1D1F2C]",
+      iconBgColor: "bg-[#1D1F2C]",
+      icon: <CiCirclePlus className="text-4xl" />,
+      buttonText: "Yes, Change",
+      buttonColor: "bg-black",
+      defaultTitle: "Are you sure you want to change your payment method?",
+    },
   };
 
   const config = dialogConfigs[type] || dialogConfigs.delete;
@@ -66,7 +74,7 @@ export default function CustomModal({
         </DialogHeader>
         <div className="flex justify-center gap-2 mt-8">
           <Button variant="outline" className="lg:w-48" onClick={onClose}>
-            Cancel
+            {type === 'paymentMethod' ? 'No, Keep' : 'Cancel'}
           </Button>
           <Button
             className={`lg:w-48 ${config.buttonColor} hover:${config.buttonColor} hover:opacity-85`}
