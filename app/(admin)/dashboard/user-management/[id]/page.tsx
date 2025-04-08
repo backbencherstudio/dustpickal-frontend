@@ -24,11 +24,11 @@ const page = () => {
         {/* User info header placeholder */}
         <div className="flex justify-between items-center mr-10">
           <div>
-            <div className="mt-10 h-6 w-40 bg-gray-200 rounded mx-4 animate-pulse"></div>
-            <div className="h-4 w-32 bg-gray-200 rounded mx-4 mt-2 animate-pulse"></div>
+            <div className="mt-10 h-6 w-32 bg-gray-200 rounded mx-4 animate-pulse"></div>
+            <div className="h-5 w-56 bg-gray-200 rounded mx-4 mt-2 animate-pulse"></div>
           </div>
           <div className="mt-5">
-            <div className="bg-gray-200 h-8 w-32 rounded-md animate-pulse"></div>
+            <div className="bg-gray-200 h-8 w-36 rounded-md animate-pulse"></div>
           </div>
         </div>
 
@@ -61,8 +61,8 @@ const page = () => {
                         key={index}
                         className="flex justify-between items-center py-2"
                       >
-                        <div className="h-5 w-24 bg-gray-200 rounded animate-pulse"></div>
-                        <div className="h-5 w-20 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="h-5 w-32 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="h-5 w-28 bg-gray-200 rounded animate-pulse"></div>
                       </div>
                     ))}
                 </div>
