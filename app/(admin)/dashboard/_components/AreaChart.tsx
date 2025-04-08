@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import DateFilter from "../../_components/DateFilter";
 
 // Dynamically import ApexCharts to avoid SSR issues
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const AreaChart = ({ data }) => {
   const options: ApexCharts.ApexOptions = {
@@ -123,14 +123,32 @@ const AreaChart = ({ data }) => {
         <h3 className="text-gray-800 text-[14px] font-medium">Revenue</h3>
         <DateFilter />
       </div>
+      <div className="grid lg:grid-cols-5 grid-cols-2 items-center flex-wrap my-6 gap-6 ">
+        <div className="border-r">
+          <h2 className="text-2xl font-semibold">
+            ${data?.revenue?.monthlyRevenue}
+          </h2>
+          <p className="text-gray-600 mt-3">Monthly</p>
+        </div>
+        {revenueData?.map((item, index, array) => (
+          <div
+            key={item.label}
+            className={index < array.length - 1 ? "border-r" : ""}
+          >
+            <p className="text-xl font-semibold">${item.value}</p>
+            <div className="flex gap-2 items-center mt-3">
+              <div
+                className={`w-4 h-4 rounded`}
+                style={{ backgroundColor: item.color }}
+              ></div>
+              <p className="text-sm">{item.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
       <div id="chart" className="w-full">
-        {typeof window !== 'undefined' && (
-          <Chart
-            options={options}
-            series={series}
-            type="area"
-            height={350}
-          />
+        {typeof window !== "undefined" && (
+          <Chart options={options} series={series} type="area" height={350} />
         )}
       </div>
     </div>
