@@ -1,4 +1,5 @@
 "use client";
+import CopyLink from "@/app/(admin)/_components/CopyLink";
 import CustomTable from "@/app/(admin)/_components/CustomTable";
 import { useGetUserInfoQuery } from "@/app/store/api/userApi";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -124,10 +125,7 @@ const page = () => {
         </div>
         <div className="text-[14px] mt-5">
           {activeTab === "info" ? (
-            <p className="bg-white px-2 py-1 rounded-md border border-[#d2d2d5] cursor-pointer flex items-center gap-2">
-              <IoMdCopy size={20} color="#4A4C56" />
-              Copy User Id
-            </p>
+            <CopyLink id={id} />
           ) : (
             <div className="">
               <div className="flex items-center gap-2">
@@ -195,13 +193,8 @@ const page = () => {
               columns={[]}
               data={[]}
               filter={false}
-              pagination={{
-                currentPage: 1,
-                totalPages: 1,
-                onPageChange: () => {},
-                limit: 10,
-                onLimitChange: () => {},
-              }}
+              onPageChange={() => {}}
+              paginationData={{}}
             />
           </TabsContent>
         </Tabs>
