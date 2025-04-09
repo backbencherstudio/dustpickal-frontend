@@ -3,8 +3,8 @@ import { baseApi } from "./baseApi";
 export const ruleApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getRules: builder.query({
-      query: ({ page = 1, limit = 10 }) => ({
-        url: `/admin/rule-management?page=${page}&limit=${limit}`,
+      query: ({ page = 1, limit = 10, search = "", is_draft = false }) => ({
+        url: `/admin/rule-management?page=${page}&limit=${limit}&search=${search}&is_draft=${is_draft}`,
         method: "GET",
       }),
       providesTags: ["Rules"],
