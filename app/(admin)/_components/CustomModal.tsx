@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { IoCheckmarkDoneCircle, IoDocumentOutline } from "react-icons/io5";
+import { IoCheckmarkDoneCircle, IoDocumentOutline, IoCheckmarkCircle } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
 export default function CustomModal({
   isOpen,
@@ -42,6 +42,14 @@ export default function CustomModal({
       buttonText: "Yes, Save as draft",
       buttonColor: "bg-black",
       defaultTitle: "Are you sure you want to save this rule as draft?",
+    },
+    success: {
+      bgColor: "bg-[#f0f0f0]",
+      iconBgColor: "bg-[#22CAAD]",
+      icon: <IoCheckmarkCircle className="text-4xl" />,
+      buttonText: "Home",
+      buttonColor: "bg-black",
+      defaultTitle: "Payment method added successfully!",
     },
   };
 

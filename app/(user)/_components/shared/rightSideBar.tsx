@@ -7,7 +7,7 @@ import NotificationDrawer from "../NotificationDrawer";
 import tokenIcon from "@/public/assets/client/icons/token.svg"
 import addIcon from "@/public/assets/client/icons/add-icon.svg"
 import { Plus } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 interface RightSidebarProps {
     isExpanded: boolean;
     onExpandToggle: (value: boolean) => void;
@@ -17,7 +17,7 @@ export default function RightSidebar({ isExpanded, onExpandToggle }: RightSideba
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const [isTokenOpen, setIsTokenOpen] = useState(false);
-
+    const router = useRouter();
     return (
         <>
             <div
@@ -123,7 +123,7 @@ export default function RightSidebar({ isExpanded, onExpandToggle }: RightSideba
                             </div>
                         </div>
                         <div className="pb-3 border-b border-[#A5A5AB]">
-                            <button className="w-full flex flex-row items-center gap-2 cursor-pointer px-3 py-2 bg-[#1D1F2C] rounded">
+                            <button className="w-full flex flex-row items-center gap-2 cursor-pointer px-3 py-2 bg-[#1D1F2C] rounded" onClick={() => router.push('/analyze')}>
                                 <div className="bg-white rounded-full p-0.5">
                                     <Plus className="w-3 h-3" />
                                 </div>
