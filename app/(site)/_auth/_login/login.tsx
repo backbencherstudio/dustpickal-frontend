@@ -8,6 +8,9 @@ import microsoft from "@/public/assets/client/auth/microsoft.svg";
 import AppleIcon from "@/public/assets/client/auth/apple.svg";
 import { useRouter, useSearchParams } from "next/navigation";
 import EyeIcon from "@/public/assets/client/auth/eye.svg";
+import { useLoginMutation } from "@/app/store/api/authApi";
+import { useState } from "react";
+import { toast } from "react-toastify";
 export default function LoginPage({
   isOpen,
   onClose,
@@ -23,9 +26,32 @@ export default function LoginPage({
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const [loginUser, { isLoading }] = useLoginMutation();
+  const [error, setError] = useState<string>("");
+
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await loginUser(data).unwrap();
+      console.log(response);
+      if (response.success) {
+        toast.success(response.message);
+        router.push("/");
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error: any) {
+      console.log("error", error);
+      // Access the nested message string from the error object
+      const errorMessage = error?.data?.message?.message || "Login failed. Please try again.";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
   };
+
+  console.log("error", error);
 
   const handleResetPassword = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -62,6 +88,11 @@ export default function LoginPage({
         <h1 className="text-[24px] md:text-[32px] font-semibold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[#03377F] via-[#754499] to-[#F3411B] text-center relative z-10">
           Log In to TrustScan
         </h1>
+        {error && (
+          <div className="w-full max-w-[445px] mx-auto text-red-500 text-sm text-center">
+            {error}
+          </div>
+        )}
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-[60px] w-full max-w-[445px] mx-auto"
@@ -102,7 +133,7 @@ export default function LoginPage({
               className="w-full bg-[#0D86FF] text-base font-medium text-white px-4 py-2 rounded cursor-pointer hover:bg-[#0D86FF]/90 transition-colors duration-300"
               type="submit"
             >
-              Login
+              {isLoading ? "Logging in..." : "Login"}
             </button>
             <p className="text-xs text-[#777980] font-medium text-end">
               Don't have an account?{" "}
