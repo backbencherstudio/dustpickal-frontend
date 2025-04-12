@@ -2,16 +2,26 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import { useRequestPasswordResetMutation, useResetPasswordMutation } from "@/app/store/api/authApi";
+import { toast } from "react-toastify";
 export default function ResetPassword() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const isResetPasswordOpen = searchParams.get("mode") === "forget-password";
+    const [requestPasswordReset, { isLoading }] = useRequestPasswordResetMutation();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         console.log(data);
-        router.push("?mode=send-email&email=" + data.email);
+        // send email to user
+        const response = await requestPasswordReset(data);
+        console.log(response);
+        if (response.data.success) {
+            // router.push("?mode=send-email&email=" + data.email);
+        } else {
+            console.log(response.data.message);
+            toast.error(response.data.message);
+        }
     };
 
     const handleBackToLogin = (e: React.MouseEvent) => {

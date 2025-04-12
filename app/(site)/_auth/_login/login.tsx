@@ -35,6 +35,7 @@ export default function LoginPage({
       console.log(response);
       if (response.success) {
         toast.success(response.message);
+        localStorage.setItem("token", response?.authorization?.token);
         router.push("/");
       } else {
         toast.error(response.message);

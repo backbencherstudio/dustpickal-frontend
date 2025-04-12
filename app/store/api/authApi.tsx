@@ -14,13 +14,29 @@ interface RegisterRequest {
 interface AuthResponse {
   success: boolean;
   message: string;
-  token: string;
+  authorization: {
+    token: string;
+  };
   user: {
     id: string;
     name: string;
     email: string;
     role: string;
   };
+}
+
+interface RequestPasswordResetRequest {
+  email: string;
+}
+
+interface ResetPasswordRequest {
+  token: string;
+  password: string;
+}
+
+interface ChangePasswordRequest {
+  old_password: string;
+  new_password: string;
 }
 
 export const authApi = baseApi.injectEndpoints({
@@ -52,6 +68,33 @@ export const authApi = baseApi.injectEndpoints({
     getMe: builder.query<AuthResponse["user"], void>({
       query: () => "/auth/me",
     }),
+
+    // Request password reset email
+    requestPasswordReset: builder.mutation<{ success: boolean; message: string }, RequestPasswordResetRequest>({
+      query: (data) => ({
+        url: "/auth/request-email-change",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Reset password with token
+    resetPassword: builder.mutation<{ success: boolean; message: string }, ResetPasswordRequest>({
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Change password
+    changePassword: builder.mutation<{ success: boolean; message: string }, ChangePasswordRequest>({
+      query: (data) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -60,4 +103,7 @@ export const {
   useRegisterMutation,
   useLogoutMutation,
   useGetMeQuery,
+  useRequestPasswordResetMutation,
+  useResetPasswordMutation,
+  useChangePasswordMutation,
 } = authApi;
