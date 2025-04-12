@@ -104,7 +104,7 @@ export default function Billing() {
                             <p className="text-sm">*******2585</p>
                         </div>
                         <div className="w-full h-full flex justify-end items-end">
-                            <button className="bg-[#1D1F2C] text-white px-2 py-1 rounded">Change</button>
+                            <button className="bg-[#1D1F2C] text-white px-2 py-1 rounded" onClick={() => router.push("/payment-method")}>Change</button>
                         </div>
                     </div>
                 </div>

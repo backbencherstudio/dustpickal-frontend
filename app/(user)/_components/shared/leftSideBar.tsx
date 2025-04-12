@@ -9,6 +9,7 @@ import NotificationDrawer from "../NotificationDrawer";
 import AllRules from "../rule/allRules";
 import ruleGrayIcon from "@/public/assets/client/icons/rule-gray.svg";
 import addIcon from "@/public/assets/client/icons/add-icon.svg";
+import AddRuleModal from "../AddRuleModal";
 interface LeftSidebarProps {
     isExpanded: boolean;
     onExpandToggle: (value: boolean) => void;
@@ -18,6 +19,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
     const pathname = usePathname();
     const router = useRouter();
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [isAddNewModalOpen, setIsAddNewModalOpen] = useState(false);
 
     const navItems = [
         {
@@ -52,7 +54,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
         },
         {
             label: "Subscription",
-            path: "/analyze/subscription",
+            path: "/subscription",
             icon: (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -178,9 +180,12 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                 </div>
 
                 <div className="pb-3 border-b border-[#A5A5AB]">
-                    <button className="w-full flex flex-row gap-2 cursor-pointer px-3 py-2 border border-[#A5A5AB] rounded">
+                    <button 
+                        onClick={() => setIsAddNewModalOpen(true)}
+                        className="w-full flex flex-row gap-2 cursor-pointer px-3 py-2 border border-[#A5A5AB] rounded hover:bg-gray-50"
+                    >
                         <Image src={addIcon} alt="add-icon" width={isExpanded ? 20 : 30} height={isExpanded ? 20 : 30} />
-                        <p className={` text-black ${isExpanded ? '' : 'hidden'}  ${pathname === '' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Create New Rules</p>
+                        <p className={`text-black ${isExpanded ? '' : 'hidden'} ${pathname === '' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Create New Rules</p>
                     </button>
                 </div>
                 <div className={`flex flex-col mt-3 ${isExpanded ? "items-start" : "items-center"}`}
@@ -204,7 +209,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                         ))}
                         <div
                             onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                            className={`px-3 py-2 rounded text-gray-800 flex items-center gap-2 text-nowrap overflow-hidden ${isExpanded ? "justify-start" : "justify-center"}`}
+                            className={`px-3 py-2 rounded text-gray-800 flex items-center gap-2 text-nowrap overflow-hidden cursor-pointer ${isExpanded ? "justify-start" : "justify-center"}`}
                             title="Notifications"
                         >
                             <IoMdNotificationsOutline size={20} />
@@ -212,7 +217,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                         </div>
                         <div
                             onClick={handleLogout}
-                            className={`px-3 py-2 rounded text-gray-800 flex items-center gap-2 text-nowrap overflow-hidden ${isExpanded ? "justify-start" : "justify-center"}`}
+                            className={`px-3 py-2 rounded text-gray-800 flex items-center gap-2 text-nowrap overflow-hidden cursor-pointer ${isExpanded ? "justify-start" : "justify-center"}`}
                             title="Logout"
                         >
                             <MdOutlineLogout size={20} />
@@ -242,6 +247,10 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                 position="side"
                 isOpen={isNotificationOpen}
                 onClose={() => setIsNotificationOpen(!isNotificationOpen)}
+            />
+            <AddRuleModal
+                isOpen={isAddNewModalOpen}
+                onClose={() => setIsAddNewModalOpen(false)}
             />
         </>
     );
