@@ -13,14 +13,14 @@ export default function Hero() {
         <div className="relative -mt-10">
             {/* Background Images */}
             <div className="absolute inset-0 w-full">
-                <Image 
-                    src={group} 
-                    alt="background" 
+                <Image
+                    src={group}
+                    alt="background"
                     className="w-full h-full object-cover"
                     priority
                 />
             </div>
-            
+
             {/* Content */}
             <div className="relative z-10">
                 <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">

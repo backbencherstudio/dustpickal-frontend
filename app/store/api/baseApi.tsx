@@ -8,9 +8,10 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
+      const token = localStorage.getItem("token");
       headers.set(
         "authorization",
-        `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhbnZpcmJkY2FsbGluZ25vZGUuanNAZ21haWwuY29tIiwic3ViIjoiY205MTVoZXNoMDAwMHR6NTRzdHg1Y3d2ZCIsImlhdCI6MTc0MzY3MjM1MiwiZXhwIjoxNzQzNzU4NzUyfQ.9jl03Kv-aLKzYUb3MKvYMU_7KyD9IpIhIoXC8Bw3rjE`
+        `Bearer ${token}`
       );
 
       return headers;

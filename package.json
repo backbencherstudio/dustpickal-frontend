@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^2.6.1",
     "@stripe/react-stripe-js": "^3.6.0",
     "@stripe/stripe-js": "^7.0.0",
+    "@tinymce/tinymce-react": "^6.1.0",
     "apexcharts": "^4.5.0",
     "axios": "^1.8.1",
     "chart.js": "^4.4.8",

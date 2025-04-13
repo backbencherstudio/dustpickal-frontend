@@ -2,10 +2,23 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import EyeIcon from "@/public/assets/client/auth/eye.svg";
 import { X } from "lucide-react";
+import { useChangePasswordMutation } from "@/app/store/api/authApi";
+import { toast } from "react-toastify";
 export default function ChangePasswordForm({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const [changePassword, { isLoading }] = useChangePasswordMutation();
+    const onSubmit = async (data: any) => {
+        const changePasswordData = {
+            old_password: data.currentPassword,
+            new_password: data.newPassword,
+        }
+        const response = await changePassword(changePasswordData);
+        console.log(response);
+        if (response.data.success) {
+            toast.success(response.data.message);
+        } else {
+            toast.error(response.data.message);
+        }
     };
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`fixed inset-0 bg-[#0000008c] bg-opacity-50 flex items-center justify-center z-50 ${isOpen ? "block" : "hidden"}`}>
