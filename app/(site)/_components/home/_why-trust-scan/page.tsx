@@ -98,7 +98,7 @@ export default function WhyTrustScan() {
             <div
               key={feature.id}
               className="w-full flex flex-col gap-6 p-12 rounded-4xl border border-[#7bd4ff]"
-              style={{ backgroundColor: "#dff2ff" }}
+              style={{ backgroundColor: "#e6f2fa" }}
             >
               <div className="bg-[#ceeaff] p-2.5 border border-[#7bd4ff] w-11 h-11 rounded-lg">
                 {feature.icon}

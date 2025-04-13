@@ -5,7 +5,7 @@ const OptimizeReport = () => {
     <div
       className="text-center py-20 px-4"
       style={{
-        background: "linear-gradient(to bottom, #A445B2, #FF758C)",
+        background: "linear-gradient(to bottom, #a962d3, #c873a4)",
       }}
     >
       <div className="max-w-[880px] mx-auto">
