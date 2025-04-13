@@ -35,8 +35,23 @@ const page = () => {
     }
   };
 
-  const handleDraft = () => {
-    setIsDraftModalOpen(false);
+  const handleDraft = async () => {
+    const data = {
+      title: heading,
+      description: subRule,
+      is_draft: true,
+    };
+    try {
+      await createRule(data).unwrap();
+      setHeading("");
+      setSubRule("");
+      setIsDraftModalOpen(false);
+      toast.success("Rule save as draft!");
+      router.push("/dashboard/rule-management");
+    } catch (error) {
+      console.error("Failed to create rule:", error);
+      toast.error("Failed to create rule.");
+    }
   };
 
   return (

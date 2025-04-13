@@ -1,57 +1,118 @@
-import Image from "next/image";
-import fastAndAccurate from "@/public/assets/client/icons/fast.svg";
+"use client";
 import customRules from "@/public/assets/client/icons/write.svg";
 import failureSummary from "@/public/assets/client/icons/failure.svg";
 import secureAndPrivate from "@/public/assets/client/icons/secure.svg";
 
 export default function WhyTrustScan() {
+  const features = [
+    {
+      id: 1,
+      title: "Fast & Accurate",
+      description: "Get results instantly with AI-driven analysis.",
+      bgColor: "#EBF6FC",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="28"
+          height="20"
+          viewBox="0 0 28 20"
+          fill="none"
+        >
+          <path
+            d="M17.8769 20C15.0838 20 12.7179 19.0307 10.7793 17.092C8.84082 15.1536 7.8716 12.7877 7.8716 9.99433C7.8716 7.22211 8.84082 4.86333 10.7793 2.918C12.7179 0.972666 15.0838 0 17.8769 0C20.6494 0 23.0082 0.972666 24.9533 2.918C26.8986 4.86333 27.8713 7.22211 27.8713 9.99433C27.8713 12.7877 26.8986 15.1536 24.9533 17.092C23.0082 19.0307 20.6494 20 17.8769 20ZM17.8713 18C20.0935 18 21.9824 17.2222 23.5379 15.6667C25.0935 14.1111 25.8713 12.2222 25.8713 10C25.8713 7.77778 25.0935 5.88889 23.5379 4.33333C21.9824 2.77778 20.0935 2 17.8713 2C15.649 2 13.7602 2.77778 12.2046 4.33333C10.649 5.88889 9.87126 7.77778 9.87126 10C9.87126 12.2222 10.649 14.1111 12.2046 15.6667C13.7602 17.2222 15.649 18 17.8713 18ZM21.0329 14.6203L22.4586 13.195L18.8713 9.60767V4.87167H16.8713V10.4257L21.0329 14.6203ZM1.46126 5.66667V3.66667H6.53826V5.66667H1.46126ZM0.12793 11V9H6.53826V11H0.12793ZM1.46126 16.3333V14.3333H6.53826V16.3333H1.46126Z"
+            fill="#0D86FF"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: 2,
+      title: "Custom Rules",
+      description: "Use predefined rules or create your own.",
+      bgColor: "#EBD9F1",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="26"
+          viewBox="0 0 24 26"
+          fill="none"
+        >
+          <path
+            d="M17.3337 19.6414C17.8892 19.6414 18.3614 19.4469 18.7503 19.058C19.1392 18.6692 19.3337 18.1969 19.3337 17.6414C19.3337 17.0858 19.1392 16.6136 18.7503 16.2247C18.3614 15.8358 17.8892 15.6414 17.3337 15.6414C16.7781 15.6414 16.3059 15.8358 15.917 16.2247C15.5281 16.6136 15.3337 17.0858 15.3337 17.6414C15.3337 18.1969 15.5281 18.6692 15.917 19.058C16.3059 19.4469 16.7781 19.6414 17.3337 19.6414ZM17.3337 23.6414C18.031 23.6414 18.6664 23.4824 19.24 23.1644C19.8135 22.8464 20.2823 22.4207 20.6463 21.8874C20.149 21.59 19.6225 21.3636 19.067 21.208C18.5114 21.0525 17.9337 20.9747 17.3337 20.9747C16.7337 20.9747 16.1559 21.0525 15.6003 21.208C15.0448 21.3636 14.5183 21.59 14.021 21.8874C14.385 22.4207 14.8538 22.8464 15.4273 23.1644C16.0009 23.4824 16.6363 23.6414 17.3337 23.6414ZM10.667 25.6157C7.78321 24.8293 5.39566 23.1318 3.50433 20.5234C1.61277 17.9149 0.666992 14.9987 0.666992 11.7747V4.10304L10.667 0.359375L20.667 4.10304V11.6567C20.3559 11.5303 20.0293 11.4162 19.6873 11.3144C19.3455 11.2128 19.0054 11.1329 18.667 11.0747V5.49538L10.667 2.50804L2.66699 5.49538V11.7747C2.66699 12.9558 2.83366 14.1093 3.16699 15.235C3.50033 16.3606 3.95977 17.4127 4.54533 18.3914C5.13066 19.37 5.83021 20.2487 6.64399 21.0274C7.45755 21.806 8.34044 22.4278 9.29266 22.8927L9.33132 22.8797C9.50733 23.3686 9.73544 23.837 10.0157 24.285C10.2961 24.7328 10.6149 25.1396 10.972 25.5054C10.9158 25.5225 10.865 25.5409 10.8197 25.5607C10.7743 25.5803 10.7234 25.5986 10.667 25.6157ZM17.3337 25.6414C15.6688 25.6414 14.2525 25.0576 13.085 23.89C11.9174 22.7225 11.3337 21.3063 11.3337 19.6414C11.3337 17.9765 11.9174 16.5603 13.085 15.3927C14.2525 14.2252 15.6688 13.6414 17.3337 13.6414C18.9985 13.6414 20.4148 14.2252 21.5823 15.3927C22.7499 16.5603 23.3337 17.9765 23.3337 19.6414C23.3337 21.3063 22.7499 22.7225 21.5823 23.89C20.4148 25.0576 18.9985 25.6414 17.3337 25.6414Z"
+            fill="#0D86FF"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: 3,
+      title: "Failure Summary",
+      description: "See only what’s wrong, skip what’s right.",
+      bgColor: "#F1F1F1",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="26"
+          viewBox="0 0 26 26"
+          fill="none"
+        >
+          <path
+            d="M12.9997 16.9226C13.309 16.9226 13.5658 16.8205 13.77 16.6163C13.9745 16.4121 14.0767 16.1552 14.0767 15.8456C14.0767 15.5363 13.9745 15.2795 13.77 15.0753C13.5658 14.8711 13.309 14.769 12.9997 14.769C12.6903 14.769 12.4336 14.8711 12.2293 15.0753C12.0249 15.2795 11.9227 15.5363 11.9227 15.8456C11.9227 16.1552 12.0249 16.4121 12.2293 16.6163C12.4336 16.8205 12.6903 16.9226 12.9997 16.9226ZM11.9997 12.2816H13.9997V4.23029H11.9997V12.2816ZM0.333008 25.3586V3.05096C0.333008 2.3774 0.566341 1.80729 1.03301 1.34063C1.49967 0.873958 2.06979 0.640625 2.74334 0.640625H23.256C23.9296 0.640625 24.4997 0.873958 24.9663 1.34063C25.433 1.80729 25.6663 2.3774 25.6663 3.05096V18.2303C25.6663 18.9038 25.433 19.474 24.9663 19.9406C24.4997 20.4073 23.9296 20.6406 23.256 20.6406H5.05101L0.333008 25.3586ZM4.19967 18.6406H23.256C23.3587 18.6406 23.4527 18.5978 23.538 18.5123C23.6236 18.427 23.6663 18.333 23.6663 18.2303V3.05096C23.6663 2.94829 23.6236 2.85429 23.538 2.76896C23.4527 2.6834 23.3587 2.64062 23.256 2.64062H2.74334C2.64067 2.64062 2.54667 2.6834 2.46134 2.76896C2.37579 2.85429 2.33301 2.94829 2.33301 3.05096V20.487L4.19967 18.6406Z"
+            fill="#0D86FF"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: 4,
+      title: "Secure & Private",
+      description: "Your data stays encrypted and protected.",
+      bgColor: "#F9EEE8",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="26"
+          viewBox="0 0 24 26"
+          fill="none"
+        >
+          <path
+            d="M0.269531 25.1284V23.1284H15.6029V25.1284H0.269531ZM8.00786 18.2514L0.936198 11.1797L3.27453 8.77474L10.4129 15.8464L8.00786 18.2514ZM15.9105 10.3487L8.83887 3.2104L11.2439 0.87207L18.3155 7.94374L15.9105 10.3487ZM22.3259 23.6667L5.38753 6.7284L6.79253 5.3234L23.7309 22.2617L22.3259 23.6667Z"
+            fill="#0D86FF"
+          />
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <div className="max-w-[960px] mx-auto px-4 lg:px-0 py-10 flex flex-col gap-12">
-      <h1 className="text-3xl font-semibold text-[#0F4487] text-center">Why Trust Scan?</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-between items-center">
-        <div className="w-full flex flex-col gap-6 bg-[#EBF6FC] p-12 rounded-4xl">
-          <Image src={fastAndAccurate} alt="fast-and-accurate" />
-          <div className="flex flex-col gap-3">
-            <p className="text-xl font-medium text-[#1D1F2C]">
-              Fast & Accurate
-            </p>
-            <p className="text-base font-normal text-[#4A4C56]">
-              Get results instantly with AI-driven analysis.
-            </p>
-          </div>
-        </div>
-        <div className="w-full flex flex-col gap-6 bg-[#EBD9F1] p-12 rounded-4xl">
-          <Image src={customRules} alt="fast-and-accurate" />
-          <div className="flex flex-col gap-3">
-            <p className="text-xl font-medium text-[#1D1F2C]">
-              Custom Rules
-            </p>
-            <p className="text-base font-normal text-[#4A4C56]">
-              Use predefined rules or create your own.
-            </p>
-          </div>
-        </div>
-        <div className="w-full flex flex-col gap-6 bg-[#F1F1F1] p-12 rounded-4xl">
-          <Image src={failureSummary} alt="fast-and-accurate" />
-          <div className="flex flex-col gap-3">
-            <p className="text-xl font-medium text-[#1D1F2C]">
-              Failure Summary
-            </p>
-            <p className="text-base font-normal text-[#4A4C56]">
-              See only what’s wrong, skip what’s right.
-            </p>
-          </div>
-        </div>
-        <div className="w-full flex flex-col gap-6 bg-[#F9EEE8] p-12 rounded-4xl">
-          <Image src={secureAndPrivate} alt="fast-and-accurate" />
-          <div className="flex flex-col gap-3">
-            <p className="text-xl font-medium text-[#1D1F2C]">
-              Secure & Private
-            </p>
-            <p className="text-base font-normal text-[#4A4C56]">
-              Your data stays encrypted and protected.
-            </p>
-          </div>
+    <div className="bg-[#f6fcff] py-24">
+      <div className="max-w-[960px] mx-auto px-4 lg:px-0  flex flex-col gap-12">
+        <h1 className="text-3xl font-semibold text-[#0d86ff] text-center">
+          Why Trust Scan?
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-between items-center">
+          {features.map((feature) => (
+            <div
+              key={feature.id}
+              className="w-full flex flex-col gap-6 p-12 rounded-4xl border border-[#7bd4ff]"
+              style={{ backgroundColor: "#e6f2fa" }}
+            >
+              <div className="bg-[#ceeaff] p-2.5 border border-[#7bd4ff] w-11 h-11 rounded-lg">
+                {feature.icon}
+              </div>
+              <div className="flex flex-col gap-3">
+                <p className="text-xl font-medium text-[#1D1F2C]">
+                  {feature.title}
+                </p>
+                <p className="text-base font-normal text-[#4A4C56]">
+                  {feature.description}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

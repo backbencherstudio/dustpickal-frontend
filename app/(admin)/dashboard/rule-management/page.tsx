@@ -1,16 +1,39 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomTable from "../../_components/CustomTable";
 import { IoEyeOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useGetRulesQuery } from "@/app/store/api/ruleApi";
 import { format } from "date-fns";
-const page = () => {
+
+const Page = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
+  const [draftPage, setDraftPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const { data, isLoading, isError } = useGetRulesQuery({ page, limit });
+  const [activeTab, setActiveTab] = useState("info");
+
+  const { data: draft_data, refetch: refetchDraft } = useGetRulesQuery({
+    draftPage,
+    limit,
+    is_draft: true,
+  });
+  const {
+    data: data,
+    isLoading,
+    isError,
+    refetch: refetchPublished,
+  } = useGetRulesQuery({ page, limit, search: "", is_draft: false });
+
+  useEffect(() => {
+    if (activeTab === "info") {
+      refetchPublished();
+    } else if (activeTab === "billings") {
+      refetchDraft();
+    }
+  }, [activeTab, refetchPublished, refetchDraft]);
+
   if (isLoading)
     return (
       <div className=" mt-6">
@@ -66,9 +89,14 @@ const page = () => {
       ),
     },
   ];
+
   const handlePageChange = (page) => {
     setPage(page);
   };
+  const handleDraftPageChange = (page) => {
+    setDraftPage(page);
+  };
+
   return (
     <div>
       <div className="mt-5 mx-4 relative">
@@ -78,7 +106,11 @@ const page = () => {
         >
           + Add Rule
         </p>
-        <Tabs defaultValue="info" className="w-full">
+        <Tabs
+          defaultValue="info"
+          className="w-full"
+          onValueChange={(value) => setActiveTab(value)}
+        >
           <TabsList className="flex justify-start w-full bg-transparent border-b-2 border-[#e9e9ea]">
             <TabsTrigger
               value="info"
@@ -104,7 +136,6 @@ const page = () => {
               paginationData={{
                 currentPage: data?.meta?.page || 1,
                 totalPages: data?.meta?.total_pages || 1,
-                // totalItems: data?.meta?.total || 1,
               }}
               pagination={true}
               onPageChange={handlePageChange}
@@ -114,10 +145,15 @@ const page = () => {
             <CustomTable
               type="user-management"
               title=""
-              columns={[]}
-              data={[]}
+              columns={columns}
+              data={draft_data?.data}
               filter={false}
-              onPageChange={handlePageChange}
+              paginationData={{
+                currentPage: draft_data?.meta?.page || 1,
+                totalPages: draft_data?.meta?.total_pages || 1,
+              }}
+              pagination={true}
+              onPageChange={handleDraftPageChange}
             />
           </TabsContent>
         </Tabs>
@@ -126,4 +162,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
