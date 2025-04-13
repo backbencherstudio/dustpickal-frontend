@@ -21,7 +21,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <div className="bg-[#212433] mx-auto w-full py-20">
+    <div className="bg-[#212433] mx-auto w-full py-24">
       <h1 className="text-3xl font-semibold text-white text-center">
         How It Works?
       </h1>
