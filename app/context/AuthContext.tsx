@@ -33,8 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setIsLoading(false);
         }
     };
-    
-    console.log('AuthContext - Current user state:', user);
+   
     return (
         <AuthContext.Provider value={{ user, isLoading }}>
             {children}

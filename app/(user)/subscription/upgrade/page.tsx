@@ -2,21 +2,24 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import visa from '@/public/assets/client/icons/visa.svg';
 import bank from '@/public/assets/client/icons/bank.svg';
 import cardCvc from '@/public/assets/client/icons/card-cvc.svg';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
+import { useSubscribeMutation } from "@/app/store/api/user/subscribeApi";
 export default function UpgradePage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const planType = searchParams.get('plan');
     const [countries, setCountries] = useState([]);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
     const [selectedBillingOption, setSelectedBillingOption] = useState('monthly');
     const [selectedCountry, setSelectedCountry] = useState('United States');
+    const [subscribe, { isLoading }] = useSubscribeMutation();
 
     const stripe = useStripe();
     const elements = useElements();
@@ -54,14 +57,18 @@ export default function UpgradePage() {
         }
 
         const payload = {
-            ...data,
+            name: data.fullName,
+            email: data.email,
             paymentMethodId: paymentMethod.id,
             billingOption: selectedBillingOption,
             country: selectedCountry,
+            planType: planType === 'pay-as-you-go' ? 'PAY_AS_YOU_GO' : planType?.toUpperCase(),
         };
 
         console.log("Payload to backend:", payload);
         // TODO: Send payload to backend
+        const response = await subscribe(payload);
+        console.log(response);
     };
 
     const handleBillingOptionChange = (value: string) => {

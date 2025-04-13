@@ -11,8 +11,7 @@ interface RouteProtectionProps {
 export default function RouteProtection({ children, allowedUserType }: RouteProtectionProps) {
   const { user, isLoading } = useAuth();
   const router = useRouter();
-  console.log('user?.type', user?.type)
-  console.log('allowedUserType', allowedUserType)
+  
   useEffect(() => {
     if (!isLoading && user) {
       if (user?.type?.toLowerCase() !== allowedUserType.toLowerCase()) {
