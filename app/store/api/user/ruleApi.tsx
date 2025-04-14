@@ -1,5 +1,17 @@
 import { baseApi } from "../baseApi";
 
+interface UpdateRuleResponse {
+  message: string;
+  status: boolean;
+  data: {
+    id: string;
+    title: string;
+    sub_rule: string;
+    published_date: string;
+    last_modified: string;
+  };
+}
+
 export const ruleApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getRules: builder.query({
@@ -31,10 +43,10 @@ export const ruleApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Rules"],
     }),
-    updateRule: builder.mutation({
+    updateRule: builder.mutation<UpdateRuleResponse, { id: string; data: any }>({
       query: ({ id, data }) => ({
         url: `/analyzer-interface/edit-rules/${id}`,
-        method: "PATCH",
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["Rules"],

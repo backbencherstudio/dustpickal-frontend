@@ -5,10 +5,10 @@ import { IoEyeOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import CustomTable from "../_components/CustomTable";
-import { useGetAllRulesQuery } from "@/app/store/api/user/ruleApi";
+import { useGetAllRulesQuery, useUpdateRuleMutation } from "@/app/store/api/user/ruleApi";
 const page = () => {
   const router = useRouter();
-  const { data: rules, isLoading } = useGetAllRulesQuery();
+  const { data: rules, isLoading } = useGetAllRulesQuery({});
   
   // Process the rules data to match the table format
   const rulesData = rules?.data?.userRules?.map((rule, index) => ({
