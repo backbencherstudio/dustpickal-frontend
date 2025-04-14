@@ -1,87 +1,29 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React from "react";
+import React, { useEffect } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import CustomTable from "../_components/CustomTable";
-
+import { useGetAllRulesQuery, useUpdateRuleMutation } from "@/app/store/api/user/ruleApi";
 const page = () => {
   const router = useRouter();
-  const rulesData = [
-    {
-      sl: 1,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 2,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 3,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 4,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 5,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 6,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 7,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 8,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 9,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 10,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 11,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-    {
-      sl: 12,
-      rules: "IEC 62368-1 Safety Report Check",
-      creationDate: "28/01/202025",
-      lastModified: "12/06/2025",
-    },
-  ];
+  const { data: rules, isLoading } = useGetAllRulesQuery({});
+  
+  // Process the rules data to match the table format
+  const rulesData = rules?.data?.userRules?.map((rule, index) => ({
+    sl: index + 1,
+    rules: rule.title,
+    creationDate: new Date(rule.published_date).toLocaleDateString(),
+    lastModified: new Date(rule.last_modified).toLocaleDateString(),
+    id: rule.id
+  }));
+
+  console.log(rules?.data?.userRules);
+  
+  useEffect(() => {
+    getRulesData();
+  }, []);
 
   const columns = [
     { label: "SL", accessor: "sl" },
@@ -93,7 +35,7 @@ const page = () => {
       customCell: (row) => (
         <div className="flex gap-2">
           <button
-            onClick={() => router.push(`/rule-management/${row.sl}`)}
+            onClick={() => router.push(`/rule-management/${row.id}`)}
             className=" hover:bg-gray-200 rounded-xl p-2"
           >
             <IoEyeOutline size={20} className="text-[#777980]" />
@@ -102,6 +44,17 @@ const page = () => {
       ),
     },
   ];
+
+  const getRulesData = async () => {
+    try {
+      if (rules) {
+        console.log('Rules data:', rules);
+      }
+    } catch (error) {
+      console.error('Error fetching rules:', error);
+    }
+  };
+
   return (
     <div className="">
       <p
