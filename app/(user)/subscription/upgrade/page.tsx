@@ -28,7 +28,9 @@ export default function UpgradePage() {
   const planType = searchParams.get("plan");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
   const [selectedBillingOption, setSelectedBillingOption] = useState("monthly");
-  const [selectedCountry, setSelectedCountry] = useState("United State");
+  const [selectedCountry, setSelectedCountry] = useState(
+    countries[0]?.label || "United States"
+  );
   const [subscribe] = useSubscribeMutation();
 
   const stripe = useStripe();
@@ -99,6 +101,10 @@ export default function UpgradePage() {
 
   const handlePaymentMethodChange = (value: string) => {
     setSelectedPaymentMethod(value);
+  };
+
+  const handleCountryChange = (value: string) => {
+    setSelectedCountry(value);
   };
 
   return (
@@ -211,22 +217,27 @@ export default function UpgradePage() {
                 </div>
 
                 {/* Country */}
-                <Select>
-                  <SelectTrigger className="w-full border border-[#A5A5AB] rounded py-3 text-sm">
-                    <SelectValue placeholder="Country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {countries.map((country: any) => (
-                      <SelectItem
-                        key={country.value}
-                        value={country.label}
-                        onClick={() => setSelectedCountry(country.label)}
-                      >
-                        {country.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="flex flex-col gap-3">
+                  <h4 className="text-base font-medium text-[#777980]">
+                    Country
+                  </h4>
+                  <Select>
+                    <SelectTrigger className="w-full border border-[#A5A5AB] rounded py-3 text-sm">
+                      <SelectValue placeholder={selectedCountry} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {countries.map((country: any) => (
+                        <SelectItem
+                          key={country.value}
+                          value={country.label}
+                          onClick={() => handleCountryChange(country.label)}
+                        >
+                          {country.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
                 <input
                   type="number"
