@@ -2,8 +2,8 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import { RulesProvider } from "./context/RulesContext";
-
+import { MainProvider } from "./context/MainContext";
+import { AuthProvider } from "./context/AuthContext";
 interface Providers {
   children: React.ReactNode;
 }
@@ -11,7 +11,9 @@ interface Providers {
 export function Providers({ children }: Providers) {
   return (
     <Provider store={store}>
-      <RulesProvider>{children}</RulesProvider>
+      <AuthProvider>
+        <MainProvider>{children}</MainProvider>
+      </AuthProvider>
     </Provider>
   );
 }

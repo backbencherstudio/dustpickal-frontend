@@ -85,7 +85,7 @@ export default function Subscription() {
                                                 Purchase annually and save <span className="text-[#22CAAD]">{plan.annualDiscount.percentage}% - ${plan.annualDiscount.amount}</span>
                                             </p>
                                         )}
-                                        <button className={getButtonStyles(plan)} onClick={() => router.push('/subscription/upgrade')}>Get Started</button>
+                                        <button className={getButtonStyles(plan)} onClick={() => router.push(`/subscription/upgrade?plan=${plan.id}`)}>Get Started</button>
                                     </div>
                                 </div>
                             ))}

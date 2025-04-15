@@ -23,6 +23,15 @@ interface AuthResponse {
     email: string;
     role: string;
   };
+  data: {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      role: string;
+      type: string;
+    };
+  };
 }
 
 interface RequestPasswordResetRequest {
@@ -65,8 +74,11 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // Get current user profile
-    getMe: builder.query<AuthResponse["user"], void>({
-      query: () => "/auth/me",
+    getMe: builder.mutation<AuthResponse["user"], void>({
+      query: () => ({
+        url: "/auth/me",
+        method: "GET",
+      }),
     }),
 
     // Request password reset email
@@ -102,7 +114,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useLogoutMutation,
-  useGetMeQuery,
+  useGetMeMutation,
   useRequestPasswordResetMutation,
   useResetPasswordMutation,
   useChangePasswordMutation,

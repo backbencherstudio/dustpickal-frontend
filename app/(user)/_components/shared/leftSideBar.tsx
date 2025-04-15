@@ -148,13 +148,8 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
 
                 {/* Search input */}
                 <div className="relative mt-8">
-                    <input
-                        type="text"
-                        placeholder={isExpanded ? "Search..." : ""}
-                        className={`bg-gray-100 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-300`}
-                    />
                     <svg
-                        className="w-4 h-4 absolute top-3 right-3 text-gray-400"
+                        className="w-4 h-4 absolute top-3 left-3 text-gray-400"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -167,6 +162,11 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                         />
                     </svg>
+                    <input
+                        type="text"
+                        placeholder={isExpanded ? "Search rules" : ""}
+                        className={`bg-white rounded-md px-8 py-2 border border-[#D2D2D5] w-full focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-300 placeholder:text-gray-400 placeholder:text-sm`}
+                    />
                 </div>
                 {/* rules */}
                 <div className="flex flex-row gap-2">

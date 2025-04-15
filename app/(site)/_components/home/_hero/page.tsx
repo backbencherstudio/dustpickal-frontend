@@ -281,7 +281,7 @@ export default function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                href="/analyze/profile"
+                href="/analyze"
                 className="px-18 py-3 text-white rounded-[44.72px] border-[1.789px] border-[rgba(53,133,245,0.00)] text-sm md:text-xl font-normal transition-colors duration-300 bg-[radial-gradient(82.79%_50%_at_50%_50%,#0C58C1_0%,rgba(12,88,193,0.69)_100%)] shadow-[0px_8.944px_30.41px_0px_rgba(53,133,245,0.35)] backdrop-blur-[18.782px]"
               >
                 Get Started

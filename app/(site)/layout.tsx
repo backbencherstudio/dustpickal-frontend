@@ -6,7 +6,7 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[#dbf5fa]">
+    <div className="bg-[#e6f8f9]">
       <NavBar />
       {children}
     </div>

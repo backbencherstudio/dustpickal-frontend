@@ -8,6 +8,7 @@ import tokenIcon from "@/public/assets/client/icons/token.svg"
 import addIcon from "@/public/assets/client/icons/add-icon.svg"
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import AnalyzeHistories from "../analyze/analyzeHistories";
 interface RightSidebarProps {
     isExpanded: boolean;
     onExpandToggle: (value: boolean) => void;
@@ -154,6 +155,31 @@ export default function RightSidebar({ isExpanded, onExpandToggle }: RightSideba
                         </button>
                     </div>
                 )}
+
+                {/* Search input */}
+                <div className="relative mt-3">
+                    <svg
+                        className="w-4 h-4 absolute top-3 left-3 text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                    </svg>
+                    <input
+                        type="text"
+                        placeholder={isExpanded ? "Search history" : ""}
+                        className={`bg-white rounded-md px-8.5 py-2 border border-[#D2D2D5] w-full focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-300 placeholder:text-gray-400 placeholder:text-sm`}
+                    />
+                </div>
+
+                <AnalyzeHistories />
             </div>
 
             <NotificationDrawer
