@@ -12,41 +12,65 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import CustomModal from "../../_components/CustomModal";
-import { useUpdateRuleMutation } from "@/app/store/api/user/ruleApi";
+import { useUpdateRuleMutation, useGetRuleByIdQuery, useDeleteRuleMutation } from "@/app/store/api/user/ruleApi";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-const page = () => {
+
+const Page = () => {
   const { id } = useParams();
   const [updateRule, { isLoading: isUpdating }] = useUpdateRuleMutation();
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
+  const { data: ruleData, isLoading: isLoadingRule } = useGetRuleByIdQuery(id as string, {
+    skip: !id,
+  })
+  const [deleteRule, { isLoading: isDeleting }] = useDeleteRuleMutation();
+  const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm();
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  console.log(id);
+  
 
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const edit = urlParams.get("edit") || false;
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const edit = urlParams.get("edit") || false;
 
-  //   if (edit) {
-  //     setIsEdit(true);
-  //   }
-  // }, [isEdit]);
+    if (edit) {
+      setIsEdit(true);
+    }
+  }, []);
 
-  const handleDelete = () => {
+  // Populate form with rule data when it's loaded
+  useEffect(() => {
+    if (ruleData?.data) {
+      setValue("title", ruleData.data.title);
+      setValue("subRule", ruleData.data.description);
+    }
+  }, [ruleData, setValue]);
+
+  const handleDelete = async () => {
     setIsDeleteModalOpen(false);
+    try {
+      const response = await deleteRule(id as string);
+      toast.success("Rule deleted successfully");
+      router.push("/rule-management");
+    } catch (error: any) {
+      toast.error(error.data?.message || "Failed to delete rule");
+    }
   };
-  const handleUpdate = (data: any) => {
-    console.log(data);
+  
+  const handleUpdate = async (data: any) => {
     setIsUpdateModalOpen(false);
     try {
-      const response = updateRule({ id: id as string, data });
-      console.log(response);
-      // toast.success(response.data.message);
-    } catch (error) {
+      const ruleData = {
+        title: data.title,
+        description: data.subRule,
+      };
+      const response = await updateRule({ id: id as string, data: ruleData });
+      toast.success("Rule updated successfully");
+      router.push("/rule-management");
+    } catch (error: any) {
       console.error('Update failed:', error);
-      toast.error(error.data.message);
+      toast.error(error.data?.message || "Failed to update rule");
     }
   };
 
@@ -66,12 +90,16 @@ const page = () => {
     setValue("subRule", numberedText);
   };
 
+  if (isLoadingRule) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit(handleUpdate)}>
         <div className="">
           <div className="flex justify-between items-center mt-5">
-            <p className="text-[14px]  text-gray-400">Rule Heading</p>
+            <p className="text-[14px] text-gray-400">Rule Heading</p>
 
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -79,12 +107,14 @@ const page = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="lg:mr-24 mr-3 text-[12px] p-2 ">
                 <button
+                  type="button"
                   onClick={editRule}
                   className="bg-[#d2d2d5] text-black cursor-pointer w-full mx-auto py-2 px-3 rounded text-start hover:opacity-80 transition-all duration-300 font-medium"
                 >
                   Edit
                 </button>
                 <button
+                  type="button"
                   onClick={() => setIsDeleteModalOpen(true)}
                   className="bg-[#ef6471] text-white cursor-pointer w-full mx-auto py-2 px-3 rounded mt-2 text-start hover:opacity-80 transition-all duration-300 font-medium"
                 >
@@ -98,6 +128,7 @@ const page = () => {
             type="text"
             placeholder="Rule heading"
             className="mt-3 p-3 border-gray-300 shadow-none focus:border-[#f7f9fb] focus:ring focus:ring-gray-300 transition-colors duration-200"
+            disabled={!isEdit}
           />
           <p className="text-[14px] mt-5 text-gray-400">Sub-Rule</p>
           <Textarea
@@ -106,10 +137,12 @@ const page = () => {
             rows={10}
             value={watch("subRule")}
             onChange={handleTextareaChange}
+            disabled={!isEdit}
           />
           {isEdit && (
             <div className="flex justify-end mt-10 gap-4">
               <Button
+                type="button"
                 onClick={() => setIsUpdateModalOpen(true)}
                 className="px-6 py-2 text-[12px] border rounded bg-black text-white hover:opacity-80 transition-all duration-300"
               >
@@ -137,4 +170,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
