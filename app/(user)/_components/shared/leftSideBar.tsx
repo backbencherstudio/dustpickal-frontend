@@ -80,7 +80,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        router.push("/auth/signin");
+        router.push("/");
     };
 
     return (
