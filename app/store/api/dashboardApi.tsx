@@ -15,8 +15,31 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Dashboard"],
     }),
+    getApiUsageOverview: builder.query({
+      query: () => ({
+        url: `/admin/api-management/usage-overview`,
+        method: "GET",
+      }),
+    }),
+    getDailyUsageTokens: builder.query({
+      query: () => ({
+        url: `/admin/api-management/daily-usage`,
+        method: "GET",
+      }),
+    }),
+    getUserUsage: builder.query({
+      query: (page) => ({
+        url: `/admin/api-management/user-usages?page=${page}`,
+        method: "GET",
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetDashboardsQuery } = dashboardApi;
+export const {
+  useGetDashboardsQuery,
+  useGetApiUsageOverviewQuery,
+  useGetDailyUsageTokensQuery,
+  useGetUserUsageQuery,
+} = dashboardApi;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -6,7 +6,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 
-const DateFilter = () => {
+const DateFilter = ({ onDateChange }) => {
   const [year, setYear] = useState(2025);
   const [month, setMonth] = useState(2); // Use index for months (0 = January)
 
@@ -25,12 +25,19 @@ const DateFilter = () => {
     "December",
   ];
 
-  const updateMonth = (step: number) => {
+  const updateMonth = (step) => {
     const newMonth = (month + step + 12) % 12;
     setMonth(newMonth);
     if (newMonth === 11 && step === -1) setYear((prev) => prev - 1); // Dec -> Jan
     if (newMonth === 0 && step === 1) setYear((prev) => prev + 1); // Jan -> Dec
   };
+
+  // Call the onDateChange callback whenever year or month changes
+  useEffect(() => {
+    if (onDateChange) {
+      onDateChange({ year, month: month + 1 }); // Add 1 to month for API (1-12 format)
+    }
+  }, [year, month, onDateChange]);
 
   return (
     <div className="flex items-center justify-center space-x-3 px-3 py-1.5 rounded border">

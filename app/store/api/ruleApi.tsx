@@ -4,7 +4,7 @@ export const ruleApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getRules: builder.query({
       query: ({ page = 1, limit = 10, search = "", is_draft = false }) => ({
-        url: `/admin/rule-management?page=${page}&limit=${limit}&search=${search}&is_draft=${is_draft}`,
+        url: `/admin/rule-management?page=${page}&limit=${limit}`,
         method: "GET",
       }),
       providesTags: ["Rules"],

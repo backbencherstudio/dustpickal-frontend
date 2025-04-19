@@ -3,9 +3,13 @@ import dynamic from "next/dynamic";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const OverViewChart = () => {
-  const series = [400, 400, 500];
-  const total = series.reduce((sum, num) => sum + num, 0);
+const OverViewChart = ({ data }) => {
+  const series = [
+    data?.tokens_remaining,
+    data?.output_token_usage,
+    data?.input_token_usage,
+  ];
+  const total = data?.total_tokens_used;
 
   const options: ApexCharts.ApexOptions = {
     series,
