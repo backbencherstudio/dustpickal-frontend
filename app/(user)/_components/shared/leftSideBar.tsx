@@ -86,7 +86,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
     return (
         <>
             <div
-                className={`bg-white z-20 h-screen p-3 shadow-xl rounded transition-all duration-300 ease-in-out 
+                className={`bg-white z-20 h-screen p-3 overflow-y-auto custom-scrollbar shadow-xl rounded transition-all duration-300 ease-in-out 
           ${isExpanded ? "w-[280px]" : "w-[80px]"}`}
             >
                 <div
