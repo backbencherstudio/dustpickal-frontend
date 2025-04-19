@@ -14,6 +14,7 @@ import OutputTokenUsageChart from "./_components/OutputTokenUsageChart";
 
 const Page = () => {
   const [page, setPage] = useState(1);
+  const [dateFilter, setDateFilter] = useState(null);
   const { data, isLoading, isError, refetch } =
     useGetApiUsageOverviewQuery(null);
   const { data: userData } = useGetUserUsageQuery(page);
@@ -46,6 +47,7 @@ const Page = () => {
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
+  const handleDateChange = (newDate) => {};
 
   return (
     <div className="bg-white p-3 rounded">
@@ -114,7 +116,7 @@ const Page = () => {
         <div className="col-span-1"></div>
         <div className="col-span-4">
           <div className="flex justify-end">
-            <DateFilter />
+            <DateFilter onDateChange={handleDateChange} />
           </div>
           <CustomTable
             type="users"
