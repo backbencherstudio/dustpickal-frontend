@@ -30,7 +30,7 @@ export const ruleApi = baseApi.injectEndpoints({
     }),
     getRuleById: builder.query({
       query: (id) => ({
-        url: `/analyzer-interface/rules/${id}`,
+        url: `/user-rules-management/rule/${id}`,
         method: "GET",
       }),
       providesTags: ["Rules"],
@@ -45,15 +45,15 @@ export const ruleApi = baseApi.injectEndpoints({
     }),
     updateRule: builder.mutation<UpdateRuleResponse, { id: string; data: any }>({
       query: ({ id, data }) => ({
-        url: `/analyzer-interface/edit-rules/${id}`,
-        method: "POST",
+        url: `/user-rules-management/update-rule/${id}`,
+        method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["Rules"],
     }),
     deleteRule: builder.mutation({
       query: (id) => ({
-        url: `/analyzer-interface/rules/${id}`,
+        url: `/user-rules-management/delete-rule/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Rules"],
