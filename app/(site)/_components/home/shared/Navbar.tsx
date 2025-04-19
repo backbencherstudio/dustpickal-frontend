@@ -10,6 +10,8 @@ import SendEmailModal from "@/app/(site)/_auth/_forget-password/sendEmailModal";
 import PasswordResetForm from "@/app/(site)/_auth/_forget-password/passwordResetForm";
 import { useRouter } from "next/navigation";
 import Signup from "@/app/(site)/_auth/_signup/signup";
+import { useAuth } from "@/app/context/AuthContext";
+
 export default function NavBar() {
     const router = useRouter();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,6 +20,9 @@ export default function NavBar() {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
     const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
+    const { user } = useAuth();
+
+    console.log(user);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -38,6 +43,11 @@ export default function NavBar() {
         // setIsLoginModalOpen(false);
         // setIsSignUpModalOpen(false);
         router.push("/");
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        router.refresh();
     };
 
     // const handleCloseResetPassword = (e: React.MouseEvent) => {
@@ -67,8 +77,17 @@ export default function NavBar() {
 
                     {/* Desktop Auth Buttons */}
                     <div className="hidden lg:flex flex-row items-center gap-3">
-                        <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 hover:text-blue-400 rounded-full transition-colors cursor-pointer" onClick={() => showLoginModal()}>Login</button>
-                        <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 border border-[#0D86FF] rounded-xl hover:bg-white hover:text-[#0D86FF] transition-colors cursor-pointer" onClick={() => showSignUpModal()}>Sign Up</button>
+                        {user ? (
+                            <div className="flex flex-row gap-3">
+                                <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 hover:text-blue-400 rounded-full transition-colors cursor-pointer" onClick={() => router.push("/analyze")}>Analysis</button>
+                                <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 border border-[#0D86FF] rounded-xl hover:bg-white hover:text-[#0D86FF] transition-colors cursor-pointer" onClick={() => showSignUpModal()}>Logout</button>
+                            </div>
+                        ) : (
+                            <>
+                                <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 hover:text-blue-400 rounded-full transition-colors cursor-pointer" onClick={() => showLoginModal()}>Login</button>
+                                <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 border border-[#0D86FF] rounded-xl hover:bg-white hover:text-[#0D86FF] transition-colors cursor-pointer" onClick={() => showSignUpModal()}>Sign Up</button>
+                            </>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -106,8 +125,17 @@ export default function NavBar() {
                             <Link href="/analyze/profile" className="text-base font-normal text-black hover:text-[#0C58C1] p-2 transform transition-transform duration-200 hover:translate-x-2">Pricing</Link>
                             <Link href="/analyze/profile" className="text-base font-normal text-black hover:text-[#0C58C1] p-2 transform transition-transform duration-200 hover:translate-x-2">Testimonials</Link>
                             <div className="flex flex-col gap-4 pt-4 border-t border-gray-200">
-                                <button className="text-sm font-medium text-[#0C58C1] text-center p-3 hover:text-blue-400 rounded-full transition-all duration-300 cursor-pointer" onClick={() => showLoginModal()}>Login</button>
-                                <button className="text-sm font-normal text-white text-center p-3 bg-[#0C58C1] rounded-full hover:bg-white hover:text-[#0C58C1] transition-all duration-300 cursor-pointer" onClick={() => showSignUpModal()}>Sign Up</button>
+                                {user ? (
+                                    <div>
+                                        <button className="text-sm font-medium text-[#0C58C1] text-center p-3 hover:text-blue-400 rounded-full transition-all duration-300 cursor-pointer" onClick={() => router.push("/analyze")}>Analysis</button>
+                                        <button className="text-sm font-normal text-white text-center p-3 bg-[#0C58C1] rounded-full hover:bg-white hover:text-[#0C58C1] transition-all duration-300 cursor-pointer" onClick={() => handleLogout()}>Logout</button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <button className="text-sm font-medium text-[#0C58C1] text-center p-3 hover:text-blue-400 rounded-full transition-all duration-300 cursor-pointer" onClick={() => showLoginModal()}>Login</button>
+                                        <button className="text-sm font-normal text-white text-center p-3 bg-[#0C58C1] rounded-full hover:bg-white hover:text-[#0C58C1] transition-all duration-300 cursor-pointer" onClick={() => showSignUpModal()}>Sign Up</button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

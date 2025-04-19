@@ -146,7 +146,7 @@ const Page = () => {
                 onClick={() => setIsUpdateModalOpen(true)}
                 className="px-6 py-2 text-[12px] border rounded bg-black text-white hover:opacity-80 transition-all duration-300"
               >
-                Update
+                {isUpdating ? "Updating..." : "Update"}
               </Button>
             </div>
           )}

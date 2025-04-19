@@ -25,6 +25,7 @@ export default function UpgradePage() {
     formState: { errors },
   } = useForm();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const planType = searchParams.get("plan");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
@@ -39,7 +40,7 @@ export default function UpgradePage() {
 
   const onSubmit = async (data: any) => {
     console.log("Form Data:", data, selectedCountry);
-
+    setIsLoading(true);
     if (!stripe || !elements) {
       console.error("Stripe or Elements not loaded");
       return;
@@ -94,6 +95,7 @@ export default function UpgradePage() {
           // Payment successful!
           // You can update your UI or redirect to success page
           toast.success('Payment successful!');
+          router.push("/analyze");
         }
       
         toast.success("Subscription successful!");
@@ -104,6 +106,8 @@ export default function UpgradePage() {
     } catch (err) {
       console.error("Error during payment or subscription:", err);
       toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -321,7 +325,7 @@ export default function UpgradePage() {
                   type="submit"
                   className="w-full bg-[#0D86FF] text-white rounded py-2 text-sm font-medium"
                 >
-                  Upgrade
+                  {isLoading ? "Upgrading..." : "Upgrade"}
                 </button>
               </div>
             </div>

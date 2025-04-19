@@ -78,7 +78,7 @@ export default function Subscription() {
                                 </div>
                             )}
                         </div>
-                        {user?.subscription?.type !== 'PAY_AS_YOU_GO' && (
+                        {user?.subscription !== null && (
                             <button className="flex flex-col gap-1 items-end cursor-pointer md:px-7 md:py-2" onClick={() => handleCancelSubscription()}>
                                 <p className="text-sm font-medium text-[#4A4C56] hover:text-red-500/80 underline">Cancel Subscription</p>
                             </button>
