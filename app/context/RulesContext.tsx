@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface Rule {
   id: number;
-  name: string;
+  title: string;
   description: string;
   type: 'predefined' | 'custom';
 }
