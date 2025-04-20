@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { IoIosAttach, IoIosSend } from "react-icons/io";
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowLeft, FaUser } from "react-icons/fa6";
 import { useParams, useRouter } from "next/navigation";
 import { GoReply } from "react-icons/go";
 import {
@@ -9,6 +9,7 @@ import {
   useReplySupportMutation,
 } from "@/app/store/api/supportApi";
 import { format } from "date-fns";
+import toast from "react-hot-toast";
 
 const TicketDetail = () => {
   const { id } = useParams();
@@ -16,20 +17,8 @@ const TicketDetail = () => {
   const [replyMessage, setReplyMessage] = useState("");
   const [showReply, setShowReply] = useState(false);
   const [attachments, setAttachments] = useState<File[]>([]);
-  const { data } = useGetSupportInfoQuery(id);
+  const { data, refetch } = useGetSupportInfoQuery(id);
   const [replySupport] = useReplySupportMutation();
-
-  const ticketInfo = {
-    ticketId: "#SUP-41231547",
-    status: "Open",
-    subject: "Facing Issues with my subscription plan",
-    description:
-      "I am unable to access certain features that should be available in my current subscription plan. The analytics dashboard shows an error message when I try to generate reports.",
-    createdAt: "12/02/2025 10:30 AM",
-    lastUpdated: "15/02/2025 02:45 PM",
-    priority: "High",
-    category: "Subscription",
-  };
 
   const messages = [
     {
@@ -72,10 +61,10 @@ const TicketDetail = () => {
         id,
         content: replyData,
       }).unwrap();
-
-      console.log("Reply sent successfully:", response);
+      refetch();
       setReplyMessage("");
       setShowReply(false);
+      toast.success("Reply Sended Successfully");
     } catch (error) {
       console.error("Failed to send reply:", error);
     }
@@ -124,13 +113,18 @@ const TicketDetail = () => {
                               </p>
                             </div>
                           )} */}
+                          <div className="bg-gray-100 w-10 h-10 border rounded-full flex justify-center items-center text-gray-400">
+                            <FaUser size={20} />
+                          </div>
                           <div>
                             <h3 className="font-medium text-sm mb-1">
                               {" "}
-                              {data?.data?.subject}
+                              {message?.is_from_user
+                                ? data?.data?.subject
+                                : "Admin Support"}
                             </h3>
                             <p className="text-xs text-gray-500">
-                              {/* {message?.user.name} */}
+                              {message?.is_from_user ? "user" : "admin"}
                             </p>
                           </div>
                         </div>
@@ -157,7 +151,7 @@ const TicketDetail = () => {
             <div className="mt-4 flex justify-end">
               <button
                 onClick={() => setShowReply(true)}
-                className="bg-black text-white px-4 py-2 rounded hover:opacity-90 flex gap-2 text-[14px]"
+                className="bg-black text-white px-4 py-2 rounded hover:opacity-90 flex gap-2 text-[14px] cursor-pointer"
               >
                 <GoReply size={20} /> Reply
               </button>
