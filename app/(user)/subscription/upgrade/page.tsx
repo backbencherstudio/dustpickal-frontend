@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSubscribeMutation } from "@/app/store/api/user/subscribeApi";
 import { countries } from "@/app/data/countries";
+import { toast } from "react-toastify";
 
 export default function UpgradePage() {
   const {
@@ -27,7 +28,7 @@ export default function UpgradePage() {
   const searchParams = useSearchParams();
   const planType = searchParams.get("plan");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
-  const [selectedBillingOption, setSelectedBillingOption] = useState("monthly");
+  const [selectedBillingOption, setSelectedBillingOption] = useState("MONTHLY");
   const [selectedCountry, setSelectedCountry] = useState(
     countries[0]?.label || "United States"
   );
@@ -81,22 +82,33 @@ export default function UpgradePage() {
 
       // Call the subscribe API
       const response = await subscribe(payload).unwrap();
-
-      if (response) {
-        console.log("Subscription successful:", response);
-        alert("Subscription successful!");
+      console.log("response", response);
+      if (response.success) {
+        // console.log("Subscription successful:", response.data.clientSecret);
+        const { paymentIntent, error } = await stripe.confirmCardPayment(response.data.clientSecret);
+  
+        if (error) {
+          // Handle payment error
+          toast.error(error.message);
+        } else if (paymentIntent.status === 'succeeded') {
+          // Payment successful!
+          // You can update your UI or redirect to success page
+          toast.success('Payment successful!');
+        }
+      
+        toast.success("Subscription successful!");
       } else {
-        console.error("Subscription failed:", response);
-        alert("Subscription failed. Please try again.");
+        console.error("Subscription failed:", response.message);
+        toast.error("Subscription failed. Please try again.");
       }
     } catch (err) {
       console.error("Error during payment or subscription:", err);
-      alert("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 
   const handleBillingOptionChange = (value: string) => {
-    setSelectedBillingOption(value);
+    setSelectedBillingOption(value.toUpperCase());
   };
 
   const handlePaymentMethodChange = (value: string) => {
@@ -261,15 +273,15 @@ export default function UpgradePage() {
                 <div className="flex flex-col gap-2">
                   <div
                     className={`w-full border rounded-xl px-3 py-2 cursor-pointer ${
-                      selectedBillingOption === "monthly"
+                      selectedBillingOption === "MONTHLY"
                         ? "border-[#0D86FF]"
                         : "border-[#A5A5AB]"
                     }`}
-                    onClick={() => handleBillingOptionChange("monthly")}
+                    onClick={() => handleBillingOptionChange("MONTHLY")}
                   >
                     <input
                       type="radio"
-                      checked={selectedBillingOption === "monthly"}
+                      checked={selectedBillingOption === "MONTHLY"}
                       readOnly
                     />
                     <p className="text-sm font-medium">
@@ -278,15 +290,15 @@ export default function UpgradePage() {
                   </div>
                   <div
                     className={`w-full border rounded-xl px-3 py-2 cursor-pointer ${
-                      selectedBillingOption === "yearly"
+                      selectedBillingOption === "YEARLY"
                         ? "border-[#0D86FF]"
                         : "border-[#A5A5AB]"
                     }`}
-                    onClick={() => handleBillingOptionChange("yearly")}
+                    onClick={() => handleBillingOptionChange("YEARLY")}
                   >
                     <input
                       type="radio"
-                      checked={selectedBillingOption === "yearly"}
+                      checked={selectedBillingOption === "YEARLY"}
                       readOnly
                     />
                     <div className="flex flex-col">

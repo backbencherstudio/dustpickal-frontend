@@ -1,43 +1,13 @@
 import { useState } from 'react';
 import { useRules } from '@/app/context/RulesContext';
+import { useGetRulesQuery } from '@/app/store/api/user/ruleApi';
 
 export default function AllRules() {
-  const [activeTab, setActiveTab] = useState('predefined');
   const [isPredefinedOpen, setIsPredefinedOpen] = useState(true);
   const [isCustomOpen, setIsCustomOpen] = useState(true);
   const { selectedRules, addRule, removeRule, isRuleSelected } = useRules();
+  const { data: rulesData, isLoading } = useGetRulesQuery({});
 
-  const rules = {
-    predefined: [
-      {
-        id: 1,
-        name: "Basic Authentication dfsa dfdshbfsgsa df",
-        description: "Authenticate users with username and password",
-        type: "predefined"
-      },
-      {
-        id: 2,
-        name: "Rate Limiting dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-        description: "Limit number of requests per time window",
-        type: "predefined"
-      }
-    ],
-    custom: [
-      {
-        id: 3,
-        name: "IP Whitelist dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-        description: "Allow requests only from specific IP addresses",
-        type: "custom"
-      },
-      {
-        id: 4,
-        name: "Custom Header Check dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-        description: "Validate custom headers in requests",
-        type: "custom"
-      }
-    ]
-  };
-  
   const textLimiter = (text: string, limit: number) => {
     if (text.length > limit) {
       return text.substring(0, limit) + '...';
@@ -52,6 +22,10 @@ export default function AllRules() {
       addRule(rule);
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="pt-3 pb-10 w-full">
@@ -69,14 +43,14 @@ export default function AllRules() {
         </button>
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isPredefinedOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="space-y-4">
-            {rules.predefined.map(rule => (
+            {rulesData?.data?.adminRules?.map(rule => (
               <div key={rule.id} className="flex flex-row gap-2">
                 <input 
                   type="checkbox" 
                   checked={isRuleSelected(rule.id)}
                   onChange={() => handleRuleToggle(rule)}
                 />
-                <h3 className="text-[#1D1F2C]">{textLimiter(rule.name, 25)}</h3>
+                <h3 className="text-[#1D1F2C]">{textLimiter(rule.title, 25)}</h3>
               </div>
             ))}
           </div>
@@ -97,14 +71,14 @@ export default function AllRules() {
         </button>
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isCustomOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="space-y-4">
-            {rules.custom.map(rule => (
+            {rulesData?.data?.userRules?.map(rule => (
               <div key={rule.id} className="flex flex-row gap-2">
                 <input 
                   type="checkbox" 
                   checked={isRuleSelected(rule.id)}
                   onChange={() => handleRuleToggle(rule)}
                 />
-                <h3 className="text-[#1D1F2C]">{textLimiter(rule.name, 25)}</h3>
+                <h3 className="text-[#1D1F2C]">{textLimiter(rule.title, 25)}</h3>
               </div>
             ))}
           </div>
