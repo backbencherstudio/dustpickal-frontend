@@ -17,7 +17,7 @@ const Page = () => {
   const [dateFilter, setDateFilter] = useState(null);
   const { data, isLoading, isError, refetch } =
     useGetApiUsageOverviewQuery(null);
-  const { data: userData } = useGetUserUsageQuery(page);
+  const { data: userData } = useGetUserUsageQuery({ page, dateFilter });
 
   // Client-side only rendering state
   const [isClient, setIsClient] = useState(false);
@@ -47,7 +47,9 @@ const Page = () => {
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
-  const handleDateChange = (newDate) => {};
+  const handleDateChange = (newDate) => {
+    setDateFilter(newDate);
+  };
 
   return (
     <div className="bg-white p-3 rounded">
@@ -56,10 +58,10 @@ const Page = () => {
         <div className="col-span-1"></div>
         <div className="col-span-4">
           <div className="flex justify-center items-center mt-5">
-            <CustomFilter
+            {/* <CustomFilter
               placeholder="All"
               options={["All", "Today", "Weekly", "Monthly", "Yearly"]}
-            />
+            /> */}
           </div>
           <div className="grid lg:grid-cols-3 text-[14px] py-10 border-b">
             <div>

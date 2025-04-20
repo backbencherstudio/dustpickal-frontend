@@ -8,8 +8,7 @@ import { format } from "date-fns";
 const page = () => {
   const router = useRouter();
   const [page, setPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(10);
-  const { data, isLoading, isError } = useGetUsersQuery({ page, limit });
+  const { data, isLoading, isError } = useGetUsersQuery({ page });
   if (isLoading)
     return (
       <div className=" mt-6">
@@ -51,9 +50,31 @@ const page = () => {
     },
     { label: "Document Analyzed", accessor: "documents_analyzed" },
     { label: "Custom Rules", accessor: "custom_rules" },
-    { label: "Subscription", accessor: "subscription" },
-    { label: "Subscription Status", accessor: "subscriptionStatus" },
-    { label: "Subscription Period", accessor: "subscriptionPeriod" },
+    {
+      label: "Subscription",
+      accessor: "subscription",
+      customCell: (row) => {
+        const subscription = row.subscription;
+        if (subscription && typeof subscription === "object") {
+          return `${subscription.plan || "N/A"} (${
+            subscription.billing_cycle || "N/A"
+          })`;
+        }
+        return "N/A";
+      },
+    },
+    {
+      label: "Subscription Status",
+      accessor: "subscription",
+      customCell: (row) => {
+        const status = row.subscription;
+        if (status && typeof status === "object") {
+          return status.status || "N/A";
+        }
+        return "N/A";
+      },
+    },
+    // { label: "Subscription Period", accessor: "subscriptionPeriod" },
     {
       label: "Action",
       accessor: "action",
@@ -61,7 +82,7 @@ const page = () => {
         <div className="flex gap-2">
           <button
             onClick={() => router.push(`/dashboard/user-management/${row.id}`)}
-            className=" hover:bg-gray-200 rounded-xl p-2 cursor-pointer"
+            className="hover:bg-gray-200 rounded-xl p-2 cursor-pointer"
           >
             <IoEyeOutline size={20} />
           </button>
@@ -79,7 +100,7 @@ const page = () => {
         columns={userColumns}
         data={data?.data}
         title=""
-        filter={true}
+        filter={false}
         pagination={true}
         paginationData={{
           currentPage: data?.meta?.page || 1,

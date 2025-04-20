@@ -28,9 +28,14 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
     }),
     getUserUsage: builder.query({
-      query: (page) => ({
-        url: `/admin/api-management/user-usages?page=${page}`,
+      query: ({ page, dateFilter }) => ({
+        url: `/admin/api-management/user-usages`,
         method: "GET",
+        params: {
+          page,
+          year: dateFilter?.year, // Pass the date as a query parameter
+          month: dateFilter?.month,
+        },
       }),
     }),
   }),

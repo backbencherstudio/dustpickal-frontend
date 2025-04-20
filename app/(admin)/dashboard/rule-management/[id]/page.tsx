@@ -33,8 +33,8 @@ const page = () => {
   const [deleteRule] = useDeleteRuleMutation();
   useEffect(() => {
     if (ruleData) {
-      setHeading(ruleData.title);
-      setSubRule(ruleData.description);
+      setHeading(ruleData?.data?.rule_name);
+      setSubRule(ruleData?.data?.description);
     }
   }, [ruleData]);
 
@@ -59,6 +59,7 @@ const page = () => {
       data: {
         title: heading,
         description: subRule,
+        is_draft: false,
       },
     };
 
