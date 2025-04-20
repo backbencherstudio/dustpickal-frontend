@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useRules } from '@/app/context/RulesContext';
 import { useGetRulesQuery } from '@/app/store/api/user/ruleApi';
 
-export default function AllRules() {
+export default function AllRules({ searchQuery }: { searchQuery: string }) {
   const [isPredefinedOpen, setIsPredefinedOpen] = useState(true);
   const [isCustomOpen, setIsCustomOpen] = useState(true);
   const { selectedRules, addRule, removeRule, isRuleSelected } = useRules();
-  const { data: rulesData, isLoading } = useGetRulesQuery({});
+  const { data: rulesData, isLoading } = useGetRulesQuery(searchQuery);
 
   const textLimiter = (text: string, limit: number) => {
     if (text.length > limit) {

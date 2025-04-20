@@ -5,6 +5,7 @@ import axios from "axios";
 interface AuthContextType {
     user: any;
     isLoading: boolean;
+    getUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,7 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
    
     return (
-        <AuthContext.Provider value={{ user, isLoading }}>
+        <AuthContext.Provider value={{ getUser, user, isLoading }}>
             {children}
         </AuthContext.Provider>
     );

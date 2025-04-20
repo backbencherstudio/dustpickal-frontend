@@ -1,49 +1,42 @@
 import { useState } from "react";
-export default function AnalyzeHistories() {
-  const [activeTab, setActiveTab] = useState('predefined');
+import { useAnalyzeHistoryQuery } from "@/app/store/api/analyzeApi";
+
+interface Analysis {
+  ruleId: string;
+  ruleTitle: string;
+  ruleDescription: string;
+  result: string;
+  matched: boolean;
+}
+
+interface Document {
+  id: string;
+  fileName: string;
+  type: string;
+  analyzedAt: string;
+}
+
+interface AnalysisItem {
+  document: Document;
+  analyses: Analysis[];
+}
+
+interface AnalyzeHistoryResponse {
+  success: boolean;
+  message: string;
+  data: {
+    todayData: AnalysisItem[];
+    yesterday: AnalysisItem[];
+    last7days: AnalysisItem[];
+  };
+}
+
+export default function AnalyzeHistories({ searchQuery }: { searchQuery: string }) {
   const [isPredefinedOpen, setIsPredefinedOpen] = useState(true);
   const [isCustomOpen, setIsCustomOpen] = useState(true);
   const [isLast7DaysOpen, setIsLast7DaysOpen] = useState(true);
 
-  const analyzeHistories = [
-    {
-      id: 1,
-      name: "Basic Authentication dfsa dfdshbfsgsa df",
-      description: "Authenticate users with username and password",
-      data: "2025-04-13"
-    },
-    {
-      id: 2,
-      name: "Rate Limiting dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-      description: "Limit number of requests per time window",
-      data: "2025-04-12"
-    },
-    {
-      id: 3,
-      name: "IP Whitelist dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-      description: "Allow requests only from specific IP addresses",
-      data: "2025-04-12"
-    },
-    {
-      id: 4,
-      name: "Custom Header Check dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-      description: "Validate custom headers in requests",
-      data: "2025-03-15"
-    },
-    {
-      id: 5,
-      name: "Custom Header Check dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-      description: "Validate custom headers in requests",
-      data: "2025-03-05"
-    },
-    {
-      id: 6,
-      name: "Custom Header Check dfsg fdasfgdsfadf rewtgrgfwergwrdgsdfg",
-      description: "Validate custom headers in requests",
-      data: "2025-02-26"
-    },
-
-  ]
+  const { data: analyzeHistory } = useAnalyzeHistoryQuery(searchQuery) as { data: AnalyzeHistoryResponse | undefined };
 
   const textLimiter = (text: string, limit: number) => {
     if (text.length > limit) {
@@ -68,9 +61,14 @@ export default function AnalyzeHistories() {
         </button>
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isPredefinedOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="space-y-4">
-            {analyzeHistories.filter(rule => rule.data === new Date().toISOString().split('T')[0]).map(rule => (
-              <div key={rule.id} className="flex flex-row gap-2">
-                <h3 className="text-[#1D1F2C]">{textLimiter(rule.name, 25)}</h3>
+            {analyzeHistory?.data?.todayData?.map((item) => (
+              <div key={item.document.id} className="flex flex-col gap-2">
+                <h3 className="text-[#1D1F2C]">{textLimiter(item.document.fileName, 25)}</h3>
+                {/* {item.analyses.map((analysis, index) => (
+                  <div key={index} className="pl-4">
+                    <p className="text-sm text-gray-600">{textLimiter(analysis.ruleTitle, 30)}</p>
+                  </div>
+                ))} */}
               </div>
             ))}
           </div>
@@ -91,9 +89,14 @@ export default function AnalyzeHistories() {
         </button>
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isCustomOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="space-y-4">
-            {analyzeHistories.filter(rule => rule.data === new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0]).map(rule => (
-              <div key={rule.id} className="flex flex-row gap-2">
-                <h3 className="text-[#1D1F2C]">{textLimiter(rule.name, 25)}</h3>
+            {analyzeHistory?.data?.yesterday?.map((item) => (
+              <div key={item.document.id} className="flex flex-col gap-2">
+                <h3 className="text-[#1D1F2C]">{textLimiter(item.document.fileName, 25)}</h3>
+                {/* {item.analyses.map((analysis, index) => (
+                  <div key={index} className="pl-4">
+                    <p className="text-sm text-gray-600">{textLimiter(analysis.ruleTitle, 30)}</p>
+                  </div>
+                ))} */}
               </div>
             ))}
           </div>
@@ -114,14 +117,14 @@ export default function AnalyzeHistories() {
         </button>
         <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isLast7DaysOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="space-y-4">
-            {analyzeHistories.filter(rule => {
-              const ruleDate = new Date(rule.data);
-              const today = new Date();
-              const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7));
-              return ruleDate >= sevenDaysAgo && ruleDate <= new Date();
-            }).map(rule => (
-              <div key={rule.id} className="flex flex-row gap-2">
-                <h3 className="text-[#1D1F2C]">{textLimiter(rule.name, 25)}</h3>
+            {analyzeHistory?.data?.last7days?.map((item) => (
+              <div key={item.document.id} className="flex flex-col gap-2">
+                <h3 className="text-[#1D1F2C]">{textLimiter(item.document.fileName, 25)}</h3>
+                {/* {item.analyses.map((analysis, index) => (
+                  <div key={index} className="pl-4">
+                    <p className="text-sm text-gray-600">{textLimiter(analysis.ruleTitle, 30)}</p>
+                  </div>
+                ))} */}
               </div>
             ))}
           </div>

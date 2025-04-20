@@ -47,7 +47,7 @@ export default function NavBar() {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        router.refresh();
+        window.location.href = "/";
     };
 
     // const handleCloseResetPassword = (e: React.MouseEvent) => {
@@ -80,7 +80,7 @@ export default function NavBar() {
                         {user ? (
                             <div className="flex flex-row gap-3">
                                 <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 hover:text-blue-400 rounded-full transition-colors cursor-pointer" onClick={() => router.push("/analyze")}>Analysis</button>
-                                <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 border border-[#0D86FF] rounded-xl hover:bg-white hover:text-[#0D86FF] transition-colors cursor-pointer" onClick={() => showSignUpModal()}>Logout</button>
+                                <button className="text-base font-medium text-[#0D86FF] h-fit px-6 py-2 border border-[#0D86FF] rounded-xl hover:bg-white hover:text-[#0D86FF] transition-colors cursor-pointer" onClick={() => handleLogout()}>Logout</button>
                             </div>
                         ) : (
                             <>

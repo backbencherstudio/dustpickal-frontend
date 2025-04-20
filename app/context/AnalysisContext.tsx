@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AnalysisResult {
+    documentId: string;
     fileName: string;
-    results: {
-        rule: string;
+    analyses: {
+        ruleId: string;
+        ruleTitle: string;
         matched: boolean;
-        message: string;
+        analysis: string;
     }[];
+    tokensUsed: number;
 }
 
 interface AnalysisContextType {

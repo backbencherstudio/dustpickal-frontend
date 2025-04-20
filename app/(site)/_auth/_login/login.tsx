@@ -36,7 +36,9 @@ export default function LoginPage({
       if (response.success) {
         toast.success(response.message);
         localStorage.setItem("token", response?.authorization?.token);
-        router.refresh();
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
       } else {
         toast.error(response.message);
       }

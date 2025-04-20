@@ -15,8 +15,8 @@ interface UpdateRuleResponse {
 export const ruleApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getRules: builder.query({
-      query: ({ page = 1, limit = 10, search = "", is_draft = false }) => ({
-        url: `/analyzer-interface/all-rules?page=${page}&limit=${limit}&search=${search}&is_draft=${is_draft}`,
+      query: (searchQuery) => ({
+        url: `/analyzer-interface/all-rules?search=${searchQuery}`,
         method: "GET",
       }),
       providesTags: ["Rules"],

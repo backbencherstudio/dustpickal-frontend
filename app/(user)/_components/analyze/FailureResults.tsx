@@ -10,7 +10,7 @@ export default function FailureResults() {
         return null;
     }
 
-    const failures = currentDocResults.results.filter(result => !result.matched);
+    const failures = currentDocResults.analyses.filter(result => !result.matched);
 
     if (failures.length === 0) {
         return (
@@ -43,10 +43,10 @@ export default function FailureResults() {
                                 <div className="mt-1 w-2 h-2 rounded-full bg-red-500" />
                                 <div className="flex-1">
                                     <h3 className="text-sm font-medium text-red-500">
-                                        {failure.rule}
+                                        {failure.ruleTitle}
                                     </h3>
                                     <p className="text-sm mt-1 text-red-500">
-                                        {failure.message}
+                                        {failure.analysis}
                                     </p>
                                 </div>
                             </div>

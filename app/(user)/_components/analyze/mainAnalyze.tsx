@@ -126,66 +126,33 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
     const analyzeFiles = async () => {
         const successFiles = uploadedFiles.filter(file => file.status === 'success');
         
-        // Mock analysis results based on the rules and files
-        const mockResults = successFiles.map(file => ({
-            fileName: file.name,
-            results: selectedRules.map(rule => {
-                // Mock different scenarios based on the rules shown in the image
-                if (rule.title.includes('Date of issue')) {
-                    return {
-                        rule: rule.title,
-                        matched: false,
-                        message: "The test report is issued on 12 Oct 2013. It's more than 3 years old."
-                    };
-                }
-                if (rule.title.includes('Test Report Number')) {
-                    return {
-                        rule: rule.title,
-                        matched: true,
-                        message: "The Test Report Ref. No. 17027138 002 is consistent on every page."
-                    };
-                }
-                if (rule.title.includes('CB certificate')) {
-                    return {
-                        rule: rule.title,
-                        matched: true,
-                        message: "The CB Test Certificate Ref. No. JPTUV-051322-M1 matches the main test report reference number 17027138 002."
-                    };
-                }
-                if (rule.title.includes('Markings durability')) {
-                    return {
-                        rule: rule.title,
-                        matched: false,
-                        message: "There is no explicit mention of marking durability being tested in the report."
-                    };
-                }
-                // Default case
-                return {
-                    rule: rule.title,
-                    matched: Math.random() > 0.5, // Random match for other rules
-                    message: `Rule check for ${rule.title} completed.`
-                };
-            })
-        }));
-
-        setAnalysisResults(mockResults);
-        if (mockResults.length > 0) {
-            setSelectedDocument(mockResults[0].fileName);
-        }
-
-        // Later this will be replaced with actual API call:
-        const analyzeFiles = {
-            files: successFiles.map(file => file.file),
-            ruleIds: selectedRules.map(rule => rule.id.toString())
-        }
+        // Create FormData for API request
         const formData = new FormData();
-        analyzeFiles.files.forEach(file => {
-            formData.append('file', file);
+        successFiles.forEach(file => {
+            formData.append('file', file.file);
         });
-        formData.append('ruleIds', JSON.stringify(analyzeFiles.ruleIds));
-        const response = await analyze(formData);
-        console.log("response", response);
-        // setAnalysisResults(response.data);
+        formData.append('ruleIds', selectedRules.map(rule => rule.id.toString()).join(','));
+        
+        try {
+            const response = await analyze(formData).unwrap();
+            
+            console.log('response analyze', response);
+            if (response.success) {
+                // Update the analysis results with the API response
+                setAnalysisResults(response.data.results);
+                
+                // Set the first document as selected if available
+                if (response.data.results.length > 0) {
+                    setSelectedDocument(response.data.results[0].fileName);
+                }
+            } else {
+                console.error("Analysis failed:", response.message);
+                // Handle error case - you might want to show an error message to the user
+            }
+        } catch (error) {
+            console.error("Error during analysis:", error);
+            // Handle error case - you might want to show an error message to the user
+        }
     };
     
     return (

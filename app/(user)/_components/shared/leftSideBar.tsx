@@ -20,7 +20,8 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
     const router = useRouter();
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [isAddNewModalOpen, setIsAddNewModalOpen] = useState(false);
-
+    const [searchQuery, setSearchQuery] = useState("");
+    console.log('searchQuery', searchQuery)
     const navItems = [
         {
             label: "Rule Management",
@@ -166,6 +167,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                         type="text"
                         placeholder={isExpanded ? "Search rules" : ""}
                         className={`bg-white rounded-md px-8 py-2 border border-[#D2D2D5] w-full focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-300 placeholder:text-gray-400 placeholder:text-sm`}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
                 {/* rules */}
@@ -175,7 +177,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                             <Image src={ruleGrayIcon} width={100} height={100} alt="" className="w-5 h-5" />
                         </button>
                         :
-                        <AllRules />
+                        <AllRules searchQuery={searchQuery} />
                     }
                 </div>
 

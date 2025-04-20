@@ -19,6 +19,11 @@ export default function RightSidebar({ isExpanded, onExpandToggle }: RightSideba
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const [isTokenOpen, setIsTokenOpen] = useState(false);
     const router = useRouter();
+    const [searchQuery, setSearchQuery] = useState("");
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        router.push('/');
+    }
     return (
         <>
             <div
@@ -85,9 +90,9 @@ export default function RightSidebar({ isExpanded, onExpandToggle }: RightSideba
                                 {isProfileDropdownOpen && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
                                         <div className="py-1">
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => router.push('/profile')}>Your Profile</a>
+                                            {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a> */}
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={() => handleLogout()}>Logout</a>
                                         </div>
                                     </div>
                                 )}
@@ -176,10 +181,11 @@ export default function RightSidebar({ isExpanded, onExpandToggle }: RightSideba
                         type="text"
                         placeholder={isExpanded ? "Search history" : ""}
                         className={`bg-white rounded-md px-8.5 py-2 border border-[#D2D2D5] w-full focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-300 placeholder:text-gray-400 placeholder:text-sm`}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
 
-                <AnalyzeHistories />
+                <AnalyzeHistories searchQuery={searchQuery} />
             </div>
 
             <NotificationDrawer

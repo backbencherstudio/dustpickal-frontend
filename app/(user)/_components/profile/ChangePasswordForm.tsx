@@ -4,7 +4,7 @@ import EyeIcon from "@/public/assets/client/auth/eye.svg";
 import { X } from "lucide-react";
 import { useChangePasswordMutation } from "@/app/store/api/authApi";
 import { toast } from "react-toastify";
-export default function ChangePasswordForm({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+export default function ChangePasswordForm({ isOpen, onClose, closeModal }: { isOpen: boolean, onClose: () => void, closeModal: () => void }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [changePassword, { isLoading }] = useChangePasswordMutation();
     const onSubmit = async (data: any) => {
@@ -16,6 +16,8 @@ export default function ChangePasswordForm({ isOpen, onClose }: { isOpen: boolea
         console.log(response);
         if (response.data.success) {
             toast.success(response.data.message);
+            onClose();
+            closeModal();
         } else {
             toast.error(response.data.message);
         }

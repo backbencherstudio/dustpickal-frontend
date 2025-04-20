@@ -4,17 +4,29 @@ import EyeIcon from "@/public/assets/client/auth/eye.svg";
 import { X } from "lucide-react";
 import ChangePasswordForm from "./ChangePasswordForm";
 import { useState } from "react";
+import { useCheckPasswordMutation } from "@/app/store/api/authApi";
+import { toast } from "react-toastify";
+
 export default function ChangePasswordModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [checkPassword, { isLoading: isCheckingPassword }] = useCheckPasswordMutation();
+
     const [isOpenChangePassword, setIsOpenChangePassword] = useState(false);
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         console.log(data);
-        // onClose();
-        setIsOpenChangePassword(true);
+        const response = await checkPassword(data);
+        console.log(response);
+        if (response.data.data.isValid) {
+            // onClose();
+            setIsOpenChangePassword(true);
+        } else {
+            toast.error("Password is incorrect");
+        }
+
     };
 
     if (isOpenChangePassword) {
-        return <ChangePasswordForm isOpen={isOpenChangePassword} onClose={() => setIsOpenChangePassword(false)} />
+        return <ChangePasswordForm isOpen={isOpenChangePassword} onClose={() => setIsOpenChangePassword(false)} closeModal={onClose} />
     }
 
     return (

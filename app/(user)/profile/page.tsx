@@ -3,6 +3,9 @@ import { LucideSquareUserRound, ArrowLeft } from "lucide-react";
 import router from "next/router";
 import React, { useState } from "react";
 import ChangePasswordModal from "../_components/profile/changePasswordModal";
+import { useAuth } from "@/app/context/AuthContext";
+import Image from "next/image";
+import oneImg from "@/public/assets/client/mini-logo.png"
 
 const page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,6 +14,8 @@ const page = () => {
     name: "",
     password: "",
   });
+  const { user } = useAuth();
+  console.log(user);
   const handleEdit = (field) => {
     setEditField(field);
     setFormData({
@@ -38,23 +43,23 @@ const page = () => {
         </button>
       </div>
       <div className="flex items-center gap-4 mt-6">
-        <LucideSquareUserRound size={80} color="gray" />
+        {user?.avatar ? <Image src={user?.avatar} alt="profile" width={80} height={80} /> : <LucideSquareUserRound size={80} color="gray" />}
         <div>
           <h1 className="text-[12px] text-zinc-700 ">Profile Name</h1>
-          <p className="bg-white w-[200px] px-2 py-1 mt-2 rounded">Your Name</p>
+          <p className="bg-white px-2 py-1 mt-2 rounded w-fit" style={{ boxShadow: '0px 0px 5px 0px rgba(112, 112, 112, 0.15) inset' }}>{user?.name ? user?.name : user?.email}</p>
         </div>
       </div>
       <p className="text-gray-500 mt-10 border-b pb-2">Account Security</p>
       <div className="mt-6">
         <p className="text-gray-700">Email</p>
         <div className="flex justify-between items-center gap-2">
-          <h1 className="text-gray-500">youremail@gmail.com</h1>
-          <div
+          <h1 className="text-gray-500">{user?.email}</h1>
+          {/* <div
             className="rounded px-3 p-1 border-2 text-gray-600 font-medium flex items-center justify-center cursor-pointer hover:bg-gray-100"
             onClick={() => handleEdit("email")}
           >
             <p className="">Change Email</p>
-          </div>
+          </div> */}
         </div>
       </div>{" "}
       <div className="mt-6">

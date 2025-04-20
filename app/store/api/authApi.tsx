@@ -48,6 +48,10 @@ interface ChangePasswordRequest {
   new_password: string;
 }
 
+interface CheckPasswordRequest {
+  password: string;
+}
+
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<AuthResponse, LoginRequest>({
@@ -99,6 +103,15 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    // Check password
+    checkPassword: builder.mutation<{ success: boolean; message: string; data: { isValid: boolean } }, CheckPasswordRequest>({
+      query: (data) => ({
+        url: "/auth/check-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
     // Change password
     changePassword: builder.mutation<{ success: boolean; message: string }, ChangePasswordRequest>({
       query: (data) => ({
@@ -117,5 +130,6 @@ export const {
   useGetMeMutation,
   useRequestPasswordResetMutation,
   useResetPasswordMutation,
+  useCheckPasswordMutation,
   useChangePasswordMutation,
 } = authApi;
