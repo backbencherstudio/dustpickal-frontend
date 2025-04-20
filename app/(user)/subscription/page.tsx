@@ -1,11 +1,17 @@
 'use client'
 import { ArrowLeft, Check, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { subscriptionPlans } from "./subscriptionData";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
+import { useCancelSubscriptionMutation } from "@/app/store/api/user/subscribeApi";
+import { toast } from "react-toastify";
+
 export default function Subscription() {
     const [selected, setSelected] = useState<'monthly' | 'annual'>('monthly');
     const router = useRouter();
+    const { user } = useAuth();
+    const [cancelSubscription, { isLoading }] = useCancelSubscriptionMutation();
 
     const getButtonStyles = (plan: typeof subscriptionPlans[0]) => {
         if (plan.id === 'pro') {
@@ -24,6 +30,17 @@ export default function Subscription() {
         return "flex flex-col gap-2 justify-between h-56 bg-white p-4 rounded-lg shadow-[0px_0px_40px_0px_rgba(171,171,171,0.15)]";
     };
 
+    const handleCancelSubscription = async () => {
+       const response = await cancelSubscription({
+            subscriptionId: user?.subscription?.id,
+        });
+        if (response.data.success) {
+            toast.success(response.data.message);
+        } else {
+            toast.error(response.data.message);
+        }
+    };
+
     return (
         <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-6">
@@ -36,9 +53,36 @@ export default function Subscription() {
                 </button>
                 <div className="flex flex-col gap-6">
                     <h4 className="text-xl font-medium text-[#777980]">Current Plan</h4>
-                    <div className="flex flex-col gap-1 bg-[#F8FAFB] px-4 pt-4 pb-[60px] rounded-[8px]">
-                        <p className="text-base font-semibold text-[#4A4C56]">You don't have any Plan Now!</p>
-                        <p className="text-sm font-medium text-[#777980]">You're using free plan 3 document/ month. Purchase plan for more access...</p>
+                    <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-1 bg-[#F8FAFB] px-4 pt-4 pb-6 md:pb-[60px] rounded-[8px]">
+                        <div className="flex flex-col gap-1">
+                            {user?.subscription ? (
+                                <div className="flex flex-col gap-1">
+                                    <p className="text-base font-semibold text-[#4A4C56]">You're enjoying {user?.subscription?.type} Plan.</p>
+                                    {user?.subscription?.type === 'BASIC' && (
+                                        <p className="text-sm font-medium text-[#777980]">Billed annually <span className="text-[#22CAAD]">$96</span> and saved <span className="text-[#22CAAD]">20%</span> - $<span className="line-through">120</span></p>
+                                    )}
+                                    {user?.subscription?.type === 'PRO' && (
+                                        <p className="text-sm font-medium text-[#777980]">Billed annually <span className="text-[#22CAAD]">$120</span> and saved <span className="text-[#22CAAD]">20%</span> - $<span className="line-through">150</span></p>
+                                    )}
+                                    {user?.subscription?.type === 'ENTERPRISE' && (
+                                        <p className="text-sm font-medium text-[#777980]">Billed annually <span className="text-[#22CAAD]">$240</span> and saved <span className="text-[#22CAAD]">20%</span> - $<span className="line-through">336</span></p>
+                                    )}
+                                    {user?.subscription?.type === 'PAY_AS_YOU_GO' && (
+                                        <p className="text-sm font-medium text-[#777980]">Pay as you go - $<span className="text-[#22CAAD]">0.10</span> per token</p>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="flex flex-col gap-1">
+                                    <p className="text-base font-semibold text-[#4A4C56]">You don't have any Plan Now!</p>
+                                    <p className="text-sm font-medium text-[#777980]">You're using free plan 3 document/ month. Purchase plan for more access...</p>
+                                </div>
+                            )}
+                        </div>
+                        {user?.subscription?.type !== 'PAY_AS_YOU_GO' && (
+                            <button className="flex flex-col gap-1 items-end cursor-pointer md:px-7 md:py-2" onClick={() => handleCancelSubscription()}>
+                                <p className="text-sm font-medium text-[#4A4C56] hover:text-red-500/80 underline">Cancel Subscription</p>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -47,14 +91,14 @@ export default function Subscription() {
                     <div className="col-span-2"></div>
                     <div className="col-span-10 flex flex-col gap-7">
                         <div className="flex flex-row p-[2px] bg-[#E9E9EA] rounded w-fit">
-                            <button 
-                                className={`px-2 py-1 rounded-l cursor-pointer text-base font-medium ${selected === 'monthly' ? 'bg-white text-[#4A4C56] rounded' : 'text-[#777980]'}`} 
+                            <button
+                                className={`px-2 py-1 rounded-l cursor-pointer text-base font-medium ${selected === 'monthly' ? 'bg-white text-[#4A4C56] rounded' : 'text-[#777980]'}`}
                                 onClick={() => setSelected('monthly')}
                             >
                                 Monthly Pricing
                             </button>
-                            <button 
-                                className={`px-2 py-1 rounded-r cursor-pointer text-base font-medium ${selected === 'annual' ? 'bg-white text-[#4A4C56] rounded' : 'text-[#777980]'}`} 
+                            <button
+                                className={`px-2 py-1 rounded-r cursor-pointer text-base font-medium ${selected === 'annual' ? 'bg-white text-[#4A4C56] rounded' : 'text-[#777980]'}`}
                                 onClick={() => setSelected('annual')}
                             >
                                 Annual Pricing

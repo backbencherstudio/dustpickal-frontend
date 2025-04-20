@@ -11,7 +11,7 @@ export const baseApi = createApi({
       const token = localStorage.getItem("token");
       headers.set(
         "authorization",
-        `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhbnZpcmJkY2FsbGluZ25vZGUxLmpzQGdtYWlsLmNvbSIsInN1YiI6ImNtOWY3eDhjNDAwMDJ0enV3bGFuZ2tneGUiLCJpYXQiOjE3NDQ3MDYyMTEsImV4cCI6MTc0NDc5MjYxMX0.BrauHIbw_f4Gi419eFTFxKW2nMk2c36i4qxG9TrfKMA`
+        `Bearer ${token}`
       );
       return headers;
     },

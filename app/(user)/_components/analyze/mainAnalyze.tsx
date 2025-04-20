@@ -29,7 +29,7 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
     const { setAnalysisResults, setSelectedDocument } = useAnalysis();
     const [analyze, { isLoading }] = useAnalyzeMutation();
 
-
+    console.log("selectedRules", selectedRules);
     useEffect(() => {
         // Find files that are in 'uploading' state and haven't started progress simulation yet
         uploadedFiles.forEach(file => {
@@ -131,39 +131,39 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
             fileName: file.name,
             results: selectedRules.map(rule => {
                 // Mock different scenarios based on the rules shown in the image
-                if (rule.name.includes('Date of issue')) {
+                if (rule.title.includes('Date of issue')) {
                     return {
-                        rule: rule.name,
+                        rule: rule.title,
                         matched: false,
                         message: "The test report is issued on 12 Oct 2013. It's more than 3 years old."
                     };
                 }
-                if (rule.name.includes('Test Report Number')) {
+                if (rule.title.includes('Test Report Number')) {
                     return {
-                        rule: rule.name,
+                        rule: rule.title,
                         matched: true,
                         message: "The Test Report Ref. No. 17027138 002 is consistent on every page."
                     };
                 }
-                if (rule.name.includes('CB certificate')) {
+                if (rule.title.includes('CB certificate')) {
                     return {
-                        rule: rule.name,
+                        rule: rule.title,
                         matched: true,
                         message: "The CB Test Certificate Ref. No. JPTUV-051322-M1 matches the main test report reference number 17027138 002."
                     };
                 }
-                if (rule.name.includes('Markings durability')) {
+                if (rule.title.includes('Markings durability')) {
                     return {
-                        rule: rule.name,
+                        rule: rule.title,
                         matched: false,
                         message: "There is no explicit mention of marking durability being tested in the report."
                     };
                 }
                 // Default case
                 return {
-                    rule: rule.name,
+                    rule: rule.title,
                     matched: Math.random() > 0.5, // Random match for other rules
-                    message: `Rule check for ${rule.name} completed.`
+                    message: `Rule check for ${rule.title} completed.`
                 };
             })
         }));
@@ -174,11 +174,17 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
         }
 
         // Later this will be replaced with actual API call:
-        // const analyzeFiles = {
-        //     files: successFiles.map(file => file.file),
-        //     rules: selectedRules.map(rule => rule.name)
-        // }
-        // const response = await analyze(analyzeFiles);
+        const analyzeFiles = {
+            files: successFiles.map(file => file.file),
+            ruleIds: selectedRules.map(rule => rule.id.toString())
+        }
+        const formData = new FormData();
+        analyzeFiles.files.forEach(file => {
+            formData.append('file', file);
+        });
+        formData.append('ruleIds', JSON.stringify(analyzeFiles.ruleIds));
+        const response = await analyze(formData);
+        console.log("response", response);
         // setAnalysisResults(response.data);
     };
     
@@ -199,7 +205,7 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
                                     {selectedRules.map(rule => (
                                         <div key={rule.id} className="relative flex flex-row gap-3 px-3 py-2 bg-white rounded-lg border border-[#E9E9EA]">
                                             <Image src={ruleIcon} alt='' />
-                                            <p className='text-sm text-[#4A4C56] text-ellipsis'>{rule.name}</p>
+                                            <p className='text-sm text-[#4A4C56] text-ellipsis'>{rule.title}</p>
                                             <button className='cursor-pointer hover:scale-110 transition-all duration-300 absolute -right-3 -top-3 border border-[#A5A5AB] rounded-full p-0.5 bg-[#1D1F2C]' onClick={() => removeRule(rule.id)}>
                                                 <X className='w-4 h-4 text-white' />
                                             </button>

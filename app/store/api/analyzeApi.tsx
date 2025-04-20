@@ -2,12 +2,12 @@ import { baseApi } from "./baseApi";
 
 interface AnalyzeRequest {
     files: File[];
-    rules: string[];
+    ruleIds: string[];
 }
 
 export const analyzeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        analyze: builder.mutation<{ success: boolean; message: string }, AnalyzeRequest>({
+        analyze: builder.mutation<{ success: boolean; message: string }, FormData>({
             query: (data) => ({
                 url: "/analyzer-interface/analyze",
                 method: "POST",
