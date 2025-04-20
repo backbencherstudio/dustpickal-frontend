@@ -6,12 +6,12 @@ import CustomFilter from "../../_components/CustomFilter";
 // Dynamically import ApexCharts to avoid SSR issues
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const UserStatusChart = () => {
+const UserStatusChart = ({ data }) => {
   // Define status names
   const statusNames = ["Active", "Inactive", "Pending"];
 
   const options: ApexCharts.ApexOptions = {
-    series: [450, 300, 250],
+    series: [data?.activeUsers, data?.canceledUsers, data?.expiredUsers],
     chart: {
       type: "donut",
       width: "100%",
@@ -80,10 +80,10 @@ const UserStatusChart = () => {
     <div className="bg-white p-4 rounded-xl w-full">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-gray-800 text-[14px] font-medium">User Status</h3>
-        <CustomFilter
+        {/* <CustomFilter
           placeholder="All"
           options={["All", "Today", "Weekly", "Monthly", "Yearly"]}
-        />
+        /> */}
       </div>
       <div id="chart" className="w-full">
         <Chart
@@ -96,15 +96,15 @@ const UserStatusChart = () => {
         <div className="flex flex-col justify-center gap-3 mt-10">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded  bg-[#0d86ff]"></div>
-            <p className="text-sm">Active Users: 50000</p>
+            <p className="text-sm">Active Users: {data?.activeUsers}</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded  bg-[#d2d2d5]"></div>
-            <p className="text-sm">Expired Users: 20000</p>
+            <p className="text-sm">Expired Users: {data?.expiredUsers}</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded  bg-[#ff6a89]"></div>
-            <p className="text-sm">Cancelled Users : 30000</p>
+            <p className="text-sm">Cancelled Users : {data?.canceledUsers}</p>
           </div>
         </div>
       </div>

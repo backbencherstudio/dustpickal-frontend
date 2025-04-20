@@ -11,6 +11,7 @@ import {
 } from "@/app/store/api/dashboardApi";
 import InputTokenUsageChart from "./_components/InputTokenUsageChart";
 import OutputTokenUsageChart from "./_components/OutputTokenUsageChart";
+import SkeletonLoading from "../_components/SkeletonLoading";
 
 const Page = () => {
   const [page, setPage] = useState(1);
@@ -42,7 +43,7 @@ const Page = () => {
   ];
   // Only render the full content on the client side
   if (!isClient) {
-    return <div className="bg-white p-3 rounded">Loading dashboard...</div>;
+    return <SkeletonLoading />;
   }
   const handlePageChange = (newPage) => {
     setPage(newPage);
