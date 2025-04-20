@@ -14,6 +14,7 @@ export const ruleApi = baseApi.injectEndpoints({
         url: `/user-support/${id}`,
         method: "GET",
       }),
+      // providesTags: ["Support"],
     }),
     replySupport: builder.mutation({
       query: ({ id, content }) => ({
