@@ -1,6 +1,8 @@
 "use client";
 import CustomTable from "@/app/(admin)/_components/CustomTable";
+import { useGetAllSupportsQuery } from "@/app/store/api/supportApi";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
@@ -104,23 +106,23 @@ const ticketData = [
 const page = () => {
   const [activeTab, setActiveTab] = useState("request");
   const router = useRouter();
+  const { data } = useGetAllSupportsQuery(null);
   useEffect(() => {
     localStorage.setItem("tab", "Support");
   }, []);
   const columns = [
-    { header: "Ticket ID", accessor: "ticketId" },
-    { header: "User Name", accessor: "userName" },
-    { header: "User ID", accessor: "userId" },
-    { header: "Subject", accessor: "subject" },
+    { label: "Ticket ID", accessor: "ticket_id" },
+    // { label: "User Name", accessor: "userName" },
+    { label: "Subject", accessor: "subject" },
     {
-      header: "Status",
+      label: "Status",
       accessor: "status",
       customCell: (row) => (
         <div
           className={`px-2 py-1 rounded-full text-sm ${
-            row?.status === "Open"
+            row?.status == "OPEN"
               ? " text-[#007bff]"
-              : row?.status === "Pending"
+              : row?.status == "PENDING"
               ? " text-[#f9c80e]"
               : " text-[#22caad]"
           }`}
@@ -129,14 +131,35 @@ const page = () => {
         </div>
       ),
     },
-    { header: "Issue Date", accessor: "issueDate" },
-    { header: "Last Updated", accessor: "lastUpdated" },
+    { label: "Priority", accessor: "priority" },
     {
-      header: "View",
+      label: "Issue Date",
+      accessor: "updated_at",
+      customCell: (row) => {
+        try {
+          return format(new Date(row.created_at), "dd MMMM yyyy");
+        } catch (error) {
+          return row.created_at || "N/A";
+        }
+      },
+    },
+    {
+      label: "Updated Date",
+      accessor: "updated_at",
+      customCell: (row) => {
+        try {
+          return format(new Date(row.updated_at), "dd MMMM yyyy");
+        } catch (error) {
+          return row.updated_at || "N/A";
+        }
+      },
+    },
+    {
+      label: "View",
       accessor: "view",
       customCell: (row) => (
         <button
-          onClick={() => router.push(`/dashboard/support/${row.ticketId}`)}
+          onClick={() => router.push(`/dashboard/support/${row.id}`)}
           className="p-2 hover:bg-gray-200 rounded-lg cursor-pointer"
         >
           <IoEyeOutline size={20} />
@@ -169,8 +192,11 @@ const page = () => {
               type="support"
               title=""
               columns={columns}
-              data={ticketData}
+              data={data?.data}
+              pagination={false}
               filter={false}
+              paginationData={{}}
+              onPageChange=""
             />
           </TabsContent>
           <TabsContent value="history" className="mt-6">
@@ -178,8 +204,11 @@ const page = () => {
               type="support"
               title=""
               columns={columns}
-              data={ticketData}
+              data={data?.data}
+              pagination={false}
               filter={false}
+              paginationData={{}}
+              onPageChange=""
             />
           </TabsContent>
         </Tabs>

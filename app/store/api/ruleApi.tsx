@@ -14,7 +14,6 @@ export const ruleApi = baseApi.injectEndpoints({
         url: `/admin/rule-management/${id}`,
         method: "GET",
       }),
-      providesTags: ["Rules"],
     }),
     createRule: builder.mutation({
       query: (data) => ({
