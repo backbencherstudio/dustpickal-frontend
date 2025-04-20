@@ -14,7 +14,6 @@ export const userApi = baseApi.injectEndpoints({
         url: `/admin/user-profile-info/${id}`,
         method: "GET",
       }),
-      providesTags: ["Users"],
     }),
   }),
 });

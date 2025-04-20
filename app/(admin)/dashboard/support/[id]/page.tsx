@@ -2,13 +2,22 @@
 import React, { useState } from "react";
 import { IoIosAttach, IoIosSend } from "react-icons/io";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { GoReply } from "react-icons/go";
+import {
+  useGetSupportInfoQuery,
+  useReplySupportMutation,
+} from "@/app/store/api/supportApi";
+import { format } from "date-fns";
 
 const TicketDetail = () => {
+  const { id } = useParams();
   const router = useRouter();
+  const [replyMessage, setReplyMessage] = useState("");
   const [showReply, setShowReply] = useState(false);
   const [attachments, setAttachments] = useState<File[]>([]);
+  const { data } = useGetSupportInfoQuery(id);
+  const [replySupport] = useReplySupportMutation();
 
   const ticketInfo = {
     ticketId: "#SUP-41231547",
@@ -54,7 +63,23 @@ const TicketDetail = () => {
       setAttachments(Array.from(e.target.files));
     }
   };
+  const handleSendReply = async () => {
+    const replyData = {
+      content: replyMessage,
+    };
+    try {
+      const response = await replySupport({
+        id,
+        content: replyData,
+      }).unwrap();
 
+      console.log("Reply sent successfully:", response);
+      setReplyMessage("");
+      setShowReply(false);
+    } catch (error) {
+      console.error("Failed to send reply:", error);
+    }
+  };
   return (
     <div className="p-6">
       {/* Header */}
@@ -69,23 +94,24 @@ const TicketDetail = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <h2 className="font-medium">Ticket ID: {ticketInfo.ticketId}</h2>
+        <h2 className="text-md">
+          <span className="font-semibold ">Ticket ID:</span>{" "}
+          {data?.data?.ticket_id}
+        </h2>
 
         {/* Messages */}
         <div className=" p-4 rounded-lg col-span-4">
           <h2 className="text-lg font-medium mb-4">Conversation</h2>
           <div className="space-y-6">
-            {messages.map((message) => (
+            {data?.data?.messages?.map((message) => (
               <div key={message.id} className=" p-4 bg-white rounded-lg">
                 <div className="flex items-start gap-4">
-                  {/* User Image */}
-
                   {/* Message Content */}
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-2 border-b pb-2">
                       <div>
                         <div className="flex items-center gap-2">
-                          {message.user.image ? (
+                          {/* {message?.user?.image ? (
                             <img
                               src={message.user.image}
                               alt={message.user.name.slice(0, 2)}
@@ -97,24 +123,27 @@ const TicketDetail = () => {
                                 {message.user.name.slice(0, 2)}
                               </p>
                             </div>
-                          )}
+                          )} */}
                           <div>
                             <h3 className="font-medium text-sm mb-1">
                               {" "}
-                              {message.subject}
+                              {data?.data?.subject}
                             </h3>
                             <p className="text-xs text-gray-500">
-                              {message.user.name}
+                              {/* {message?.user.name} */}
                             </p>
                           </div>
                         </div>
                       </div>
                       <span className="text-xs text-gray-500">
-                        {message.timestamp}
+                        {format(
+                          new Date(message.created_at),
+                          "dd MMMM yyyy MM:HH"
+                        )}
                       </span>
                     </div>
                     <div className="whitespace-pre-wrap text-gray-700">
-                      {message.message}
+                      {message?.content}
                     </div>
 
                     {/* Reply Button */}
@@ -153,6 +182,8 @@ const TicketDetail = () => {
               </p>
               <textarea
                 placeholder="Type here..."
+                value={replyMessage}
+                onChange={(e) => setReplyMessage(e.target.value)}
                 className="w-full rounded-lg p-3 h-32 focus:outline-none focus:ring-1 focus:ring-blue-500 mb-2"
               />
 
@@ -184,10 +215,14 @@ const TicketDetail = () => {
               </div>
 
               <div className="flex justify-start gap-6">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:opacity-90 flex items-center gap-2 text-[14px]">
+                <button
+                  disabled={replyMessage.length === 0}
+                  onClick={handleSendReply}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:opacity-90 flex items-center gap-2 text-[14px] cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
                   <IoIosSend size={18} /> Send
                 </button>
-                <input
+                {/* <input
                   type="file"
                   multiple
                   id="file-attachment"
@@ -201,7 +236,7 @@ const TicketDetail = () => {
                   <div className="hover:text-blue-500 p-1 rounded-full">
                     <IoIosAttach size={24} />
                   </div>
-                </label>
+                </label> */}
                 <button
                   onClick={() => {
                     setShowReply(false);
