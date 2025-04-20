@@ -22,9 +22,13 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
     }),
     getDailyUsageTokens: builder.query({
-      query: () => ({
+      query: ({ dateFilter }) => ({
         url: `/admin/api-management/daily-usage`,
         method: "GET",
+        params: {
+          year: dateFilter?.year,
+          month: dateFilter?.month,
+        },
       }),
     }),
     getUserUsage: builder.query({

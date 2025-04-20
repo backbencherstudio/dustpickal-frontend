@@ -13,15 +13,12 @@ const InputTokenUsageChart = ({ title, color }) => {
 
   // Pass date parameters to the API query
   const { data: dailyUsage, refetch } = useGetDailyUsageTokensQuery({
-    year: dateFilter.year,
-    month: dateFilter.month,
+    dateFilter,
   });
 
   // Handle date changes from the DateFilter component
   const handleDateChange = (newDate) => {
     setDateFilter(newDate);
-    // Refetch data with new parameters
-    // refetch();
   };
 
   // Transform API data into chart format

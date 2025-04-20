@@ -13,16 +13,17 @@ const OutputTokenUsageChart = ({ title, color }) => {
   const [mounted, setMounted] = useState(false);
 
   // Pass date parameters to the API query
-  const { data: dailyUsage, refetch } = useGetDailyUsageTokensQuery({
-    year: dateFilter.year,
-    month: dateFilter.month,
+  const {
+    data: dailyUsage,
+    isLoading,
+    refetch,
+  } = useGetDailyUsageTokensQuery({
+    dateFilter,
   });
 
   // Handle date changes from the DateFilter component
   const handleDateChange = (newDate) => {
     setDateFilter(newDate);
-    // Refetch data with new parameters
-    // refetch();
   };
 
   // Transform API data into chart format
@@ -90,7 +91,7 @@ const OutputTokenUsageChart = ({ title, color }) => {
     },
   ];
 
-  if (!mounted) return null; // Prevents hydration error in Next.js
+  if (!mounted) return null;
 
   return (
     <div className="grid lg:grid-cols-5">
