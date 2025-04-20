@@ -7,8 +7,8 @@ import {
 } from "lucide-react";
 
 const DateFilter = ({ onDateChange }) => {
-  const [year, setYear] = useState(2025);
-  const [month, setMonth] = useState(2); // Use index for months (0 = January)
+  const [year, setYear] = useState(() => new Date().getFullYear());
+  const [month, setMonth] = useState(() => new Date().getMonth());
 
   const months = [
     "January",

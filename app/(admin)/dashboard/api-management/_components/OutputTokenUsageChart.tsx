@@ -9,7 +9,7 @@ import { useGetDailyUsageTokensQuery } from "@/app/store/api/dashboardApi";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const OutputTokenUsageChart = ({ title, color }) => {
-  const [dateFilter, setDateFilter] = useState({ year: 2025, month: 3 });
+  const [dateFilter, setDateFilter] = useState({ year: 2025, month: 4 });
   const [mounted, setMounted] = useState(false);
 
   // Pass date parameters to the API query
