@@ -13,12 +13,12 @@ const AnalyticsCards = ({ data }) => {
     },
     {
       title: "Documents Analyzed",
-      value: 3670,
+      value: data?.analyzedDocuments,
       icon: <IoDocumentTextOutline size={20} />,
     },
     {
       title: "Predefined Rules",
-      value: 30,
+      value: data?.mostUsagePreDefinedRules?.length,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

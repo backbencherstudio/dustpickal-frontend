@@ -21,105 +21,25 @@ export default function DashboardPage() {
     page,
     limit,
   });
-
+  // let count = 0;
   const rulesColumns = [
-    { label: "S/N", accessor: "pNo" },
-    { label: "Rule Name", accessor: "rule_name" },
-    { label: "Total Messages", accessor: "total_message" },
-    { label: "Total views", accessor: "total_views" },
-    // { label: "Last Message", accessor: "last_message" },
     // {
-    //   label: "Action",
-    //   accessor: "action",
-    //   customCell: (row) => (
-    //     <div className="flex gap-2">
-    //       <button
-    //         onClick={() => router.push(`/admin/users/${row.id}`)}
-    //         className="bg-gray-100 hover:bg-gray-200 rounded-xl p-2"
-    //       >
-    //         <IoEyeOutline size={20} />
-    //       </button>
-    //       <button
-    //         onClick={() => handleDelete(row)}
-    //         className="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-xl p-2"
-    //       >
-    //         <RiDeleteBin5Line size={20} />
-    //       </button>
-    //     </div>
-    //   ),
+    //   label: "S/N",
+    //   accessor: "pNo",
+    //   customCell: () => {
+    //     count = count + 1;
+    //     return count;
+    //   },
     // },
-  ];
-  const rulesData = [
-    {
-      pNo: 1,
-      rule_name: "Rule 1",
-      total_message: 100,
-      total_views: 100,
-    },
-    {
-      pNo: 2,
-      rule_name: "Rule 2",
-      total_message: 100,
-      total_views: 100,
-    },
+    { label: "Rule Name", accessor: "title" },
+    { label: "Total Views", accessor: "usage_count" },
   ];
   const newUsersColumns = [
-    { label: "User Name", accessor: "userName" },
+    { label: "User Name", accessor: "name" },
     { label: "Email", accessor: "email" },
-    { label: "Subscriptions", accessor: "subscriptions" },
+    { label: "Subscriptions", accessor: "subscription" },
   ];
-  const newUsersData = [
-    {
-      userName: "Theresa Webb",
-      email: "curtis.weaver@example.com",
-      subscriptions: "Pay as you go",
-    },
-    {
-      userName: "Brooklyn Simmons",
-      email: "nevaeh.simmons@example.com",
-      subscriptions: "Pay as you go",
-    },
-    {
-      userName: "Kristin Watson",
-      email: "jackson.graham@example.com",
-      subscriptions: "Pro plan",
-    },
-    {
-      userName: "Courtney Henry",
-      email: "tim.jennings@example.com",
-      subscriptions: "Pay as you go",
-    },
-    {
-      userName: "Kristin Watson",
-      email: "jackson.graham@example.com",
-      subscriptions: "Enterprise",
-    },
-    {
-      userName: "Courtney Henry",
-      email: "tim.jennings@example.com",
-      subscriptions: "Basic",
-    },
-    {
-      userName: "Kristin Watson",
-      email: "jackson.graham@example.com",
-      subscriptions: "Pay as you go",
-    },
-    {
-      userName: "Courtney Henry",
-      email: "tim.jennings@example.com",
-      subscriptions: "Basic",
-    },
-    {
-      userName: "Kristin Watson",
-      email: "jackson.graham@example.com",
-      subscriptions: "Pro plan",
-    },
-    {
-      userName: "Robert Fox",
-      email: "michael.mitc@example.com",
-      subscriptions: "Enterprise",
-    },
-  ];
+
   if (isLoading) return <SkeletonLoading />;
   if (isError)
     return (
@@ -153,7 +73,7 @@ export default function DashboardPage() {
         </div>
         <div className="bg-white p-6 rounded-xl shadow lg:col-span-1">
           {/* <SubsStatus /> */}
-          <UserStatusChart />
+          <UserStatusChart data={data?.data?.userStatus} />
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-5 mt-6 gap-6">
@@ -161,37 +81,37 @@ export default function DashboardPage() {
           <ApiChart />
         </div>
         <div className="bg-white p-4 rounded-xl shadow lg:col-span-2">
-          <SubsStatsChart />
+          <SubsStatsChart data={data?.data?.subscriptionStatistics} />
         </div>
       </div>
       <div className="grid grid-cols-2 mt-6">
         <CustomTable
           type="rules"
           columns={rulesColumns}
-          data={rulesData}
+          data={data?.data?.mostUsagePreDefinedRules}
           title="List of most used Pre-define ruleses"
-          pagination={{
-            currentPage: page,
-            totalPages: data?.data?.totalPages || 1,
-            onPageChange: setPage,
-            limit,
-            onLimitChange: setLimit,
+          pagination={false}
+          filter={false}
+          paginationData={{
+            currentPage: 1,
+            totalPages: 1,
           }}
+          onPageChange=""
         />
       </div>
       <div className="mt-6">
         <CustomTable
-          type="newUsers"
+          type="rules"
           columns={newUsersColumns}
-          data={newUsersData}
+          data={data?.data?.newUsers?.data}
           title="New users this month"
-          pagination={{
-            currentPage: page,
-            totalPages: data?.data?.totalPages || 1,
-            onPageChange: setPage,
-            limit,
-            onLimitChange: setLimit,
+          pagination={false}
+          filter={false}
+          paginationData={{
+            currentPage: data?.data?.newUsers?.pagination.page || 1,
+            totalPages: data?.data?.newUsers?.pagination.totalPages || 1,
           }}
+          onPageChange=""
         />
       </div>
     </div>
