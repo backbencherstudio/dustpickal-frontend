@@ -28,10 +28,10 @@ const page = () => {
       <div className="max-w-[1112px] mx-auto">
         <h1 className="text-3xl font-semibold text-center">Pricing</h1>
         <div className="flex flex-col gap-6">
-          <div className="grid grid-cols-12 gap-4 justify-between">
+          <div className="grid lg:grid-cols-12 gap-4 justify-between">
             <div className="col-span-2"></div>
             <div className="col-span-10 flex flex-col gap-7">
-              <div className="flex justify-center -ml-20 w-full p-[2px] my-10 rounded">
+              <div className="flex justify-center lg:-ml-20 w-full p-[2px] my-10 rounded">
                 <div className="border rounded-md bg-[#e9e9ea]">
                   <button
                     className={`px-2 py-1 rounded-l cursor-pointer text-base font-medium ${
@@ -107,7 +107,7 @@ const page = () => {
           </div>
 
           {/* Features Table */}
-          <div className="grid md:grid-cols-12 gap-4 mt-12">
+          <div className="grid lg:grid-cols-12 gap-4 mt-12">
             <div className="col-span-2">
               <h3 className="text-base font-medium text-[#1D1F2C]">Feature</h3>
             </div>

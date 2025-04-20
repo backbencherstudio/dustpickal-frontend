@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
 // import { useGetMeMutation } from "../store/api/authApi";
 import axios from "axios";
 interface AuthContextType {
@@ -11,13 +17,13 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<any>(null);
-    // const [getMe, { isLoading }] = useGetMeMutation();
-    const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  // const [getMe, { isLoading }] = useGetMeMutation();
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        getUser();
-    }, []);
+  useEffect(() => {
+    getUser();
+  }, []);
 
     const getUser = async () => {
         try {
@@ -43,9 +49,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };

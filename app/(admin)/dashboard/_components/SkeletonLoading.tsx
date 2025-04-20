@@ -13,7 +13,6 @@ const SkeletonLoading = () => {
         ))}
       </div>
 
-      {/* Charts Skeleton */}
       <div className="grid grid-cols-1 lg:grid-cols-4 mt-6 gap-6">
         <div className="lg:col-span-3 bg-white p-6 rounded-xl">
           <div className="h-4 w-32 bg-gray-200 rounded mb-4"></div>

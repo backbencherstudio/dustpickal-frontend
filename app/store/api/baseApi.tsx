@@ -11,13 +11,13 @@ export const baseApi = createApi({
       const token = localStorage.getItem("token");
       headers.set(
         "authorization",
-        `Bearer ${token}`
+        `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhbnZpcmJkY2FsbGluZ25vZGUuanNAZ21haWwuY29tIiwic3ViIjoiY205YXZrOHRvMDAwMHR6MzhnajRpemVudiIsImlhdCI6MTc0NTAzNjk2NiwiZXhwIjoxNzQ1MTIzMzY2fQ.OaRtO9ew-onDy2Q2D63jE_MdU-fescNplBbW_uzM0rY`
       );
       return headers;
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["Dashboard", "Notifications", "Rules", "Users", "Analyze"],
+  tagTypes: ["Dashboard", "Notifications", "Rules", "Users", "Support", "Analyze"],
 });
 
 export const { useQuery, useMutation } = baseApi as any;

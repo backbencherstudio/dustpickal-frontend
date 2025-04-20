@@ -15,8 +15,40 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Dashboard"],
     }),
+    getApiUsageOverview: builder.query({
+      query: () => ({
+        url: `/admin/api-management/usage-overview`,
+        method: "GET",
+      }),
+    }),
+    getDailyUsageTokens: builder.query({
+      query: ({ dateFilter }) => ({
+        url: `/admin/api-management/daily-usage`,
+        method: "GET",
+        params: {
+          year: dateFilter?.year,
+          month: dateFilter?.month,
+        },
+      }),
+    }),
+    getUserUsage: builder.query({
+      query: ({ page, dateFilter }) => ({
+        url: `/admin/api-management/user-usages`,
+        method: "GET",
+        params: {
+          page,
+          year: dateFilter?.year, // Pass the date as a query parameter
+          month: dateFilter?.month,
+        },
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetDashboardsQuery } = dashboardApi;
+export const {
+  useGetDashboardsQuery,
+  useGetApiUsageOverviewQuery,
+  useGetDailyUsageTokensQuery,
+  useGetUserUsageQuery,
+} = dashboardApi;

@@ -1,7 +1,10 @@
 import React from "react";
 import CustomFilter from "../../_components/CustomFilter";
+import { useGetApiUsageOverviewQuery } from "@/app/store/api/dashboardApi";
 
 const ApiChart = () => {
+  const { data, isLoading, isError, refetch } =
+    useGetApiUsageOverviewQuery(null);
   const apiData = [
     {
       total: 10000,
@@ -9,10 +12,11 @@ const ApiChart = () => {
       Remaining: 4000,
     },
   ];
+  console.log(data);
 
-  const total = apiData[0].total;
-  const used = apiData[0].Used;
-  const remaining = apiData[0].Remaining;
+  const total = data?.data?.total_token;
+  const used = data?.data?.total_tokens_used;
+  const remaining = data?.data?.tokens_remaining;
 
   // Calculate percentages for sizing
   const usedPercentage = Math.round((used / total) * 100);

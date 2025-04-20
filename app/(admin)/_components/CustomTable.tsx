@@ -138,10 +138,12 @@ export default function CustomTable({
                 >
                   {columns?.map((col) => (
                     <TableCell
-                      key={col.accessor}
+                      key={col?.accessor}
                       className="py-2 px-4 text-[12px] border-r border-[#d2d2d5] last:border-r-0"
                     >
-                      {col.customCell ? col.customCell(row) : row[col.accessor]}
+                      {col?.customCell
+                        ? col?.customCell(row)
+                        : row[col?.accessor]}
                     </TableCell>
                   ))}
                 </TableRow>

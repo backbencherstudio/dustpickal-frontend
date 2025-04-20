@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MdOutlineNotifications } from "react-icons/md";
 import CustomTable from "./CustomTable";
 import { FaAnglesLeft, FaAnglesUp } from "react-icons/fa6";
+import { useGetNotificationsQuery } from "@/app/store/api/notificationApi";
 
 interface NotificationDrawerProps {
   position: "side" | "top";
@@ -17,6 +18,7 @@ const NotificationDrawer = ({
   onClose,
 }: NotificationDrawerProps) => {
   const [activeTab, setActiveTab] = useState("all");
+  const { data: notifications } = useGetNotificationsQuery(null);
 
   const drawerPositionClasses = {
     side: "hidden z-10 lg:block fixed -right-10 bottom-10 h-[80vh] overflow-y-auto w-[430px] transform transition-transform duration-300 ease-in-out",
@@ -37,7 +39,7 @@ const NotificationDrawer = ({
     >
       <div className="p-5">
         <div className="flex justify-between items-center">
-          <h1 className="text-[20px] text-gray-800 my-4 flex items-center gap-2 font-medium">
+          <h1 className="text-[20px] text-gray-800 mt-4 flex items-center gap-2 font-medium">
             <MdOutlineNotifications size={24} /> Notifications
           </h1>
           <button onClick={onClose}>
@@ -51,7 +53,7 @@ const NotificationDrawer = ({
 
         <Tabs defaultValue="all" className="w-full">
           <TabsList className=" bg-white border-b-2 border-[#e9e9ea] rounded-none w-full flex justify-start px-7">
-            <TabsTrigger
+            {/* <TabsTrigger
               onClick={() => setActiveTab("all")}
               value="all"
               className="data-[state=active]:text-white text-black data-[state=active]:bg-black bg-[#e9e9ea] data-[state=active]:border-b-2 max-w-[50px] data-[state=active]:border-b-[#1d1f2c] data-[state=active]:shadow-none  px-4 py-2 mb-3 cursor-pointer rounded shadow"
@@ -71,18 +73,47 @@ const NotificationDrawer = ({
               className="data-[state=active]:text-white text-black data-[state=active]:bg-black bg-[#e9e9ea] data-[state=active]:border-b-2 max-w-[85px] data-[state=active]:border-b-[#1d1f2c] data-[state=active]:shadow-none  px-4 py-2 mb-3 cursor-pointer rounded shadow"
             >
               Unread
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
+
           <TabsContent value="all">
-            <CustomTable
-              type="user-management"
-              title=""
-              columns={[]}
-              data={[]}
-              filter={false}
-            />
+            <div className="space-y-4">
+              {notifications?.data?.map((notification, index) => (
+                <div
+                  key={index}
+                  className="flex items-start justify-between bg-[#f9f9f9] p-4 rounded-lg border-b"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="text-gray-800">
+                      {notification.type === "SUBSCRIPTION_PURCHASED" ? (
+                        <span className="text-xl">📄</span>
+                      ) : notification.type === "payment" ? (
+                        <span className="text-xl">💳</span>
+                      ) : (
+                        <span className="text-xl">📩</span>
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">
+                        {notification.title}
+                      </p>
+                      <p className="text-sm text-gray-900">
+                        {notification.message}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        {notification.time} • {notification.date}
+                      </p>
+                    </div>
+                  </div>
+                  {/* {!notification.read && (
+                    <span className="text-red-500 text-lg font-bold">•</span>
+                  )} */}
+                </div>
+              ))}
+            </div>
           </TabsContent>
-          <TabsContent value="read">
+
+          {/* <TabsContent value="read">
             <CustomTable
               type="user-management"
               title=""
@@ -99,7 +130,7 @@ const NotificationDrawer = ({
               data={[]}
               filter={false}
             />
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
       </div>
     </div>

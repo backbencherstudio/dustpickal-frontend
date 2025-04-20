@@ -104,11 +104,24 @@ const page = () => {
     },
     {
       label: "Document Analyzed",
-      value: data?.user_information?.documents_analyzed,
+      value: data?.user_information?.documents_analyzed || "N/A",
     },
-    { label: "Custom Rules", value: data?.user_information?.custom_rules },
-    { label: "Subscription Plan", value: data?.user_information?.subscription },
-    { label: "Subscription Status", value: "Active", isActive: true },
+    {
+      label: "Custom Rules",
+      value: data?.user_information?.custom_rules || "N/A",
+    },
+    {
+      label: "Subscription Plan",
+      value: data?.user_information?.subscription
+        ? `${data.user_information.subscription.plan || "N/A"} (${
+            data.user_information.subscription.billing_cycle || "N/A"
+          })`
+        : "N/A",
+    },
+    {
+      label: "Subscription Status",
+      value: data?.user_information?.subscription?.status || "N/A",
+    },
   ];
 
   return (
@@ -172,13 +185,7 @@ const page = () => {
                       <p> {info.label} </p>
                       <p> :</p>
                     </div>
-                    <p
-                      className={`text-[14px] font-medium ${
-                        info.isActive ? "text-green-500" : ""
-                      }`}
-                    >
-                      {info.value}
-                    </p>
+                    <p className={`text-[14px] font-medium`}>{info.value}</p>
                   </div>
                 ))}
               </div>

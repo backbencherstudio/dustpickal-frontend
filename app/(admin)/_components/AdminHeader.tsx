@@ -27,14 +27,14 @@ const AdminHeader = () => {
                 .join(" ")
             : ""}
         </h1>
-        <div className="relative w-[50%] lg:w-full lg:max-w-[340px] hidden lg:block">
+        {/* <div className="relative w-[50%] lg:w-full lg:max-w-[340px] hidden lg:block">
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="text"
             placeholder="Search rules"
             className=" w-full border bg-[##f7f9fb] border-[#EAF1FF] rounded-lg p-2 pl-10"
           />
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-4 mr-16 lg:mr-8">
           <button

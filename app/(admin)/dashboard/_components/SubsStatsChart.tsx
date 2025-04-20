@@ -6,9 +6,9 @@ import CustomFilter from "../../_components/CustomFilter";
 // Dynamically import ApexCharts to avoid SSR issues
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const SubsStatsChart = () => {
+const SubsStatsChart = ({ data }) => {
   const options: ApexCharts.ApexOptions = {
-    series: [100, 500, 1000, 400],
+    series: [data?.payAsYouGo, data?.pro, data?.basic, data?.enterprise],
     chart: {
       type: "donut",
     },
@@ -75,10 +75,6 @@ const SubsStatsChart = () => {
         <h3 className="text-gray-800 text-[14px] font-medium">
           Subscription Statistics
         </h3>
-        <CustomFilter
-          placeholder="All"
-          options={["All", "Today", "Weekly", "Monthly", "Yearly"]}
-        />
       </div>
 
       <div id="chart" className="w-full">

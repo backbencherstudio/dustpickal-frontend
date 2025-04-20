@@ -1,26 +1,24 @@
 "use client";
 import React, { useState } from "react";
 import { IoIosAttach, IoIosSend } from "react-icons/io";
-import { FaArrowLeft } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
+import { FaArrowLeft, FaUser } from "react-icons/fa6";
+import { useParams, useRouter } from "next/navigation";
 import { GoReply } from "react-icons/go";
+import {
+  useGetSupportInfoQuery,
+  useReplySupportMutation,
+} from "@/app/store/api/supportApi";
+import { format } from "date-fns";
+import toast from "react-hot-toast";
 
 const TicketDetail = () => {
+  const { id } = useParams();
   const router = useRouter();
+  const [replyMessage, setReplyMessage] = useState("");
   const [showReply, setShowReply] = useState(false);
   const [attachments, setAttachments] = useState<File[]>([]);
-
-  const ticketInfo = {
-    ticketId: "#SUP-41231547",
-    status: "Open",
-    subject: "Facing Issues with my subscription plan",
-    description:
-      "I am unable to access certain features that should be available in my current subscription plan. The analytics dashboard shows an error message when I try to generate reports.",
-    createdAt: "12/02/2025 10:30 AM",
-    lastUpdated: "15/02/2025 02:45 PM",
-    priority: "High",
-    category: "Subscription",
-  };
+  const { data, refetch } = useGetSupportInfoQuery(id);
+  const [replySupport] = useReplySupportMutation();
 
   const messages = [
     {
@@ -54,7 +52,23 @@ const TicketDetail = () => {
       setAttachments(Array.from(e.target.files));
     }
   };
-
+  const handleSendReply = async () => {
+    const replyData = {
+      content: replyMessage,
+    };
+    try {
+      const response = await replySupport({
+        id,
+        content: replyData,
+      }).unwrap();
+      refetch();
+      setReplyMessage("");
+      setShowReply(false);
+      toast.success("Reply Sended Successfully");
+    } catch (error) {
+      console.error("Failed to send reply:", error);
+    }
+  };
   return (
     <div className="p-6">
       {/* Header */}
@@ -69,23 +83,24 @@ const TicketDetail = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <h2 className="font-medium">Ticket ID: {ticketInfo.ticketId}</h2>
+        <h2 className="text-md">
+          <span className="font-semibold ">Ticket ID:</span>{" "}
+          {data?.data?.ticket_id}
+        </h2>
 
         {/* Messages */}
         <div className=" p-4 rounded-lg col-span-4">
           <h2 className="text-lg font-medium mb-4">Conversation</h2>
           <div className="space-y-6">
-            {messages.map((message) => (
+            {data?.data?.messages?.map((message) => (
               <div key={message.id} className=" p-4 bg-white rounded-lg">
                 <div className="flex items-start gap-4">
-                  {/* User Image */}
-
                   {/* Message Content */}
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-2 border-b pb-2">
                       <div>
                         <div className="flex items-center gap-2">
-                          {message.user.image ? (
+                          {/* {message?.user?.image ? (
                             <img
                               src={message.user.image}
                               alt={message.user.name.slice(0, 2)}
@@ -97,24 +112,32 @@ const TicketDetail = () => {
                                 {message.user.name.slice(0, 2)}
                               </p>
                             </div>
-                          )}
+                          )} */}
+                          <div className="bg-gray-100 w-10 h-10 border rounded-full flex justify-center items-center text-gray-400">
+                            <FaUser size={20} />
+                          </div>
                           <div>
                             <h3 className="font-medium text-sm mb-1">
                               {" "}
-                              {message.subject}
+                              {message?.is_from_user
+                                ? data?.data?.subject
+                                : "Admin Support"}
                             </h3>
                             <p className="text-xs text-gray-500">
-                              {message.user.name}
+                              {message?.is_from_user ? "user" : "admin"}
                             </p>
                           </div>
                         </div>
                       </div>
                       <span className="text-xs text-gray-500">
-                        {message.timestamp}
+                        {format(
+                          new Date(message.created_at),
+                          "dd MMMM yyyy MM:HH"
+                        )}
                       </span>
                     </div>
                     <div className="whitespace-pre-wrap text-gray-700">
-                      {message.message}
+                      {message?.content}
                     </div>
 
                     {/* Reply Button */}
@@ -128,7 +151,7 @@ const TicketDetail = () => {
             <div className="mt-4 flex justify-end">
               <button
                 onClick={() => setShowReply(true)}
-                className="bg-black text-white px-4 py-2 rounded hover:opacity-90 flex gap-2 text-[14px]"
+                className="bg-black text-white px-4 py-2 rounded hover:opacity-90 flex gap-2 text-[14px] cursor-pointer"
               >
                 <GoReply size={20} /> Reply
               </button>
@@ -153,6 +176,8 @@ const TicketDetail = () => {
               </p>
               <textarea
                 placeholder="Type here..."
+                value={replyMessage}
+                onChange={(e) => setReplyMessage(e.target.value)}
                 className="w-full rounded-lg p-3 h-32 focus:outline-none focus:ring-1 focus:ring-blue-500 mb-2"
               />
 
@@ -184,10 +209,14 @@ const TicketDetail = () => {
               </div>
 
               <div className="flex justify-start gap-6">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:opacity-90 flex items-center gap-2 text-[14px]">
+                <button
+                  disabled={replyMessage.length === 0}
+                  onClick={handleSendReply}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:opacity-90 flex items-center gap-2 text-[14px] cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
                   <IoIosSend size={18} /> Send
                 </button>
-                <input
+                {/* <input
                   type="file"
                   multiple
                   id="file-attachment"
@@ -201,7 +230,7 @@ const TicketDetail = () => {
                   <div className="hover:text-blue-500 p-1 rounded-full">
                     <IoIosAttach size={24} />
                   </div>
-                </label>
+                </label> */}
                 <button
                   onClick={() => {
                     setShowReply(false);

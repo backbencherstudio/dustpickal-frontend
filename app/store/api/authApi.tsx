@@ -78,15 +78,18 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // Get current user profile
-    getMe: builder.mutation<AuthResponse["user"], void>({
-      query: () => ({
-        url: "/auth/me",
-        method: "GET",
-      }),
-    }),
+    // getMe: builder.mutation<AuthResponse["user"], void>({
+    //   query: () => ({
+    //     url: "/auth/me",
+    //     method: "GET",
+    //   }),
+    // }),
 
     // Request password reset email
-    requestPasswordReset: builder.mutation<{ success: boolean; message: string }, RequestPasswordResetRequest>({
+    requestPasswordReset: builder.mutation<
+      { success: boolean; message: string },
+      RequestPasswordResetRequest
+    >({
       query: (data) => ({
         url: "/auth/request-email-change",
         method: "POST",
@@ -95,7 +98,10 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // Reset password with token
-    resetPassword: builder.mutation<{ success: boolean; message: string }, ResetPasswordRequest>({
+    resetPassword: builder.mutation<
+      { success: boolean; message: string },
+      ResetPasswordRequest
+    >({
       query: (data) => ({
         url: "/auth/reset-password",
         method: "POST",
@@ -113,7 +119,10 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // Change password
-    changePassword: builder.mutation<{ success: boolean; message: string }, ChangePasswordRequest>({
+    changePassword: builder.mutation<
+      { success: boolean; message: string },
+      ChangePasswordRequest
+    >({
       query: (data) => ({
         url: "/auth/change-password",
         method: "POST",
@@ -127,7 +136,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useLogoutMutation,
-  useGetMeMutation,
+  // useGetMeMutation,
   useRequestPasswordResetMutation,
   useResetPasswordMutation,
   useCheckPasswordMutation,
