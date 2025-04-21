@@ -11,6 +11,7 @@ const SubsStatsChart = ({ data }) => {
     series: [data?.payAsYouGo, data?.pro, data?.basic, data?.enterprise],
     chart: {
       type: "donut",
+      width: "100%", // Ensure the chart takes full width
     },
     colors: ["#FF6B6B", "#FFB572", "#A69AFC", "#4AD991"],
     labels: ["Pay as you go", "Pro", "Basic", "Enterprise"],
@@ -20,7 +21,7 @@ const SubsStatsChart = ({ data }) => {
     plotOptions: {
       pie: {
         donut: {
-          size: "50%",
+          size: "60%",
           labels: {
             show: true, // Enable labels inside the donut
             total: {
@@ -57,10 +58,25 @@ const SubsStatsChart = ({ data }) => {
     },
     responsive: [
       {
-        breakpoint: 480,
+        breakpoint: 1024, // For tablets and smaller screens
         options: {
+          chart: {
+            width: "100%",
+          },
           legend: {
             position: "bottom",
+          },
+        },
+      },
+      {
+        breakpoint: 480, // For mobile devices
+        options: {
+          chart: {
+            width: "100%",
+          },
+          legend: {
+            position: "bottom",
+            fontSize: "12px",
           },
         },
       },
@@ -77,19 +93,13 @@ const SubsStatsChart = ({ data }) => {
         </h3>
       </div>
 
-      <div id="chart" className="w-full">
+      <div id="chart" className="w-full h-[200px]">
         <Chart
           options={options}
           series={options.series}
           type="donut"
-          // height={400}
+          height="100%" // Ensure the chart height adapts
         />
-        {/* <div className="flex items-center gap-2 mt-4 justify-left ml-[30%]">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#a58be6 ] via-[#ff597b] via-40% to-[#7ed3da]"></div>
-            <p className="text-[15px] font-semibold">Total {total}</p>
-          </div>
-        </div> */}
       </div>
     </div>
   );

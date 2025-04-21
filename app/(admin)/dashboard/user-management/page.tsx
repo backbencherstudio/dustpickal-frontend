@@ -24,7 +24,11 @@ const page = () => {
     );
   if (isError) return <div>Error...</div>;
   const userColumns = [
-    { label: "User Name", accessor: "username" },
+    {
+      label: "User Name",
+      accessor: "username",
+      customCell: (row) => row.username || "Not Given",
+    },
     { label: "Email", accessor: "email" },
     {
       label: "Published Date",
