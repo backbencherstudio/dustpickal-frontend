@@ -28,8 +28,9 @@ export default function UpgradePage() {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const planType = searchParams.get("plan");
+  const planPrice = Number(searchParams.get("price")) || 0;
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
-  const [selectedBillingOption, setSelectedBillingOption] = useState("MONTHLY");
+  const [selectedBillingOption, setSelectedBillingOption] = useState(searchParams.get("planType") || "MONTHLY");
   const [selectedCountry, setSelectedCountry] = useState(
     countries[0]?.label || "United States"
   );
@@ -289,7 +290,7 @@ export default function UpgradePage() {
                       readOnly
                     />
                     <p className="text-sm font-medium">
-                      Pay Monthly — $10/month
+                      Pay Monthly — ${selectedBillingOption === "MONTHLY" ? planPrice : planPrice / 12}/month
                     </p>
                   </div>
                   <div
@@ -308,8 +309,8 @@ export default function UpgradePage() {
                     <div className="flex flex-col">
                       <p className="text-sm font-medium">Pay Yearly</p>
                       <p className="text-sm text-[#777980]">
-                        $96 billed annually{" "}
-                        <span className="line-through ml-2">$120</span>{" "}
+                        ${selectedBillingOption === "YEARLY" ? planPrice : planPrice * 12 * 0.8} billed annually{" "}
+                        <span className="line-through ml-2">${planPrice}</span>{" "}
                         <span className="ml-1 text-[#22CAAD] font-semibold">
                           Save 20%
                         </span>
@@ -320,7 +321,7 @@ export default function UpgradePage() {
               </div>
 
               <div className="flex flex-col gap-1">
-                <p className="text-xl text-[#1D1F2C] font-medium">$10</p>
+                <p className="text-xl text-[#1D1F2C] font-medium">${planPrice}</p>
                 <button
                   type="submit"
                   className="w-full bg-[#0D86FF] text-white rounded py-2 text-sm font-medium"

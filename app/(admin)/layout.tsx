@@ -21,7 +21,7 @@ export default function AdminLayout({ children }) {
   };
 
   return (
-    // <RouteProtection allowedUserType="admin">
+    <RouteProtection allowedUserType="admin">
     <div className="flex h-screen bg-[#f7f9fb]">
       <Toaster position="top-center" reverseOrder={false} />
       {/* Mobile menu button */}
@@ -84,7 +84,7 @@ export default function AdminLayout({ children }) {
           <div className="p-5 lg:p-8 lg:pl-16">{children}</div>
         </div>
       </div>
-    </div>
-    // </RouteProtection>
+      </div>
+    </RouteProtection>
   );
 }

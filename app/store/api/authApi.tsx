@@ -91,7 +91,7 @@ export const authApi = baseApi.injectEndpoints({
       RequestPasswordResetRequest
     >({
       query: (data) => ({
-        url: "/auth/request-email-change",
+        url: "/auth/forgot-password",
         method: "POST",
         body: data,
       }),

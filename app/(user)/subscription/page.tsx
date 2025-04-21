@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import { useCancelSubscriptionMutation } from "@/app/store/api/user/subscribeApi";
 import { toast } from "react-toastify";
+import CustomModal from "@/app/(admin)/_components/CustomModal";
 
 export default function Subscription() {
-    const [selected, setSelected] = useState<'monthly' | 'annual'>('monthly');
+    const [selected, setSelected] = useState<'monthly' | 'yearly'>('monthly');
     const router = useRouter();
     const { user } = useAuth();
     const [cancelSubscription, { isLoading }] = useCancelSubscriptionMutation();
+    const [isOpen, setIsOpen] = useState(false);
 
     const getButtonStyles = (plan: typeof subscriptionPlans[0]) => {
         if (plan.id === 'pro') {
@@ -31,6 +33,7 @@ export default function Subscription() {
     };
 
     const handleCancelSubscription = async () => {
+        setIsOpen(false);
        const response = await cancelSubscription({
             subscriptionId: user?.subscription?.id,
         });
@@ -79,7 +82,7 @@ export default function Subscription() {
                             )}
                         </div>
                         {user?.subscription !== null && (
-                            <button className="flex flex-col gap-1 items-end cursor-pointer md:px-7 md:py-2" onClick={() => handleCancelSubscription()}>
+                            <button className="flex flex-col gap-1 items-end cursor-pointer md:px-7 md:py-2" onClick={() => setIsOpen(true)}>
                                 <p className="text-sm font-medium text-[#4A4C56] hover:text-red-500/80 underline">Cancel Subscription</p>
                             </button>
                         )}
@@ -98,8 +101,8 @@ export default function Subscription() {
                                 Monthly Pricing
                             </button>
                             <button
-                                className={`px-2 py-1 rounded-r cursor-pointer text-base font-medium ${selected === 'annual' ? 'bg-white text-[#4A4C56] rounded' : 'text-[#777980]'}`}
-                                onClick={() => setSelected('annual')}
+                                className={`px-2 py-1 rounded-r cursor-pointer text-base font-medium ${selected === 'yearly' ? 'bg-white text-[#4A4C56] rounded' : 'text-[#777980]'}`}
+                                onClick={() => setSelected('yearly')}
                             >
                                 Annual Pricing
                             </button>
@@ -116,7 +119,9 @@ export default function Subscription() {
                                         <p className="text-base font-medium text-[#1D1F2C]">{plan.name}</p>
                                         <div className="flex flex-col gap-1">
                                             <p className="text-base font-medium text-[#777980]">
-                                                <span className="text-2xl font-semibold text-[#1D1F2C]">${plan.monthlyPrice}</span>
+                                                <span className="text-2xl font-semibold text-[#1D1F2C]">
+                                                    {selected === 'yearly' ? `$${plan.monthlyPrice * 12}` : `$${plan.monthlyPrice}`}
+                                                </span>
                                                 <span className="text-xl font-medium text-[#777980]"> / </span>
                                                 {plan.tokenAmount} Token
                                             </p>
@@ -129,7 +134,7 @@ export default function Subscription() {
                                                 Purchase annually and save <span className="text-[#22CAAD]">{plan.annualDiscount.percentage}% - ${plan.annualDiscount.amount}</span>
                                             </p>
                                         )}
-                                        <button className={getButtonStyles(plan)} onClick={() => router.push(`/subscription/upgrade?plan=${plan.id}`)}>Get Started</button>
+                                        <button className={getButtonStyles(plan)} onClick={() => router.push(`/subscription/upgrade?plan=${plan.id}&planType=${selected === 'yearly' ? 'YEARLY' : 'MONTHLY'}&price=${selected === 'yearly' ? plan.monthlyPrice * 12 : plan.monthlyPrice}`)}>Get Started</button>
                                     </div>
                                 </div>
                             ))}
@@ -273,6 +278,13 @@ export default function Subscription() {
                     </div>
                 </div>
             </div>
+            <CustomModal
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                title="Are you sure you want to cancel your subscription?"
+                onConfirm={() => handleCancelSubscription()}
+                type="danger"
+            />
         </div>
     );
 }

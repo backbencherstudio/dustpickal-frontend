@@ -5,11 +5,18 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineLogout, MdSupport } from "react-icons/md";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import NotificationDrawer from "../NotificationDrawer";
 import AllRules from "../rule/allRules";
 import ruleGrayIcon from "@/public/assets/client/icons/rule-gray.svg";
 import addIcon from "@/public/assets/client/icons/add-icon.svg";
 import AddRuleModal from "../AddRuleModal";
+import { useGetNotificationsQuery } from "@/app/store/api/user/NotificationApi";
 interface LeftSidebarProps {
     isExpanded: boolean;
     onExpandToggle: (value: boolean) => void;
@@ -21,7 +28,8 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [isAddNewModalOpen, setIsAddNewModalOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    console.log('searchQuery', searchQuery)
+    const { data, isLoading } = useGetNotificationsQuery({});
+    // console.log('searchQuery', searchQuery)
     const navItems = [
         {
             label: "Rule Management",
@@ -182,12 +190,23 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                 </div>
 
                 <div className="pb-3 border-b border-[#A5A5AB]">
-                    <button 
+                    <button
                         onClick={() => setIsAddNewModalOpen(true)}
                         className="w-full flex flex-row gap-2 cursor-pointer px-3 py-2 border border-[#A5A5AB] rounded hover:bg-gray-50"
                     >
                         <Image src={addIcon} alt="add-icon" width={isExpanded ? 20 : 30} height={isExpanded ? 20 : 30} />
-                        <p className={`text-black ${isExpanded ? '' : 'hidden'} ${pathname === '' ? 'text-blue-500 font-medium' : 'font-medium'}`}>Create New Rules</p>
+                        <p className={`text-black ${isExpanded ? '' : 'hidden'} ${pathname === '' ? 'text-blue-500 font-medium' : 'font-medium'}`}>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        Create New Rules
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        Tap here to create custom rules
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </p>
                     </button>
                 </div>
                 <div className={`flex flex-col mt-3 ${isExpanded ? "items-start" : "items-center"}`}
@@ -216,6 +235,11 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                         >
                             <IoMdNotificationsOutline size={20} />
                             {isExpanded && <p className="text-sm font-medium">Notification</p>}
+                            {data?.data?.filter((notification: any) => notification.read === false).length > 0 && (
+                                <span className="text-xs font-medium bg-white text-black text-right border border-red-500 rounded-full px-1 py-0.5">
+                                    {data?.data?.filter((notification: any) => notification.read === false).length}
+                                </span>
+                            )}
                         </div>
                         <div
                             onClick={handleLogout}

@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import { MdOutlineNotifications } from "react-icons/md";
 import CustomTable from "./CustomTable";
 import { FaAnglesLeft, FaAnglesUp } from "react-icons/fa6";
-
+import { useGetNotificationsQuery } from "@/app/store/api/user/NotificationApi";
+import { CreditCard } from "lucide-react";
+import moment from "moment";
 interface NotificationDrawerProps {
   position: "side" | "top";
   isOpen: boolean;
@@ -17,6 +19,7 @@ const NotificationDrawer = ({
   onClose,
 }: NotificationDrawerProps) => {
   const [activeTab, setActiveTab] = useState("all");
+  const { data, isLoading } = useGetNotificationsQuery({});
 
   const drawerPositionClasses = {
     side: "hidden z-10 lg:block fixed -left-0 bottom-10 h-[80vh] overflow-y-auto w-[430px] transform transition-transform duration-300 ease-in-out",
@@ -26,6 +29,8 @@ const NotificationDrawer = ({
     side: isOpen ? "translate-x-0" : "-translate-x-full",
     top: isOpen ? "translate-y-0" : "-translate-y-full",
   };
+
+  console.log(data);
 
   return (
     <div
@@ -74,31 +79,64 @@ const NotificationDrawer = ({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="all">
-            <CustomTable
-              type="user-management"
-              title=""
-              columns={[]}
-              data={[]}
-              filter={false}
-            />
+            <div className="flex flex-col gap-4">
+              {data?.data?.map((notification: any) => (
+                <div key={notification.id} className="flex flex-col gap-1 p-2 border-b-[0.5px] border-[#e9e9ea]">
+                  <div className="flex gap-2 w-full">
+                    <CreditCard className="w-5 h-5 rounded-full" />
+                    <div className="flex flex-col gap-3 w-full">
+                      <div className="flex flex-col gap-1">
+                        <h1 className="text-sm text-[#4A4C56] font-medium">{notification.type}</h1>
+                        <p className="text-xs text-[#777980]">{notification.message}</p>
+                      </div>
+                      <p className="text-xs font-medium text-[#4A4C56] text-right">
+                        {moment(notification.created_at).format('hh:mm A • MM/DD/YYYY')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </TabsContent>
           <TabsContent value="read">
-            <CustomTable
-              type="user-management"
-              title=""
-              columns={[]}
-              data={[]}
-              filter={false}
-            />
+            <div className="flex flex-col gap-4 ">
+              {data?.data?.filter((notification: any) => notification.read === true).map((notification: any) => (
+                <div key={notification.id} className="flex flex-col gap-1 p-2 border-b-[0.5px] border-[#e9e9ea]">
+                  <div className="flex gap-2 w-full">
+                    <CreditCard className="w-5 h-5 rounded-full" />
+                    <div className="flex flex-col gap-3 w-full">
+                      <div className="flex flex-col gap-1">
+                        <h1 className="text-sm text-[#4A4C56] font-medium">{notification.type}</h1>
+                        <p className="text-xs text-[#777980]">{notification.message}</p>
+                      </div>
+                      <p className="text-xs font-medium text-[#4A4C56] text-right">
+                        {moment(notification.created_at).format('hh:mm A • MM/DD/YYYY')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </TabsContent>
           <TabsContent value="unread">
-            <CustomTable
-              type="user-management"
-              title=""
-              columns={[]}
-              data={[]}
-              filter={false}
-            />
+            <div className="flex flex-col gap-4 ">
+              {data?.data?.filter((notification: any) => notification.read === false).map((notification: any) => (
+                <div key={notification.id} className="flex flex-col gap-1 p-2 border-b-[0.5px] border-[#e9e9ea]">
+                  <div className="flex gap-2 w-full">
+                    {notification.type === "SUBSCRIPTION_PURCHASED" ? <CreditCard className="w-5 h-5 rounded-full" /> : <CreditCard className="w-5 h-5 rounded-full" />}
+                    <div className="flex flex-col gap-3 w-full">
+                      <div className="flex flex-col gap-1">
+                        <h1 className="text-sm text-[#4A4C56] font-medium">{notification.type}</h1>
+                        <p className="text-xs text-[#777980]">{notification.message}</p>
+                      </div>
+                      <p className="text-xs font-medium text-[#4A4C56] text-right">
+                        {moment(notification.created_at).format('hh:mm A • MM/DD/YYYY')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </TabsContent>
         </Tabs>
       </div>

@@ -51,6 +51,14 @@ export default function CustomModal({
       buttonColor: "bg-black",
       defaultTitle: "Payment method added successfully!",
     },
+    danger: {
+      bgColor: "bg-[#f0f0f0]",
+      iconBgColor: "bg-[#ef6471]",
+      icon: <FaRegTrashAlt className="text-4xl" />,
+      buttonText: "Yes",
+      buttonColor: "bg-[#ef6471]",
+      defaultTitle: "Are you sure you want to cancel your subscription?",
+    },
   };
 
   const config = dialogConfigs[type] || dialogConfigs.delete;

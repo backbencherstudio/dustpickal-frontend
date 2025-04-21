@@ -2,7 +2,7 @@
 import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
+import Loading from "./Loading";
 interface RouteProtectionProps {
   children: React.ReactNode;
   allowedUserType: "user" | "admin";
@@ -26,7 +26,11 @@ export default function RouteProtection({ children, allowedUserType }: RouteProt
 
   // Show nothing while loading or if user type doesn't match
   if (isLoading || !user || user?.type?.toLowerCase() !== allowedUserType.toLowerCase()) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading />
+      </div>
+    );
   }
 
   // Render children if user type matches

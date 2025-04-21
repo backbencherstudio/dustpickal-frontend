@@ -7,11 +7,11 @@ import OptimizeReport from "./_components/home/_optimize-report/page";
 import Pricing from "./_components/home/_pricing/page";
 import WhatOurClientSays from "./_components/home/_what-our-client-says/page";
 import Footer from "./_components/home/_footer/page";
-
+import Loading from "@/app/components/Loading";
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loading /></div>}>
         <Hero />
         <WhatWeDo />
         <WhyTrustScan />

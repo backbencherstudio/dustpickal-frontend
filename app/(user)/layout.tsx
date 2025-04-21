@@ -31,7 +31,7 @@ export default function AnalyzeLayout({
         </div>
 
         {/* Main content */}
-        <div className="p-5 transition-all duration-300 flex-1 overflow-y-auto custom-scrollbar">
+        <div className="p-5 transition-all duration-300 flex-1 overflow-y-auto custom-scrollbar hidden lg:block">
           {children}
         </div>
 
@@ -125,7 +125,7 @@ export default function AnalyzeLayout({
           </div>
 
           {/* Mobile main content */}
-          <div className="w-full h-full p-3 overflow-auto">{children}</div>
+          <div className="w-full h-full px-10 py-5 overflow-auto">{children}</div>
         </div>
       </div>
     </RouteProtection>

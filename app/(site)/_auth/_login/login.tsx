@@ -38,7 +38,7 @@ export default function LoginPage({
         localStorage.setItem("token", response?.authorization?.token);
         setTimeout(() => {
           window.location.href = "/";
-        }, 2000);
+        }, 1000);
       } else {
         toast.error(response.message);
       }
