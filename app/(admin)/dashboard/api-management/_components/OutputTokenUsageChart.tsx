@@ -22,8 +22,13 @@ const OutputTokenUsageChart = ({ title, color }) => {
   });
 
   // Handle date changes from the DateFilter component
-  const handleDateChange = (newDate) => {
-    setDateFilter(newDate);
+  const handleDateChange = async (newDate) => {
+    if (
+      newDate.year !== dateFilter.year ||
+      newDate.month !== dateFilter.month
+    ) {
+      setDateFilter(newDate);
+    }
   };
 
   // Transform API data into chart format

@@ -9,15 +9,19 @@ export const baseApi = createApi({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("token");
-      headers.set(
-        "authorization",
-        `Bearer ${token}`
-      );
+      headers.set("authorization", `Bearer ${token}`);
       return headers;
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["Dashboard", "Notifications", "Rules", "Users", "Support", "Analyze"],
+  tagTypes: [
+    "Dashboard",
+    "Notifications",
+    "Rules",
+    "Users",
+    "Support",
+    "Analyze",
+  ],
 });
 
 export const { useQuery, useMutation } = baseApi as any;

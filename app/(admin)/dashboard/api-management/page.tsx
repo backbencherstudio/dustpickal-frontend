@@ -15,7 +15,7 @@ import SkeletonLoading from "../_components/SkeletonLoading";
 
 const Page = () => {
   const [page, setPage] = useState(1);
-  const [dateFilter, setDateFilter] = useState(null);
+  const [dateFilter, setDateFilter] = useState({ year: 2025, month: 4 });
   const { data, isLoading, isError, refetch } =
     useGetApiUsageOverviewQuery(null);
   const { data: userData } = useGetUserUsageQuery({ page, dateFilter });
@@ -48,8 +48,14 @@ const Page = () => {
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
-  const handleDateChange = (newDate) => {
-    setDateFilter(newDate);
+  // Handle date changes from the DateFilter component
+  const handleDateChange = async (newDate) => {
+    if (
+      newDate.year !== dateFilter.year ||
+      newDate.month !== dateFilter.month
+    ) {
+      setDateFilter(newDate);
+    }
   };
 
   return (
