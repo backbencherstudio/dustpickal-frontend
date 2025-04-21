@@ -132,7 +132,7 @@ const TicketDetail = () => {
                       <span className="text-xs text-gray-500">
                         {format(
                           new Date(message.created_at),
-                          "dd MMMM yyyy MM:HH"
+                          "dd MMMM yyyy hh:mm"
                         )}
                       </span>
                     </div>
