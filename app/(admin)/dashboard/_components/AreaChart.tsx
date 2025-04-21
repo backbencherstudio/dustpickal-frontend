@@ -6,7 +6,7 @@ import DateFilter from "../../_components/DateFilter";
 // Dynamically import ApexCharts to avoid SSR issues
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const AreaChart = ({ data }) => {
+const AreaChart = ({ data, handleDateChange }) => {
   const options: ApexCharts.ApexOptions = {
     chart: {
       height: 350,
@@ -117,11 +117,12 @@ const AreaChart = ({ data }) => {
       color: "#0d86ff",
     },
   ];
+
   return (
     <div className="bg-white p-4 rounded-xl">
       <div className="flex justify-between items-center">
         <h3 className="text-gray-800 text-[14px] font-medium">Revenue</h3>
-        <DateFilter />
+        <DateFilter onDateChange={handleDateChange} />
       </div>
       <div className="grid lg:grid-cols-5 grid-cols-2 items-center flex-wrap my-6 gap-6 ">
         <div className="border-r">

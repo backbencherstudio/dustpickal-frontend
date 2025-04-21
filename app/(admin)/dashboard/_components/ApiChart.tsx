@@ -28,10 +28,10 @@ const ApiChart = () => {
         <h3 className="text-gray-800 text-[14px] font-medium ">
           API management
         </h3>
-        <CustomFilter
+        {/* <CustomFilter
           placeholder="All"
           options={["All", "Today", "Weekly", "Monthly", "Yearly"]}
-        />
+        /> */}
       </div>
 
       <div className="flex justify-around mt-6">
