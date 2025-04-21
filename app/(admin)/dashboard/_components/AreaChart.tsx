@@ -77,24 +77,11 @@ const AreaChart = ({ data, handleDateChange }) => {
     },
   };
 
-  const series = [
-    {
-      name: "Pay As You Go",
-      data: [200, 100, 600, 200, 1000, 600, 1400, 800, 1800, 1200],
-    },
-    {
-      name: "Basic",
-      data: [300, 500, 800, 1200, 1500, 1800, 2100, 2400, 2700, 3000],
-    },
-    {
-      name: "Pro",
-      data: [400, 600, 1200, 1500, 1300, 1800, 600, 2000, 900, 2200],
-    },
-    {
-      name: "Enterprise",
-      data: [1500, 1800, 2000, 2000, 1700, 2300, 1800, 2600, 3000, 3200],
-    },
-  ];
+  const series = data?.revenue?.dailyPlanSales?.map((plan) => ({
+    name: plan.plan.replace(/_/g, " "), // Replace underscores with spaces for better readability
+    data: plan.dailySales.map((d) => d.amount), // Extract the `amount` for each day
+  }));
+
   const revenueData = [
     {
       value: data?.revenue?.subscriptionRevenue?.payAsYouGo,
