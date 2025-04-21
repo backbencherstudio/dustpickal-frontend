@@ -16,7 +16,7 @@ const UserStatusChart = ({ data }) => {
       type: "donut",
       width: "100%",
     },
-    colors: ["#4AD991", "#FF6B6B", "#FFB572"],
+    colors: ["#0d86ff", "#ff6a89", "#d2d2d5"],
     labels: statusNames,
     dataLabels: {
       enabled: false,
@@ -90,8 +90,8 @@ const UserStatusChart = ({ data }) => {
           options={options}
           series={options.series}
           type="donut"
-          height="300"
-          width="80%"
+          height="250"
+          width="100%"
         />
         <div className="flex flex-col justify-center gap-3 mt-10">
           <div className="flex items-center gap-2">
