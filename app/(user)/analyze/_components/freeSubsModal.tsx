@@ -40,7 +40,7 @@ export default function FreeSubsModal({ isOpen, onClose }: { isOpen: boolean, on
                     </div>
                     <div className="flex flex-col items-center gap-4">
                         <p className="text-xs text-[#4A4C56] text-center relative z-10">Simply add your card to get started—no charge unless you upgrade.</p>
-                        <button className="w-full bg-[#24A4FF] text-lg text-white px-4 py-2 rounded-full" onClick={() => router.push('/analyze/subscription')}>Continue</button>
+                        <button className="w-full bg-[#24A4FF] text-lg text-white px-4 py-2 rounded-full cursor-pointer" onClick={onClose}>Continue</button>
                     </div>
                 </div>
             </div>

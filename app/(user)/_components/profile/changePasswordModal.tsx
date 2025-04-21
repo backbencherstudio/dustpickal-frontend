@@ -13,9 +13,9 @@ export default function ChangePasswordModal({ isOpen, onClose }: { isOpen: boole
 
     const [isOpenChangePassword, setIsOpenChangePassword] = useState(false);
     const onSubmit = async (data: any) => {
-        console.log(data);
+        // console.log(data);(data);
         const response = await checkPassword(data);
-        console.log(response);
+        // console.log(data);(response);
         if (response.data.data.isValid) {
             // onClose();
             setIsOpenChangePassword(true);

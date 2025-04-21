@@ -32,7 +32,7 @@ export default function LoginPage({
   const onSubmit = async (data: any) => {
     try {
       const response = await loginUser(data).unwrap();
-      console.log(response);
+      // console.log(data);(response);
       if (response.success) {
         toast.success(response.message);
         localStorage.setItem("token", response?.authorization?.token);
@@ -43,7 +43,7 @@ export default function LoginPage({
         toast.error(response.message);
       }
     } catch (error: any) {
-      console.log("error", error);
+      // console.log(data);("error", error);
       // Access the nested message string from the error object
       const errorMessage = error?.data?.message?.message || "Login failed. Please try again.";
       setError(errorMessage);
@@ -54,7 +54,7 @@ export default function LoginPage({
     }
   };
 
-  console.log("error", error);
+  // console.log(data);("error", error);
 
   const handleResetPassword = (e: React.MouseEvent) => {
     e.preventDefault();

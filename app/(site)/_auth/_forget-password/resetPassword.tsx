@@ -12,14 +12,14 @@ export default function ResetPassword() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = async (data: any) => {
-        console.log(data);
+        // console.log(data);(data);
         // send email to user
         const response = await requestPasswordReset(data);
-        console.log(response);
+        // console.log(data);(response);
         if (response.data.success) {
             // router.push("?mode=send-email&email=" + data.email);
         } else {
-            console.log(response.data.message);
+            // console.log(data);(response.data.message);
             toast.error(response.data.message);
         }
     };

@@ -70,13 +70,13 @@ const page = () => {
   const handlePaymentSelection = (type: string, id: number) => {
     setIsOpen(true);
     // Logic to handle payment selection
-    console.log(`Selected ${type} with id ${id}`);
+    // console.log(data);(`Selected ${type} with id ${id}`);
   };
 
   // Handle payment method deletion
   const handleDelete = (type: string, id: number) => {
     // Logic to handle deletion
-    console.log(`Deleting ${type} with id ${id}`);
+    // console.log(data);(`Deleting ${type} with id ${id}`);
   };
 
   return (

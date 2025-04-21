@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import FreeSubsModal from "./_components/freeSubsModal";
 import MainAnalyze from "../_components/analyze/mainAnalyze";
 import Link from "next/link";
-
+import { useAuth } from "@/app/context/AuthContext";
 const steps = [
     {
         id: "01",
@@ -39,6 +39,8 @@ export default function AnalyzePage() {
         progress: number;
         file: File;
     }[]>([]);
+    const { user } = useAuth();
+    // console.log(data);(user);
 
     const handleFileUpload = (event: React.DragEvent<HTMLDivElement> | React.ChangeEvent<HTMLInputElement>) => {
         let files: FileList | null = null;
@@ -187,7 +189,9 @@ export default function AnalyzePage() {
                     </div>
                 </div>
             </div>
-            <FreeSubsModal isOpen={isFreeSubsModalOpen} onClose={() => setIsFreeSubsModalOpen(false)} />
+            {user?.subscription === null && (
+                <FreeSubsModal isOpen={isFreeSubsModalOpen} onClose={() => setIsFreeSubsModalOpen(false)} />
+            )}
         </div>
     );
 }

@@ -12,7 +12,7 @@ const ApiChart = () => {
       Remaining: 4000,
     },
   ];
-  console.log(data);
+  // console.log(data);(data);
 
   const total = data?.data?.total_token;
   const used = data?.data?.total_tokens_used;

@@ -26,12 +26,12 @@ const page = () => {
     setIsDraftModalOpen(false);
   };
   const onSubmit = async (data: any) => {
-    console.log(data);
+    // console.log(data);(data);
     const ruleData = {
       title: data.ruleHeading,
       description: data.subRule,
     };
-    console.log(ruleData);
+    // console.log(data);(ruleData);
     const response = await createRule(ruleData);
     if (response.data.success) {
       toast.success(response.data.message);

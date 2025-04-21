@@ -7,7 +7,7 @@ export default function SendEmailModal() {
     const searchParams = useSearchParams();
     const isSendEmailModalOpen = searchParams.get("mode") === "send-email";
     const email = searchParams.get("email");
-    console.log(email);
+    // console.log(data);(email);
 
     const handleClose = () => {
         router.push("/"); // Remove the query parameter

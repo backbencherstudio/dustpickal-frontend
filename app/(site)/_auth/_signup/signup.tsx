@@ -21,11 +21,11 @@ export default function Signup() {
     };
 
     const onSubmit = async (data: any) => {
-      console.log(data, "data");
+      // console.log(data);(data, "data");
       try {
           setError("");
           const response = await registerUser(data).unwrap();
-          console.log("response", response);
+          // console.log(data);("response", response);
           if (response.success) {
             toast.success(response.message);
             router.push("/?mode=login");
@@ -33,9 +33,9 @@ export default function Signup() {
             toast.error(response.message);
           }
       } catch (err: any) {
-        console.log("err", err);
+        // console.log(data);("err", err);
           const errorMessage = err.data?.message?.message || err.data?.error || err.error || "Registration failed. Please try again.";
-          console.log('errorMessage', errorMessage)
+          // console.log(data);('errorMessage', errorMessage)
           toast.error(errorMessage);
           setError(typeof errorMessage ? errorMessage : "Registration failed. Please try again.");
       }

@@ -13,7 +13,7 @@ export default function ChangePasswordForm({ isOpen, onClose, closeModal }: { is
             new_password: data.newPassword,
         }
         const response = await changePassword(changePasswordData);
-        console.log(response);
+        // console.log(data);(response);
         if (response.data.success) {
             toast.success(response.data.message);
             onClose();

@@ -40,7 +40,7 @@ export default function UpgradePage() {
   const elements = useElements();
 
   const onSubmit = async (data: any) => {
-    console.log("Form Data:", data, selectedCountry);
+    // console.log(data);("Form Data:", data, selectedCountry);
     setIsLoading(true);
     if (!stripe || !elements) {
       console.error("Stripe or Elements not loaded");
@@ -80,13 +80,13 @@ export default function UpgradePage() {
             : planType?.toUpperCase(),
       };
 
-      console.log("Payload to backend:", payload);
+      // console.log(data);("Payload to backend:", payload);
 
       // Call the subscribe API
       const response = await subscribe(payload).unwrap();
-      console.log("response", response);
+      // console.log(data);("response", response);
       if (response.success) {
-        // console.log("Subscription successful:", response.data.clientSecret);
+        // // console.log(data);("Subscription successful:", response.data.clientSecret);
         const { paymentIntent, error } = await stripe.confirmCardPayment(response.data.clientSecret);
   
         if (error) {

@@ -19,7 +19,7 @@ const page = () => {
     id: rule.id
   }));
 
-  console.log(rules?.data?.userRules);
+  // console.log(data);(rules?.data?.userRules);
   
   useEffect(() => {
     getRulesData();
@@ -48,7 +48,7 @@ const page = () => {
   const getRulesData = async () => {
     try {
       if (rules) {
-        console.log('Rules data:', rules);
+        // console.log(data);('Rules data:', rules);
       }
     } catch (error) {
       console.error('Error fetching rules:', error);

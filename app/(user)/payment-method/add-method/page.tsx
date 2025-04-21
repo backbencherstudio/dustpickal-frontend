@@ -71,7 +71,7 @@ const AddPaymentMethod = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       // Handle form submission
-      console.log({
+      // console.log(data);({
         paymentType,
         ...data
       });

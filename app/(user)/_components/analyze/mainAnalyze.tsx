@@ -29,7 +29,7 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
     const { setAnalysisResults, setSelectedDocument } = useAnalysis();
     const [analyze, { isLoading }] = useAnalyzeMutation();
 
-    console.log("selectedRules", selectedRules);
+    // console.log(data);("selectedRules", selectedRules);
     useEffect(() => {
         // Find files that are in 'uploading' state and haven't started progress simulation yet
         uploadedFiles.forEach(file => {
@@ -39,7 +39,7 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
         });
     }, [uploadedFiles]); // Add uploadedFiles as a dependency to react to changes
 
-    console.log(uploadedFiles);
+    // console.log(data);(uploadedFiles);
 
     const simulateFileUpload = (fileName: string) => {
         let progress = 0;
@@ -136,7 +136,7 @@ export default function MainAnalyze({ uploadedFiles, setUploadedFiles }: MainAna
         try {
             const response = await analyze(formData).unwrap();
             
-            console.log('response analyze', response);
+            // console.log(data);('response analyze', response);
             if (response.success) {
                 // Update the analysis results with the API response
                 setAnalysisResults(response.data.results);

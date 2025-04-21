@@ -15,7 +15,7 @@ export default function PasswordResetForm() {
     };
 
     const onSubmit = (data: any) => {
-        console.log(data);
+        // console.log(data);(data);
     };
 
     return (

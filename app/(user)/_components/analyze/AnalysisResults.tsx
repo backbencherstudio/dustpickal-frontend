@@ -24,7 +24,7 @@ export default function AnalysisResults() {
 
     const currentDocResults = analysisResults.find(result => result.fileName === selectedDocument);
 
-    console.log('analysisResults', analysisResults);
+    // console.log(data);('analysisResults', analysisResults);
 
     if (!currentDocResults) {
         return null;

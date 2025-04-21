@@ -28,7 +28,7 @@ const page = () => {
   const handleVerifyOtp = (e) => {
     e.preventDefault();
     // Add your OTP verification logic here
-    console.log("OTP verified:", otpValues.join(""));
+    // console.log(data);("OTP verified:", otpValues.join(""));
     setIsModalOpen(false);
     setShowOtpScreen(false);
     setOtpValues(["", "", "", "", "", ""]);

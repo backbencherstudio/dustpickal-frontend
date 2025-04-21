@@ -4,7 +4,7 @@ import { FiUsers } from "react-icons/fi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuUserRoundPen } from "react-icons/lu";
 const AnalyticsCards = ({ data }) => {
-  console.log(data);
+  // // console.log(data);(data);
   const cards = [
     {
       title: "Total Users",

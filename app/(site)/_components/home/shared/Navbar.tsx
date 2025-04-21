@@ -22,7 +22,7 @@ export default function NavBar() {
     const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
     const { user } = useAuth();
 
-    console.log(user);
+    // console.log(data);(user);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);

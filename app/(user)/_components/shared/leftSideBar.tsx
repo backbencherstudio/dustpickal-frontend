@@ -29,7 +29,7 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
     const [isAddNewModalOpen, setIsAddNewModalOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const { data, isLoading } = useGetNotificationsQuery({});
-    // console.log('searchQuery', searchQuery)
+    // // console.log(data);('searchQuery', searchQuery)
     const navItems = [
         {
             label: "Rule Management",
@@ -108,7 +108,8 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                             alt="logo"
                             width={102}
                             height={32}
-                            className="transition-all duration-300 ease-in-out"
+                            className="transition-all duration-300 ease-in-out cursor-pointer"
+                            onClick={() => router.push("/")}
                         />
                     ) : (
                         <Image
@@ -116,7 +117,8 @@ export default function LeftSidebar({ isExpanded, onExpandToggle }: LeftSidebarP
                             alt="logo"
                             width={32}
                             height={32}
-                            className="transition-all duration-300 ease-in-out"
+                            className="transition-all duration-300 ease-in-out cursor-pointer"
+                            onClick={() => router.push("/")}
                         />
                     )}
 

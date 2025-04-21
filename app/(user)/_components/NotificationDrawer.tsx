@@ -30,7 +30,7 @@ const NotificationDrawer = ({
     top: isOpen ? "translate-y-0" : "-translate-y-full",
   };
 
-  console.log(data);
+  // console.log(data);(data);
 
   return (
     <div

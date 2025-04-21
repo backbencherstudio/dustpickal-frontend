@@ -15,7 +15,7 @@ const page = () => {
     password: "",
   });
   const { user } = useAuth();
-  console.log(user);
+  // console.log(data);(user);
   const handleEdit = (field) => {
     setEditField(field);
     setFormData({
@@ -27,7 +27,7 @@ const page = () => {
   const handleSubmit = (e) => {
     // Add this function
     e.preventDefault();
-    console.log(formData);
+    // console.log(data);(formData);
   };
   return (
     <div className="text-[14px] font-medium mx-10">
