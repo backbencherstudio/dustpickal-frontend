@@ -78,12 +78,12 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // Get current user profile
-    // getMe: builder.mutation<AuthResponse["user"], void>({
-    //   query: () => ({
-    //     url: "/auth/me",
-    //     method: "GET",
-    //   }),
-    // }),
+    getMe: builder.mutation<AuthResponse["user"], void>({
+      query: () => ({
+        url: "/auth/me",
+        method: "GET",
+      }),
+    }),
 
     // Request password reset email
     requestPasswordReset: builder.mutation<
@@ -136,7 +136,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useLogoutMutation,
-  // useGetMeMutation,
+  useGetMeMutation,
   useRequestPasswordResetMutation,
   useResetPasswordMutation,
   useCheckPasswordMutation,
