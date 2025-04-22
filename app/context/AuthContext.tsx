@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         } catch (error) {
             console.error('AuthContext - Error fetching user:', error);
             setIsLoading(false);
-        }
+        }3
     };
    
     return (

@@ -14,10 +14,18 @@ import { useState } from "react";
 export default function DashboardPage() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-
+  const [dateFilter, setDateFilter] = useState({ year: 2025, month: 4 });
+  const handleDateChange = async (newDate) => {
+    if (
+      newDate.year !== dateFilter.year ||
+      newDate.month !== dateFilter.month
+    ) {
+      setDateFilter(newDate);
+    }
+  };
   const { data, isLoading, isError, refetch } = useGetDashboardsQuery({
-    year: 2025,
-    month: 4,
+    year: dateFilter.year,
+    month: dateFilter.month,
     page,
     limit,
   });
@@ -35,7 +43,11 @@ export default function DashboardPage() {
     { label: "Total Views", accessor: "usage_count" },
   ];
   const newUsersColumns = [
-    { label: "User Name", accessor: "name" },
+    {
+      label: "User Name",
+      accessor: "name",
+      customCell: (row) => row.name || "Not Given",
+    },
     { label: "Email", accessor: "email" },
     { label: "Subscriptions", accessor: "subscription" },
   ];
@@ -69,7 +81,7 @@ export default function DashboardPage() {
       <AnalyticsCards data={data?.data} />
       <div className="grid grid-cols-1 lg:grid-cols-4 mt-6 gap-6">
         <div className="lg:col-span-3 bg-white p-6 rounded-xl">
-          <AreaChart data={data?.data} />
+          <AreaChart data={data?.data} handleDateChange={handleDateChange} />
         </div>
         <div className="bg-white p-6 rounded-xl shadow lg:col-span-1">
           {/* <SubsStatus /> */}

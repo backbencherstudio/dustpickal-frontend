@@ -92,13 +92,13 @@ export default function UpgradePage() {
         if (error) {
           // Handle payment error
           toast.error(error.message);
-        } else if (paymentIntent.status === 'succeeded') {
+        } else if (paymentIntent.status === "succeeded") {
           // Payment successful!
           // You can update your UI or redirect to success page
-          toast.success('Payment successful!');
+          toast.success("Payment successful!");
           router.push("/analyze");
         }
-      
+
         toast.success("Subscription successful!");
       } else {
         console.error("Subscription failed:", response.message);
