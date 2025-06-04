@@ -36,7 +36,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           min_height: minHeight,
           max_height: maxHeight,
           placeholder: placeholder,
-          readonly: readOnly,
+          disabled: readOnly,
           content_style: `
             body { 
               font-family: system-ui, -apple-system, sans-serif;

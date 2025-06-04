@@ -123,13 +123,12 @@ const page = () => {
                 columns={[]}
                 data={[]}
                 filter={false}
-                pagination={{
+                pagination={true}
+                paginationData={{
                   currentPage: 1,
-                  totalPages: 1,
-                  onPageChange: () => {},
-                  limit: 10,
-                  onLimitChange: () => {},
+                  totalPages: 1
                 }}
+                onPageChange={() => {}}
               />
             </TabsContent>
           </Tabs>

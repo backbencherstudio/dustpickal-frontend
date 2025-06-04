@@ -80,7 +80,7 @@ const page = () => {
             Save ad draft
           </Button> */}
           <Button
-            disabled={errors.ruleHeading || errors.subRule}
+            disabled={!!errors.ruleHeading || !!errors.subRule}
             onClick={() => setIsAddModalOpen(true)}
             className={`px-6 py-2 text-[12px] border rounded bg-black text-white hover:opacity-80 transition-all duration-300 cursor-pointer`}
           >
